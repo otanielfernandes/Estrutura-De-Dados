@@ -1,15 +1,14 @@
 #ifndef FUNCIONARIO_H
 #define FUNCIONARIO_H
 
-#include "Pessoa.h"
-
 typedef struct
 {
-    Pessoa *dados;
+    int id;
+    char *nome;
     int caixaID;
-}Funcionario;
+} Funcionario;
 
-Funcionario *CriarFuncionario(int codigo, char *nome);
+Funcionario *CriarFuncionario(int id, char *nome, int caixaID);
 void MostrarFuncionario(Funcionario *F);
 void DestruirFuncionario(Funcionario *F);
 

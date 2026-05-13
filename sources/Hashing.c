@@ -23,7 +23,7 @@ Hashing *CriarHashing(int tamanho)
 
         H->Tabela[i].aberta = 0;
 
-        H->Tabela[i].fila = CriarListaPessoas();
+        H->Tabela[i].fila = CriarListaClientes();
 
         H->Tabela[i].totalPessoasAtendidas = 0;
 
@@ -72,7 +72,7 @@ void DestruirHashing(Hashing *H)
 
     for (int i = 0; i < H->tamanho; i++)
     {
-        DestruirListaPessoas(H->Tabela[i].fila);
+        DestruirListaClientes(H->Tabela[i].fila);
     }
 
     free(H->Tabela);

@@ -2,19 +2,19 @@
 #define CLIENTE_H
 
 #include <time.h>
-#include "Pessoa.h"
 #include "ListaProdutos.h"
 
 typedef struct
 {
-    Pessoa *dados;
+    int id;
+    char *nome;
     ListaProdutos *carrinho;
-    float tempoTotalCaixa;
+    int tempoTotalCaixa;
     time_t tempoEntrada;
 
-}Cliente;
+} Cliente;
 
-Cliente *CriarCliente(Pessoa *dados);
+Cliente *CriarCliente(int id, char *nome);
 void MostrarCliente(Cliente *C);
 void DestruirCliente(Cliente *C);
 

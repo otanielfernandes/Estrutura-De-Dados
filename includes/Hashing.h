@@ -1,14 +1,17 @@
 #ifndef HASHING_H
 #define HASHING_H
 
-#include "ListaPessoas.h"
+#include "Cliente.h"
+#include "ListaClientes.h"
+#include "Funcionario.h"
+#include "ListaFuncionarios.h"
 
 typedef struct
 {
     int id;
     int aberta;
 
-    ListaPessoas *fila;
+    ListaClientes *fila;
 
     int totalPessoasAtendidas;
     int totalProdutosVendidos;

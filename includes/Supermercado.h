@@ -5,8 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Definicoes.h"
-#include "Pessoa.h"
-#include "ListaPessoas.h"
+//#include "Pessoa.h"
+//#include "ListaPessoas.h"
+#include "ListaClientes.h"
+#include "ListaFuncionarios.h"
 #include "Relogio.h"
 #include "Estatisticas.h"
 
@@ -26,23 +28,27 @@ typedef struct {
 typedef struct
 {
     char *NOME;
-    ListaPessoas *LPessoas; // Lista das pessoas que andam as compras (Já tinhas)
-    ListaProdutos *LProdutos; // (Já tinhas)
+
+    ListaClientes *LClientes;
+    ListaFuncionarios *LFuncionarios;
+    ListaProdutos *LProdutos;
+    
     Hashing       *HCaixas;   // Tabela de Hash para as caixas (Já tinhas)
     
     // Horários (Já tinhas)
     int HoraInicio, HoraFim; 
     
-    // --- NOVOS CAMPOS (Configuração) ---
-    int max_espera;                 // MAX_ESPERA [cite: 17]
-    int n_caixas;                   // N_CAIXAS [cite: 17]
-    int tempo_atendimento_produto;  // TEMPO_ATENDIMENTO_PRODUTO [cite: 18]
-    int max_preco;                  // MAX_PRECO [cite: 18]
-    int max_fila;                   // MAX_FILA [cite: 19]
-    int min_fila;                   // MIN_FILA [cite: 20]
+    //NOVOS CAMPOS (Configuração):
+    int max_espera;                 // MAX_ESPERA 
+    int n_caixas;                   // N_CAIXAS 
+    int tempo_atendimento_produto;  // TEMPO_ATENDIMENTO_PRODUTO 
+    int max_preco;                  // MAX_PRECO 
+    int max_fila;                   // MAX_FILA 
+    int min_fila;                   // MIN_FILA 
     
-    int CadenciaEntradaClientes;    // (Já tinhas)
-    Relogio *Rolex;                 // (Já tinhas)
+    int CadenciaEntradaClientes;     
+    Relogio *Rolex;                 
+    
 } Supermercado;
 
 Supermercado *CriarSupermercado(char *nome);

@@ -14,7 +14,9 @@ typedef struct _noProduto
 typedef struct
 {
     NoProduto *Inicio;
+    NoProduto *Fim;
     int NEL;
+
 } ListaProdutos;
 
 ListaProdutos *CriarListaProdutos();

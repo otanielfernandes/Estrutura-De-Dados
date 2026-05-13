@@ -49,12 +49,15 @@ int InicializarSupermercado(Supermercado *S, char *config)
     printf("MIN_FILA: %d\n", S->min_fila);
     printf("========================================\n\n");
 
-    S->LPessoas = CriarListaPessoas();
+    //S->LPessoas = CriarListaPessoas();
     S->LProdutos = CriarListaProdutos();
+    S->LClientes = CriarListaClientes();
+    S->LFuncionarios = CriarListaFuncionarios();
 
     LerProdutos(S->LProdutos,"dados/Produtos.txt");
     printf("\nPRODUTOS CARREGADOS:\n");
     MostrarListaProdutos(S->LProdutos);
+    
     S->CadenciaEntradaClientes = 30;
     /*
     Falta implemnetar devidamente:
