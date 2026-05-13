@@ -1,1 +1,0 @@
-gcc sources/*.c -I includes -o programa ./programa.exe

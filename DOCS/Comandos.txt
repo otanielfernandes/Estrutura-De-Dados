@@ -1,0 +1,3 @@
+gcc -I./includes sources/*.c -o programa
+
+./programa.exe

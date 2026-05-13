@@ -28,6 +28,7 @@ void ExecutaAccoesMenu(Supermercado *S)
 
 int main()
 {
+    system("chcp 65001");
     printf("Projeto ED - 25-26!\n");
     srand(time(NULL));
     Supermercado *Lidl = CriarSupermercado("Lidal");

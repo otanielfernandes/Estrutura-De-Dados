@@ -1,5 +1,6 @@
 #include "../includes/Ficheiro.h"
 
+
 int LerProdutos(ListaProdutos *LProd, char *ficheiro)
 {
     FILE *f = fopen(ficheiro, "r");
@@ -9,19 +10,38 @@ int LerProdutos(ListaProdutos *LProd, char *ficheiro)
         return 0;
     }
 
-    int codigo;
-    char nome[100];
-    float preco;
-    float tempoCompra;
-    float tempoCaixa;
-    while 
-    (
-        fscanf(f,"%d %s %f %f %f", &codigo, nome, &preco, &tempoCompra, &tempoCaixa) != EOF
-    )
+    char linha[512];
+
+    while (fgets(linha, sizeof(linha), f))
     {
-        Produto *Prod =
-            CriarProduto(codigo, nome, preco, tempoCompra, tempoCaixa);
-        InserirProduto(LProd, Prod);
+        int codigo;
+        char nome[300];
+        float preco;
+        float tempoCompra;
+        float tempoCaixa;
+
+        int lidos = sscanf(
+            linha, 
+            "%d %[^\t]\t%f\t%f\t%f",
+            &codigo,
+            nome,
+            &preco,
+            &tempoCompra,
+            &tempoCaixa
+        );
+
+        if (lidos == 5)
+        {
+            Produto *Prod = CriarProduto(
+                    codigo,
+                    nome,
+                    preco,
+                    tempoCompra,
+                    tempoCaixa
+                );
+
+            InserirProduto(LProd, Prod);
+        }
     }
 
     fclose(f);

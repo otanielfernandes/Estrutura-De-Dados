@@ -29,7 +29,14 @@ void MostrarProduto(Produto *Prod)
     if (Prod == NULL)
         return;
 
-    printf("%d | %s | %.2f€\n", Prod->codigo, Prod->nome, Prod->preco);
+    printf(
+        "%d | %s | %.2f€ | TempoCompra: %.1f | TempoCaixa: %.1f\n",
+        Prod->codigo,
+        Prod->nome,
+        Prod->preco,
+        Prod->tempoCompra,
+        Prod->tempoCaixa
+    );
 }
 
 void DestruirProduto(Produto *Prod)
