@@ -1,0 +1,36 @@
+# depslib dependency file v1.0
+1776339032 source:c:\users\fmorgado\onedrive\ambiente de trabalho\projeto_ed_25_26\uteis.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
+1776341096 source:c:\users\fmorgado\onedrive\ambiente de trabalho\projeto_ed_25_26\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	"Supermercado.h"
+
+1776332988 source:c:\users\fmorgado\onedrive\ambiente de trabalho\projeto_ed_25_26\pessoa.c
+	"Pessoa.h"
+
+1776334049 c:\users\fmorgado\onedrive\ambiente de trabalho\projeto_ed_25_26\pessoa.h
+	<stdio.h>
+	<stdlib.h>
+
+1776341096 source:c:\users\fmorgado\onedrive\ambiente de trabalho\projeto_ed_25_26\supermercado.c
+	"Supermercado.h"
+
+1776336236 c:\users\fmorgado\onedrive\ambiente de trabalho\projeto_ed_25_26\supermercado.h
+	<stdio.h>
+	<stdlib.h>
+	"Pessoa.h"
+	"Relogio.h"
+
+1776334767 source:c:\users\fmorgado\onedrive\ambiente de trabalho\projeto_ed_25_26\relogio.c
+	"Relogio.h"
+
+1776334767 c:\users\fmorgado\onedrive\ambiente de trabalho\projeto_ed_25_26\relogio.h
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
