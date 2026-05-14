@@ -51,13 +51,21 @@ int InicializarSupermercado(Supermercado *S, char *config)
 
     //S->LPessoas = CriarListaPessoas();
     S->LProdutos = CriarListaProdutos();
-    S->LClientes = CriarListaClientes();
-    S->LFuncionarios = CriarListaFuncionarios();
-
     LerProdutos(S->LProdutos,"dados/Produtos.txt");
     printf("\nPRODUTOS CARREGADOS:\n");
     MostrarListaProdutos(S->LProdutos);
-    
+
+    S->LClientes = CriarListaClientes();
+    LerClientes(S->LClientes, "dados/Clientes.txt");
+    printf("\nCLIENTES CARREGADOS:\n");
+    MostrarListaClientes(S->LClientes);
+
+
+    S->LFuncionarios = CriarListaFuncionarios();
+    LerFuncionarios(S->LFuncionarios, "dados/Funcionarios.txt");
+    printf("\nFUNCIONARIOS CARREGADOS:\n");
+    MostrarListaFuncionarios(S->LFuncionarios);
+
     S->CadenciaEntradaClientes = 30;
     /*
     Falta implemnetar devidamente:
