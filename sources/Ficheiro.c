@@ -1,6 +1,5 @@
 #include "../includes/Ficheiro.h"
 
-
 int LerProdutos(ListaProdutos *LProd, char *ficheiro)
 {
     FILE *f = fopen(ficheiro, "r");
@@ -49,8 +48,6 @@ int LerProdutos(ListaProdutos *LProd, char *ficheiro)
     return 1;
 }
 
-
-#include "../includes/Ficheiro.h"
 
 //Mexer depois:
 int LerClientes(ListaClientes *LC, char *ficheiro)

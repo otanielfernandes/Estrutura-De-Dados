@@ -1,4 +1,4 @@
-
+//Versão 17.5 do projecto supermercad:
 #include "../includes/Supermercado.h"
 #include "../includes/Ficheiro.h"
 
