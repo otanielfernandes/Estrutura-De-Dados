@@ -3,13 +3,9 @@
 
 #include "../includes/ListaClientes.h"
 
-#define SUCESSO 1
-#define INSUCESSO 0
-
-
 ListaClientes *CriarListaClientes()
 {
-    ListaClientes *LC =(ListaClientes *)malloc(sizeof(ListaClientes));
+    ListaClientes *LC =  (ListaClientes *)malloc(sizeof(ListaClientes));
 
     if (LC == NULL)
         return NULL;
@@ -20,36 +16,50 @@ ListaClientes *CriarListaClientes()
     return LC;
 }
 
-
-int InserirCliente(ListaClientes *LC, Cliente *C
-)
+int InserirCliente(ListaClientes *LC, Cliente *C)
 {
     if (LC == NULL || C == NULL)
-        return INSUCESSO;
+        return 0;
 
-    NoCliente *novo = (NoCliente *)malloc(sizeof(NoCliente));
+    NoCliente *Novo = (NoCliente *)malloc(sizeof(NoCliente));
 
-    if (novo == NULL)
-        return INSUCESSO;
+    if (Novo == NULL)
+        return 0;
 
-    novo->Cli = C;
-    novo->Prox = NULL;
+    Novo->Cli = C;
 
-    if (LC->Inicio == NULL)
-    {
-        LC->Inicio = novo;
-    }
-    else
-    {
-        NoCliente *aux = LC->Inicio;
+    Novo->Prox = LC->Inicio;
 
-        while (aux->Prox != NULL)
-            aux = aux->Prox;
-        aux->Prox = novo;
-    }
+    LC->Inicio = Novo;
+
     LC->NEL++;
 
-    return SUCESSO;
+    return 1;
+}
+
+void InverterListaClientes(ListaClientes *LC)
+{
+    if (LC == NULL)
+        return;
+
+    NoCliente *anterior = NULL;
+
+    NoCliente *atual = LC->Inicio;
+
+    NoCliente *seguinte;
+
+    while (atual != NULL)
+    {
+        seguinte = atual->Prox;
+
+        atual->Prox = anterior;
+
+        anterior = atual;
+
+        atual = seguinte;
+    }
+
+    LC->Inicio = anterior;
 }
 
 void MostrarListaClientes(ListaClientes *LC)
@@ -57,12 +67,13 @@ void MostrarListaClientes(ListaClientes *LC)
     if (LC == NULL)
         return;
 
-    NoCliente *aux = LC->Inicio;
+    NoCliente *Aux = LC->Inicio;
 
-    while (aux != NULL)
+    while (Aux != NULL)
     {
-        MostrarCliente(aux->Cli);
-        aux = aux->Prox;
+        MostrarCliente(Aux->Cli);
+
+        Aux = Aux->Prox;
     }
 }
 
@@ -71,16 +82,17 @@ void DestruirListaClientes(ListaClientes *LC)
     if (LC == NULL)
         return;
 
-    NoCliente *aux = LC->Inicio;
+    NoCliente *Aux = LC->Inicio;
 
-    while (aux != NULL)
+    while (Aux != NULL)
     {
-        NoCliente *temp = aux;
+        NoCliente *Temp = Aux;
 
-        aux = aux->Prox;
+        Aux = Aux->Prox;
 
-        DestruirCliente(temp->Cli);
-        free(temp);
+        DestruirCliente(Temp->Cli);
+
+        free(Temp);
     }
 
     free(LC);

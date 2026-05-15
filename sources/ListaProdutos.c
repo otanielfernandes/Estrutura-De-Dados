@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "../includes/ListaProdutos.h"
 
 ListaProdutos *CriarListaProdutos()
@@ -14,35 +17,56 @@ ListaProdutos *CriarListaProdutos()
     return LProd;
 }
 
-//Procedimento para inserir sempre um produto no final da lista:
 int InserirProduto(ListaProdutos *LProd, Produto *Prod)
 {
     if (LProd == NULL || Prod == NULL)
         return INSUCESSO;
 
-    NoProduto *novo = (NoProduto *)malloc(sizeof(NoProduto));
+    NoProduto *Novo =
+        (NoProduto *)malloc(sizeof(NoProduto));
 
-    if (novo == NULL)
+    if (Novo == NULL)
         return INSUCESSO;
 
-    novo->Info = Prod;
-    novo->Prox = NULL;
+    Novo->Info = Prod;
 
-    // lista vazia
-    if (LProd->Inicio == NULL)
-    {
-        LProd->Inicio = novo;
-        LProd->Fim = novo;
-    }
-    else
-    {
-        LProd->Fim->Prox = novo;
-        LProd->Fim = novo;
-    }
+    Novo->Prox = LProd->Inicio;
+
+    LProd->Inicio = Novo;
+
+    if (LProd->Fim == NULL)
+        LProd->Fim = Novo;
 
     LProd->NEL++;
 
     return SUCESSO;
+}
+
+void InverterListaProdutos(ListaProdutos *LProd)
+{
+    if (LProd == NULL)
+        return;
+
+    NoProduto *anterior = NULL;
+
+    NoProduto *atual = LProd->Inicio;
+
+    NoProduto *seguinte;
+
+    LProd->Fim = LProd->Inicio;
+
+    while (atual != NULL)
+    {
+        seguinte = atual->Prox;
+
+        atual->Prox = anterior;
+
+        anterior = atual;
+
+        atual = seguinte;
+    }
+
+    LProd->Inicio = anterior;
 }
 
 void MostrarListaProdutos(ListaProdutos *LProd)
@@ -50,12 +74,13 @@ void MostrarListaProdutos(ListaProdutos *LProd)
     if (LProd == NULL)
         return;
 
-    NoProduto *aux = LProd->Inicio;
+    NoProduto *Aux = LProd->Inicio;
 
-    while (aux != NULL)
+    while (Aux != NULL)
     {
-        MostrarProduto(aux->Info);
-        aux = aux->Prox;
+        MostrarProduto(Aux->Info);
+
+        Aux = Aux->Prox;
     }
 }
 
@@ -64,16 +89,18 @@ void DestruirListaProdutos(ListaProdutos *LProd)
     if (LProd == NULL)
         return;
 
-    NoProduto *aux = LProd->Inicio;
+    NoProduto *Aux = LProd->Inicio;
 
-    while (aux != NULL)
+    while (Aux != NULL)
     {
-        NoProduto *temp = aux;
-        aux = aux->Prox;
-        DestruirProduto(temp->Info);
-        free(temp);
+        NoProduto *Temp = Aux;
+
+        Aux = Aux->Prox;
+
+        DestruirProduto(Temp->Info);
+
+        free(Temp);
     }
 
     free(LProd);
 }
-

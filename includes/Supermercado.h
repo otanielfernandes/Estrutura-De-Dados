@@ -12,6 +12,7 @@
 #include "Relogio.h"
 #include "Estatisticas.h"
 
+// doxygen
 //Apagar daqui por enquanto:
 /*
 //Estrurura para as caixas:

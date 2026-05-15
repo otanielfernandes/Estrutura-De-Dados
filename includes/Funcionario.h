@@ -6,6 +6,7 @@ typedef struct
     int id;
     char *nome;
     int caixaID;
+
 } Funcionario;
 
 Funcionario *CriarFuncionario(int id, char *nome, int caixaID);

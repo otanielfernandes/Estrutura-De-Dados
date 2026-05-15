@@ -3,14 +3,10 @@
 
 #include "../includes/ListaFuncionarios.h"
 
-#define SUCESSO 1
-#define INSUCESSO 0
-
-
 ListaFuncionarios *CriarListaFuncionarios()
 {
     ListaFuncionarios *LF =
-     (ListaFuncionarios *)malloc(sizeof(ListaFuncionarios));
+        (ListaFuncionarios *)malloc(sizeof(ListaFuncionarios));
 
     if (LF == NULL)
         return NULL;
@@ -21,70 +17,83 @@ ListaFuncionarios *CriarListaFuncionarios()
     return LF;
 }
 
-
 int InserirFuncionario(ListaFuncionarios *LF, Funcionario *F)
 {
     if (LF == NULL || F == NULL)
-        return INSUCESSO;
+        return 0;
 
-    NoFuncionario *novo = (NoFuncionario *)malloc(sizeof(NoFuncionario));
+    NoFuncionario *Novo = (NoFuncionario *)malloc(sizeof(NoFuncionario));
 
-    if (novo == NULL)
-        return INSUCESSO;
+    if (Novo == NULL)
+        return 0;
 
-    novo->Func = F;
-    novo->Prox = NULL;
+    Novo->Func = F;
 
-    if (LF->Inicio == NULL)
-    {
-        LF->Inicio = novo;
-    }
+    Novo->Prox = LF->Inicio;
 
-    else
-    {
-        NoFuncionario *aux = LF->Inicio;
-
-        while (aux->Prox != NULL)
-            aux = aux->Prox;
-
-        aux->Prox = novo;
-    }
+    LF->Inicio = Novo;
 
     LF->NEL++;
 
-    return SUCESSO;
+    return 1;
 }
 
+void InverterListaFuncionarios(ListaFuncionarios *LF)
+{
+    if (LF == NULL)
+        return;
+
+    NoFuncionario *anterior = NULL;
+
+    NoFuncionario *atual = LF->Inicio;
+
+    NoFuncionario *seguinte;
+
+    while (atual != NULL)
+    {
+        seguinte = atual->Prox;
+
+        atual->Prox = anterior;
+
+        anterior = atual;
+
+        atual = seguinte;
+    }
+
+    LF->Inicio = anterior;
+}
 
 void MostrarListaFuncionarios(ListaFuncionarios *LF)
 {
     if (LF == NULL)
         return;
 
-    NoFuncionario *aux = LF->Inicio;
+    NoFuncionario *Aux = LF->Inicio;
 
-    while (aux != NULL)
+    while (Aux != NULL)
     {
-        MostrarFuncionario(aux->Func);
-        aux = aux->Prox;
+        MostrarFuncionario(Aux->Func);
+
+        Aux = Aux->Prox;
     }
 }
-
 
 void DestruirListaFuncionarios(ListaFuncionarios *LF)
 {
     if (LF == NULL)
         return;
 
-    NoFuncionario *aux = LF->Inicio;
+    NoFuncionario *Aux = LF->Inicio;
 
-    while (aux != NULL)
+    while (Aux != NULL)
     {
-        NoFuncionario *temp = aux;
-        aux = aux->Prox;
+        NoFuncionario *Temp = Aux;
 
-        DestruirFuncionario(temp->Func);
-        free(temp);
+        Aux = Aux->Prox;
+
+        DestruirFuncionario(Temp->Func);
+
+        free(Temp);
     }
 
     free(LF);

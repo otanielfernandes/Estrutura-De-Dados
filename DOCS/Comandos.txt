@@ -1,3 +1,6 @@
 gcc -I./includes sources/*.c -o programa
 
 ./programa.exe
+
+
+Para as listas de produtos, clientes e funcionários, a lista deve fazer sempre a insersão no início e depois inverter as listas

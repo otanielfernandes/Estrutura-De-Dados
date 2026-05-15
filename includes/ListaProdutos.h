@@ -21,6 +21,7 @@ typedef struct
 
 ListaProdutos *CriarListaProdutos();
 int InserirProduto(ListaProdutos *LProd, Produto *Prod);
+void InverterListaProdutos(ListaProdutos *LProd);
 void MostrarListaProdutos(ListaProdutos *LProd);
 void DestruirListaProdutos(ListaProdutos *LProd);
 

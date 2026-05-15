@@ -19,6 +19,7 @@ typedef struct
 
 ListaClientes *CriarListaClientes();
 int InserirCliente(ListaClientes *LC, Cliente *C);
+void InverterListaClientes(ListaClientes *LC);
 void MostrarListaClientes(ListaClientes *LC);
 void DestruirListaClientes(ListaClientes *LC);
 

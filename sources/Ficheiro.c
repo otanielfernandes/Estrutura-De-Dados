@@ -42,6 +42,7 @@ int LerProdutos(ListaProdutos *LProd, char *ficheiro)
             InserirProduto(LProd, Prod);
         }
     }
+        InverterListaProdutos(LProd);
 
     fclose(f);
 
@@ -68,6 +69,7 @@ int LerClientes(ListaClientes *LC, char *ficheiro)
         Cliente *C = CriarCliente(id, nome);
         InserirCliente(LC, C);
     }
+    InverterListaClientes(LC);
 
     fclose(f);
 
@@ -92,6 +94,7 @@ int LerFuncionarios(ListaFuncionarios *LF, char *ficheiro)
         Funcionario *F = CriarFuncionario(id, nome, 0);
         InserirFuncionario(LF, F);
     }
+    InverterListaFuncionarios(LF);
 
     fclose(f);
 
