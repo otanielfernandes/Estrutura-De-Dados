@@ -1,4 +1,4 @@
-//Versão 17.5 do projecto supermercad:
+//"Versão 17.8" do projecto supermercad:
 #include "../includes/Supermercado.h"
 #include "../includes/Ficheiro.h"
 
@@ -49,7 +49,7 @@ int InicializarSupermercado(Supermercado *S, char *config)
     printf("MIN_FILA: %d\n", S->min_fila);
     printf("========================================\n\n");
 
-    //S->LPessoas = CriarListaPessoas();
+    
     S->LProdutos = CriarListaProdutos();
     LerProdutos(S->LProdutos,"dados/Produtos.txt");
     printf("\nPRODUTOS CARREGADOS:\n");
@@ -67,15 +67,19 @@ int InicializarSupermercado(Supermercado *S, char *config)
     MostrarListaFuncionarios(S->LFuncionarios);
 
     S->CadenciaEntradaClientes = 30;
-    /*
-    Falta implemnetar devidamente:
+
     //Criando o Hash:
     S->HCaixas = CriarHashing(S->n_caixas);
     
     //Abrir caixas iniciais:
     ObterCaixa(S->HCaixas, 1)->aberta = 1;
     ObterCaixa(S->HCaixas, 2)->aberta = 1;
-    */
+    
+
+    //Ilustrar o estado das caixas:
+    printf("\nCAIXAS INICIAIS ABERTAS:\n");
+    MostrarHashing(S->HCaixas);
+
     return 1;
 }
 
@@ -107,6 +111,34 @@ void EstadoPagamentoIrCaixa(Supermercado *S)
             // e ir para o Hashing das Caixas
         }
 }
+
+//Função criada por Otaniel:
+//Agora cada cliente poderá ter: 2 produtos, 5 produtos ou 20 produtos aleatórios
+void GerarCarrinhoCliente(Supermercado *S, Cliente *C, int quantidade)
+{
+    if (S == NULL || C == NULL)
+        return;
+
+    for (int i = 0; i < quantidade; i++)
+    {
+        Produto *P = ObterProdutoAleatorio(S->LProdutos);
+
+        if (P != NULL)
+        {
+            Produto *Novo =
+                CriarProduto(
+                    P->codigo,
+                    P->nome,
+                    P->preco,
+                    P->tempoCompra,
+                    P->tempoCaixa
+                );
+
+            InserirProduto(C->carrinho, Novo);
+        }
+    }
+}
+
 void EntradaPessoaSupermercado(Supermercado *S)
 {
     int X = Aleatorio(0, 100);
@@ -115,7 +147,24 @@ void EntradaPessoaSupermercado(Supermercado *S)
     {
         //Pessoa *P = CriarPessoa();
         //AddLista(S->LCliente, P);
+
+        /*Isto fica comentado por enquanto:
         printf("Mais um Cliente a Entrar!\n");
+        */
+
+        Cliente *C = ObterClienteAleatorio(S->LClientes);
+
+        if (C != NULL)
+        {
+            int nProdutos = Aleatorio(1, 20);
+
+            GerarCarrinhoCliente(S, C, nProdutos);
+
+            printf(
+                "Cliente %s entrou com %d produtos\n", C->nome, nProdutos);
+
+            printf("Tempo estimado: %.2f\n", CalcularTempoCliente(C));
+        }
     }
     //---------------------
 }

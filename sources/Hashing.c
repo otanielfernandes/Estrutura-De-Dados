@@ -1,4 +1,5 @@
 #include "../includes/Hashing.h"
+#include "../includes/Cliente.h"
 
 Hashing *CriarHashing(int tamanho)
 {
@@ -33,9 +34,30 @@ Hashing *CriarHashing(int tamanho)
     return H;
 }
 
+//Função para calcular o tempo total de cada caixa (Fila):
+float CalcularTempoCaixa(Caixa *C)
+{
+    if (C == NULL || C->fila == NULL)
+        return 0;
+
+    float total = 0;
+
+    NoCliente *Aux = C->fila->Inicio;
+
+    while (Aux != NULL)
+    {
+        total += CalcularTempoCliente(Aux->Cli);
+
+        Aux = Aux->Prox;
+    }
+
+    return total;
+}
+
+
 int FuncaoHash(Hashing *H, int idCaixa)
 {
-    return idCaixa % H->tamanho;
+    return (idCaixa - 1) % H->tamanho;
 }
 
 Caixa *ObterCaixa(Hashing *H, int idCaixa)

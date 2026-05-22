@@ -6,7 +6,7 @@
 #include "Funcionario.h"
 #include "ListaFuncionarios.h"
 
-typedef struct
+typedef struct Caixa
 {
     int id;
     int aberta;
@@ -18,7 +18,7 @@ typedef struct
 
 } Caixa;
 
-typedef struct
+typedef struct Hashing
 {   
     //Será um vector dinâmico para caixas:
     Caixa *Tabela;
@@ -26,6 +26,8 @@ typedef struct
 } Hashing;
 
 Hashing *CriarHashing(int tamanho);
+
+float CalcularTempoCaixa(Caixa *C);
 
 int FuncaoHash(Hashing *H, int idCaixa);
 

@@ -15,6 +15,7 @@ typedef struct
 } Cliente;
 
 Cliente *CriarCliente(int id, char *nome);
+float CalcularTempoCliente(Cliente *C);
 void MostrarCliente(Cliente *C);
 void DestruirCliente(Cliente *C);
 

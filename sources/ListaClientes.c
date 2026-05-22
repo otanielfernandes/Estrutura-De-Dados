@@ -3,6 +3,8 @@
 
 #include "../includes/ListaClientes.h"
 
+extern int Aleatorio(int min, int max);
+
 ListaClientes *CriarListaClientes()
 {
     ListaClientes *LC =  (ListaClientes *)malloc(sizeof(ListaClientes));
@@ -60,6 +62,24 @@ void InverterListaClientes(ListaClientes *LC)
     }
 
     LC->Inicio = anterior;
+}
+
+/*Esta função escolhe um indice aleatório, percorre a lista e devolve um cliente aleatório*/
+Cliente *ObterClienteAleatorio(ListaClientes *LC)
+{
+    if (LC == NULL || LC->NEL == 0)
+        return NULL;
+
+    int indice = Aleatorio(0, LC->NEL - 1);
+
+    NoCliente *Aux = LC->Inicio;
+
+    for (int i = 0; i < indice; i++)
+    {
+        Aux = Aux->Prox;
+    }
+
+    return Aux->Cli;
 }
 
 void MostrarListaClientes(ListaClientes *LC)

@@ -24,6 +24,15 @@ Produto *CriarProduto(int codigo, char *nome, float preco, float tempoCompra, fl
     return Prod;
 }
 
+//Função para calcular o tempo de caixa de cada produto:
+float CalcularTempoProduto(Produto *P)
+{
+    if (P == NULL)
+        return 0;
+
+    return 2 + (P->preco * (4.0 / 40.0));
+}
+
 void MostrarProduto(Produto *Prod)
 {
     if (Prod == NULL)

@@ -1,4 +1,5 @@
 #include "../includes/Cliente.h"
+#include "../includes/ListaProdutos.h"
 #include <time.h>
 
 Cliente *CriarCliente(int id, char *nome)
@@ -23,6 +24,28 @@ Cliente *CriarCliente(int id, char *nome)
     C->tempoEntrada = time(NULL);
 
     return C;
+}
+
+//Função para calcular o tempo total de caixa de cada cliente:
+float CalcularTempoCliente(Cliente *C)
+{
+    if (C == NULL || C->carrinho == NULL)
+        return 0;
+
+    float total = 0;
+
+    NoProduto *Aux = C->carrinho->Inicio;
+
+    while (Aux != NULL)
+    {
+        Produto *P = Aux->Info;
+
+        total += 2 + (P->preco * (4.0/40.0));
+
+        Aux = Aux->Prox;
+    }
+
+    return total;
 }
 
 void MostrarCliente(Cliente *C)

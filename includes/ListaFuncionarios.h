@@ -23,6 +23,7 @@ ListaFuncionarios *CriarListaFuncionarios();
 
 int InserirFuncionario(ListaFuncionarios *LF, Funcionario *F);
 void InverterListaFuncionarios(ListaFuncionarios *LF);
+Funcionario *ObterFuncionarioAleatorio(ListaFuncionarios *LF);
 void MostrarListaFuncionarios(ListaFuncionarios *LF);
 void DestruirListaFuncionarios(ListaFuncionarios *LF);
 

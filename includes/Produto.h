@@ -16,6 +16,7 @@ typedef struct
 
 Produto *CriarProduto(int _codigo, char *_nome, float _preco, float _tempoCompra,
     float _tempoCaixa);
+float CalcularTempoProduto(Produto *P);
 void MostrarProduto(Produto *P);
 void DestruirProduto(Produto *P);
 

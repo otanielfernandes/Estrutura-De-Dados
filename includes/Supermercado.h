@@ -5,11 +5,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Definicoes.h"
-//#include "Pessoa.h"
-//#include "ListaPessoas.h"
 #include "ListaClientes.h"
+#include "ListaProdutos.h"
 #include "ListaFuncionarios.h"
 #include "Relogio.h"
+#include "Hashing.h"
 #include "Estatisticas.h"
 
 // doxygen
@@ -54,6 +54,7 @@ typedef struct
 
 Supermercado *CriarSupermercado(char *nome);
 int InicializarSupermercado(Supermercado *S, char *config);
+void GerarCarrinhoCliente(Supermercado *S, Cliente *C, int quantidade);
 void EstadoPagamentoIrCaixa(Supermercado *S);
 int ExecutarSimulacao(Supermercado *S);
 void EntradaPessoaSupermercado(Supermercado *S);

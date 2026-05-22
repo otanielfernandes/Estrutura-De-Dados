@@ -3,6 +3,8 @@
 
 #include "../includes/ListaFuncionarios.h"
 
+extern int Aleatorio(int min, int max);
+
 ListaFuncionarios *CriarListaFuncionarios()
 {
     ListaFuncionarios *LF =
@@ -63,6 +65,8 @@ void InverterListaFuncionarios(ListaFuncionarios *LF)
     LF->Inicio = anterior;
 }
 
+
+
 void MostrarListaFuncionarios(ListaFuncionarios *LF)
 {
     if (LF == NULL)
@@ -73,9 +77,25 @@ void MostrarListaFuncionarios(ListaFuncionarios *LF)
     while (Aux != NULL)
     {
         MostrarFuncionario(Aux->Func);
-
         Aux = Aux->Prox;
     }
+}
+
+Funcionario *ObterFuncionarioAleatorio(ListaFuncionarios *LF)
+{
+    if (LF == NULL || LF->NEL == 0)
+        return NULL;
+
+    int indice = Aleatorio(0, LF->NEL - 1);
+
+    NoFuncionario *Aux = LF->Inicio;
+
+    for (int i = 0; i < indice; i++)
+    {
+        Aux = Aux->Prox;
+    }
+
+    return Aux->Func;
 }
 
 void DestruirListaFuncionarios(ListaFuncionarios *LF)

@@ -3,6 +3,8 @@
 
 #include "../includes/ListaProdutos.h"
 
+extern int Aleatorio(int min, int max);
+
 ListaProdutos *CriarListaProdutos()
 {
     ListaProdutos *LProd = (ListaProdutos *)malloc(sizeof(ListaProdutos));
@@ -67,6 +69,23 @@ void InverterListaProdutos(ListaProdutos *LProd)
     }
 
     LProd->Inicio = anterior;
+}
+
+Produto *ObterProdutoAleatorio(ListaProdutos *LProd)
+{
+    if (LProd == NULL || LProd->NEL == 0)
+        return NULL;
+
+    int indice = Aleatorio(0, LProd->NEL - 1);
+
+    NoProduto *Aux = LProd->Inicio;
+
+    for (int i = 0; i < indice; i++)
+    {
+        Aux = Aux->Prox;
+    }
+
+    return Aux->Info;
 }
 
 void MostrarListaProdutos(ListaProdutos *LProd)

@@ -1,0 +1,21 @@
+Não percebi em qual parte do código devo colocar isto: Cliente *C =
+    ObterClienteAleatorio(S->LClientes);
+
+if (C != NULL)
+{
+    int nProdutos = Aleatorio(1, 20);
+
+    GerarCarrinhoCliente(S, C, nProdutos);
+
+    printf(
+        "Cliente %s entrou com %d produtos\n",
+        C->nome,
+        nProdutos
+    );
+
+    printf(
+        "Tempo estimado: %.2f\n",
+        CalcularTempoCliente(C)
+    );
+}
+Será que deve ser dentro deste if (X < S->CadenciaEntradaClientes) ?
