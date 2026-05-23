@@ -1,4 +1,4 @@
-//"Versão 17.8" do projecto supermercad:
+//"Versão 17.10" do projecto supermercad:
 #include "../includes/Supermercado.h"
 #include "../includes/Ficheiro.h"
 
@@ -90,6 +90,8 @@ int ExecutarSimulacao(Supermercado *S)
 
     EstadoPagamentoIrCaixa(S);
 
+    ProcessarCaixas(S->HCaixas);
+
     return 1;
 }
 /*
@@ -101,6 +103,59 @@ int IrCaixa(Pessoa *P, Supermercado *S)
     return 0;
 }
 */
+
+//Função para abrir uma nova caixa:
+Caixa *AbrirNovaCaixa(Supermercado *S)
+{
+    if (S == NULL)
+        return NULL;
+
+    for (int i = 0; i < S->HCaixas->tamanho; i++)
+    {
+        Caixa *C = &S->HCaixas->Tabela[i];
+
+        if (!C->aberta)
+        {
+            C->aberta = 1;
+
+            printf("\nCAIXA %d FOI ABERTA!\n", C->id);
+
+            return C;
+        }
+    }
+
+    return NULL;
+}
+
+
+//Função que compara os tempos de cada caixa e escolhe a caixa com menor tempo:
+Caixa *EscolherCaixa(Supermercado *S)
+{
+    if (S == NULL || S->HCaixas == NULL)
+        return NULL;
+
+    Caixa *Melhor = NULL;
+
+    float menorTempo = 999999;
+
+    for (int i = 0; i < S->HCaixas->tamanho; i++)
+    {
+        Caixa *C = &S->HCaixas->Tabela[i];
+
+        if (!C->aberta)
+            continue;
+
+        float tempo = CalcularTempoCaixa(C);
+
+        if (tempo < menorTempo)
+        {
+            menorTempo = tempo;
+            Melhor = C;
+        }
+    }
+
+    return Melhor;
+}
 
 void EstadoPagamentoIrCaixa(Supermercado *S)
 {
@@ -145,13 +200,6 @@ void EntradaPessoaSupermercado(Supermercado *S)
     //printf("X = %d\n", X);
     if (X < S->CadenciaEntradaClientes)
     {
-        //Pessoa *P = CriarPessoa();
-        //AddLista(S->LCliente, P);
-
-        /*Isto fica comentado por enquanto:
-        printf("Mais um Cliente a Entrar!\n");
-        */
-
         Cliente *C = ObterClienteAleatorio(S->LClientes);
 
         if (C != NULL)
@@ -160,10 +208,48 @@ void EntradaPessoaSupermercado(Supermercado *S)
 
             GerarCarrinhoCliente(S, C, nProdutos);
 
-            printf(
-                "Cliente %s entrou com %d produtos\n", C->nome, nProdutos);
+            float tempoCliente = CalcularTempoCliente(C);
 
-            printf("Tempo estimado: %.2f\n", CalcularTempoCliente(C));
+            Caixa *CX = EscolherCaixa(S);
+
+            if (CX != NULL)
+            {
+                float tempoCaixa = CalcularTempoCaixa(CX);
+
+                if ((tempoCaixa + tempoCliente) > S->max_espera)
+                {
+                    Caixa *Nova = AbrirNovaCaixa(S);
+
+                    if (Nova != NULL)
+                    {
+                        CX = Nova;
+                    }
+                }
+
+                if ((CalcularTempoCaixa(CX) + tempoCliente) <= S->max_espera)
+                {
+                    InserirClienteCaixa(CX, C);
+
+                    printf("\nCliente %s entrou na Caixa %d\n", C->nome, CX->id);
+
+                    printf("Tempo Cliente: %.2f\n", tempoCliente);
+
+                    printf("Tempo Caixa: %.2f\n", CalcularTempoCaixa(CX));
+                }
+
+                //A cada 5 ciclos o sistema mostra o estado atualizado das caixas.
+                static int contador = 0; 
+                contador++; 
+                if (contador % 5 == 0) 
+                { 
+                    MostrarHashing(S->HCaixas); 
+                }
+                
+                else
+                {
+                    printf("\nTODAS AS CAIXAS ESTAO CHEIAS!\n");
+                }
+            }
         }
     }
     //---------------------

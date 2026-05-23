@@ -22,6 +22,7 @@ int InserirCliente(ListaClientes *LC, Cliente *C);
 void InverterListaClientes(ListaClientes *LC);
 Cliente *ObterClienteAleatorio(ListaClientes *LC);
 void MostrarListaClientes(ListaClientes *LC);
+int RemoverClienteInicio(ListaClientes *LC);
 void DestruirListaClientes(ListaClientes *LC);
 
 #endif

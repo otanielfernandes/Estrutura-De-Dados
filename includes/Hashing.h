@@ -31,6 +31,10 @@ float CalcularTempoCaixa(Caixa *C);
 
 int FuncaoHash(Hashing *H, int idCaixa);
 
+int InserirClienteCaixa(Caixa *C, Cliente *Cli);
+
+void ProcessarCaixas(Hashing *H);
+
 Caixa *ObterCaixa(Hashing *H, int idCaixa);
 
 void MostrarHashing(Hashing *H);

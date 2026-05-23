@@ -97,6 +97,26 @@ void MostrarListaClientes(ListaClientes *LC)
     }
 }
 
+
+int RemoverClienteInicio(ListaClientes *LC)
+{
+    if (LC == NULL)
+        return 0;
+
+    if (LC->Inicio == NULL)
+        return 0;
+
+    NoCliente *Aux = LC->Inicio;
+
+    LC->Inicio = Aux->Prox;
+
+    free(Aux);
+
+    LC->NEL--;
+
+    return 1;
+}
+
 void DestruirListaClientes(ListaClientes *LC)
 {
     if (LC == NULL)

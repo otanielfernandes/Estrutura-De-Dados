@@ -58,6 +58,8 @@ void GerarCarrinhoCliente(Supermercado *S, Cliente *C, int quantidade);
 void EstadoPagamentoIrCaixa(Supermercado *S);
 int ExecutarSimulacao(Supermercado *S);
 void EntradaPessoaSupermercado(Supermercado *S);
+Caixa *EscolherCaixa(Supermercado *S);
+Caixa *AbrirNovaCaixa(Supermercado *S);
 int Supermercado_E_Para_Fechar(Supermercado *S);
 void DestruirSupermercado(Supermercado *S);
 

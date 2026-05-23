@@ -1,6 +1,8 @@
 #include "../includes/Hashing.h"
 #include "../includes/Cliente.h"
 
+extern float CalcularTempoCliente(Cliente *C);
+
 Hashing *CriarHashing(int tamanho)
 {
     Hashing *H = (Hashing *)malloc(sizeof(Hashing));
@@ -55,10 +57,62 @@ float CalcularTempoCaixa(Caixa *C)
 }
 
 
+
+
 int FuncaoHash(Hashing *H, int idCaixa)
 {
     return (idCaixa - 1) % H->tamanho;
 }
+
+//Função para inserir um cliente na Caixa(Fila):
+int InserirClienteCaixa(Caixa *C, Cliente *Cli)
+{
+    if (C == NULL || Cli == NULL)
+        return 0;
+
+    return InserirCliente(C->fila, Cli);
+}
+
+//Função para atender clientes:
+void ProcessarCaixas(Hashing *H)
+{
+    if (H == NULL)
+        return;
+
+    for (int i = 0; i < H->tamanho; i++)
+    {
+        Caixa *C = &H->Tabela[i];
+
+        if (C->aberta)
+        {
+            if (C->fila != NULL)
+            {
+                if (C->fila->Inicio != NULL)
+                {
+                    Cliente *Cli = C->fila->Inicio->Cli;
+                    if (Cli != NULL)
+                    {
+                        Cli->tempoTotalCaixa -= 5;
+
+                        if (Cli->tempoTotalCaixa <= 0)
+                        {
+                            printf(
+                                "\nCliente %s terminou atendimento na Caixa %d\n",
+                                Cli->nome,
+                                C->id
+                            );
+
+                            RemoverClienteInicio(C->fila);
+
+                            C->totalPessoasAtendidas++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 Caixa *ObterCaixa(Hashing *H, int idCaixa)
 {
