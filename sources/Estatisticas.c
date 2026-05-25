@@ -52,7 +52,7 @@ void MenuEstatisticas(Supermercado *S)
         case 1:
             MemoriaUtilizada(S, &E);
             printf("MEMORIA UTILIZADA\n\n");
-            printf("Total: %.2f bytes\n", E.memoriaUtilizada);
+            printf("Total: %zu bytes\n", E.memoriaUtilizada);
             Pausar();
             break;
 
