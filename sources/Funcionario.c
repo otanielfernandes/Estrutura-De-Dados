@@ -29,7 +29,6 @@ Funcionario *CriarFuncionario(int id, char *nome, int caixaID)
     return F;
 }
 
-
 void MostrarFuncionario(Funcionario *F)
 {
     if (F == NULL)

@@ -1,14 +1,15 @@
-/*#ifndef MENU_H
+#ifndef MENU_H
 #define MENU_H
 
 #include "Supermercado.h"
 
-
-//Menu Principal
+// Menu Principal
 void MenuPrincipal(Supermercado *S);
 
-//menus 
-void MenuCaixas(Supermercado *S);     // listar / abrir / fechar caixas
-void MenuClientes(Supermercado *S);   // listar / pesquisar clientes
-void MenuFicheiros(Supermercado *S);  // guardar CSV, histórico//
-#endif*/
+// Submenus
+void MenuCaixas(Supermercado *S);
+void MenuClientes(Supermercado *S);
+void MenuFicheiros(Supermercado *S);
+void MenuEstatisticas(Supermercado *S);
+
+#endif
