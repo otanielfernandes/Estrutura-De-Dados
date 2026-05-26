@@ -4,10 +4,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "Hashing.h"
 #include "ListaClientes.h"
 #include "ListaFuncionarios.h"
 #include "ListaProdutos.h"
+
+/* IMPORTANTE: evita erro "unknown type name Supermercado" */
+typedef struct Supermercado Supermercado;
+
+/* =========================
+        STRUCT
+========================= */
 
 typedef struct
 {
@@ -32,18 +40,23 @@ typedef struct
 
 } Estatisticas;
 
-/* CRIAÇÃO */
+/* =========================
+        BASE
+========================= */
 
 Estatisticas *CriarEstatisticas();
 void ResetEstatisticas(Estatisticas *E);
 void DestruirEstatisticas(Estatisticas *E);
 
-/* ATUALIZAÇÃO */
+/* =========================
+        ATUALIZAÇÃO
+========================= */
 
 void AtualizarEstatisticasCaixas(Estatisticas *E, Hashing *H);
 
 void AtualizarEstatisticasFuncionarios(Estatisticas *E,
-                                       ListaFuncionarios *LF, Hashing *H);
+                                       ListaFuncionarios *LF,
+                                       Hashing *H);
 
 void AtualizarEstatisticasProdutos(Estatisticas *E,
                                    ListaProdutos *LP);
@@ -51,11 +64,15 @@ void AtualizarEstatisticasProdutos(Estatisticas *E,
 void AtualizarEstatisticasClientes(Estatisticas *E,
                                    ListaClientes *LC);
 
-/* CÁLCULOS */
+/* =========================
+        CÁLCULOS
+========================= */
 
 float CalcularTempoMedioEspera(Hashing *H);
 
-/* VISUALIZAÇÃO */
+/* =========================
+        VISUALIZAÇÃO
+========================= */
 
 void MostrarEstatisticas(Estatisticas *E);
 
@@ -67,7 +84,9 @@ void MostrarResumoProdutos(ListaProdutos *LP);
 
 void MostrarResumoClientes(ListaClientes *LC);
 
-/* ESTATÍSTICAS */
+/* =========================
+        ESTATÍSTICAS
+========================= */
 
 void ObterCaixaMaisProdutos(Hashing *H, Estatisticas *E);
 
@@ -98,20 +117,15 @@ void ObterCaixaMaisPessoas(Hashing *H,
 void MostrarEstatisticasSupermercado(Hashing *H,
                                      ListaProdutos *LP);
 
-/* MENU */
-
-void MenuPrincipal();
+/* =========================
+        MENUS
+========================= */
 
 void MenuEstatisticas(Hashing *H, ListaProdutos *LP);
 
 void MenuCaixas();
-
 void MenuClientes();
-
 void MenuProdutos();
-
 void MenuFuncionarios();
-void MenuFicheiros(Supermercado *S);
-void ListarClientes(Supermercado *S);
 
 #endif

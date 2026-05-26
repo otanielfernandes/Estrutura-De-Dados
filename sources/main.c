@@ -2,52 +2,94 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "../includes/Uteis.h"
 #include "../includes/Supermercado.h"
+#include "../includes/Uteis.h"
 
-extern void wait_segundos ( int seconds );
-extern int LerInteiro(char *txt);
+/* =========================
+   MENU SIMPLES DE TESTE
+   ========================= */
 
 int Menu()
 {
-    printf("1 - Listar\n");
-    //-------
-    int OP = LerInteiro("Qual a Opcao ?");
-    return OP;
+    printf("\n===== MENU SIMULACAO =====\n");
+    printf("1 - Executar Menu Principal\n");
+    printf("2 - Mostrar Estatisticas\n");
+    printf("0 - Sair\n");
+
+    return LerInteiro("Opcao: ");
 }
+
+/* =========================
+   EXECUÇÃO MENU
+   ========================= */
+
 void ExecutaAccoesMenu(Supermercado *S)
 {
-    int OP = Menu();
-    switch(OP)
-    {
-        case 1: //ListarCliente(S->LCientes); break;
-        case 0: break;
-    }
+    int op = Menu();
 
+    switch (op)
+    {
+    case 1:
+        MenuPrincipal(S);
+        break;
+
+    case 2:
+        MenuEstatisticas(S->HCaixas, S->LProdutos);
+        break;
+
+    case 0:
+        printf("A sair...\n");
+        break;
+
+    default:
+        printf("Opcao invalida.\n");
+        break;
+    }
 }
+
+/* =========================
+   MAIN
+   ========================= */
 
 int main()
 {
     system("chcp 65001");
-    printf("Projeto ED - 25-26!\n");
-    srand(time(NULL));
-    Supermercado *Lidl = CriarSupermercado("Lidal");
-    InicializarSupermercado(Lidl, "dados/Configuracao.txt");
-    int Terminar = 0;
-    while (!Terminar)
+    printf("Projeto ED - Supermercado\n");
+
+    srand((unsigned)time(NULL));
+
+    Supermercado *S = CriarSupermercado("Lidl");
+
+    if (S == NULL)
+    {
+        printf("Erro ao criar supermercado.\n");
+        return 1;
+    }
+
+    InicializarSupermercado(S, "dados/Configuracao.txt");
+
+    int terminar = 0;
+
+    while (!terminar)
     {
         if (TeclaPressionada())
         {
-            ExecutaAccoesMenu(Lidl);
+            ExecutaAccoesMenu(S);
         }
-        ExecutarSimulacao(Lidl);
+
+        ExecutarSimulacao(S);
+
         wait_segundos(1);
-        Terminar = Supermercado_E_Para_Fechar(Lidl);
+
+        terminar = Supermercado_E_Para_Fechar(S);
     }
-    //Falat implementar o que está em baixo comentado:
-    //MostrarHashing(Lidl->HCaixas);
-    DestruirSupermercado(Lidl);
+
+    printf("\nSimulacao terminada.\n");
+
+    // Debug opcional
+    // MostrarHashing(S->HCaixas);
+
+    DestruirSupermercado(S);
+
     return 0;
 }
-
-
