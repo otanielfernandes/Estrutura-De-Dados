@@ -1,64 +1,75 @@
 #include "../includes/Estatisticas.h"
 
 // Auxiliares para cálculo de estatísticas específicas
-static float CustoCarrinho(ListaProdutos *LP)
+static double CustoCarrinho(ListaProdutos *LP)
 {
     if (LP == NULL)
-        return 0.0f;
+        return 0.0;
 
-    float total = 0.0f;
+    double total = 0.0;
     NoProduto *no = LP->Inicio;
+
     while (no != NULL)
     {
         if (no->Info != NULL)
             total += no->Info->preco;
+
         no = no->Prox;
     }
+
     return total;
 }
 
-// Função para calcular o tempo total de espera estimado numa caixa,
-// somando o tempoCaixa de cada produto de cada cliente na fila.
-static float TempoEsperaCaixa(Caixa *C)
+// Função para calcular o tempo total de espera estimado numa caixa
+static double TempoEsperaCaixa(Caixa *C)
 {
     if (C == NULL || C->fila == NULL)
-        return 0.0f;
+        return 0.0;
 
-    float tempo = 0.0f;
+    double tempo = 0.0;
     NoCliente *noC = C->fila->Inicio;
+
     while (noC != NULL)
     {
         Cliente *cli = noC->Cli;
+
         if (cli != NULL && cli->carrinho != NULL)
         {
             NoProduto *noP = cli->carrinho->Inicio;
+
             while (noP != NULL)
             {
                 if (noP->Info != NULL)
                     tempo += noP->Info->tempoCaixa;
+
                 noP = noP->Prox;
             }
         }
+
         noC = noC->Prox;
     }
+
     return tempo;
 }
 
-// Funções de estatística individuais
+// ==========================
+// ESTATÍSTICAS POR CAIXA
+// ==========================
 
-void ObterCaixaMaisProdutos(Supermercado *S, Estatisticas *E)
+void ObterCaixaMaisProdutos(Hashing *H, Estatisticas *E)
 {
     E->idCaixaMaisProdutos = -1;
     E->maxProdutosVendidos = 0;
 
-    if (S == NULL || S->HCaixas == NULL || S->HCaixas->Tabela == NULL)
+    if (H == NULL || H->Tabela == NULL)
         return;
 
     int maxProdutos = -1;
 
-    for (int i = 0; i < S->HCaixas->tamanho; i++)
+    for (int i = 0; i < H->tamanho; i++)
     {
-        Caixa *caixa = &S->HCaixas->Tabela[i];
+        Caixa *caixa = &H->Tabela[i];
+
         if (caixa->totalProdutosVendidos > maxProdutos)
         {
             maxProdutos = caixa->totalProdutosVendidos;
@@ -68,18 +79,19 @@ void ObterCaixaMaisProdutos(Supermercado *S, Estatisticas *E)
     }
 }
 
-void ObterCaixaMaisPessoas(Supermercado *S, Estatisticas *E)
+void ObterCaixaMaisPessoas(Hashing *H, Estatisticas *E)
 {
     E->idCaixaMaisPessoas = -1;
 
-    if (S == NULL || S->HCaixas == NULL || S->HCaixas->Tabela == NULL)
+    if (H == NULL || H->Tabela == NULL)
         return;
 
     int maxPessoas = -1;
 
-    for (int i = 0; i < S->HCaixas->tamanho; i++)
+    for (int i = 0; i < H->tamanho; i++)
     {
-        Caixa *caixa = &S->HCaixas->Tabela[i];
+        Caixa *caixa = &H->Tabela[i];
+
         if (caixa->totalPessoasAtendidas > maxPessoas)
         {
             maxPessoas = caixa->totalPessoasAtendidas;
@@ -88,18 +100,19 @@ void ObterCaixaMaisPessoas(Supermercado *S, Estatisticas *E)
     }
 }
 
-void ObterCaixaMenosPessoas(Supermercado *S, Estatisticas *E)
+void ObterCaixaMenosPessoas(Hashing *H, Estatisticas *E)
 {
     E->idCaixaMenosPessoas = -1;
 
-    if (S == NULL || S->HCaixas == NULL || S->HCaixas->Tabela == NULL)
+    if (H == NULL || H->Tabela == NULL)
         return;
 
     int minPessoas = -1;
 
-    for (int i = 0; i < S->HCaixas->tamanho; i++)
+    for (int i = 0; i < H->tamanho; i++)
     {
-        Caixa *caixa = &S->HCaixas->Tabela[i];
+        Caixa *caixa = &H->Tabela[i];
+
         if (minPessoas == -1 || caixa->totalPessoasAtendidas < minPessoas)
         {
             minPessoas = caixa->totalPessoasAtendidas;
@@ -108,28 +121,29 @@ void ObterCaixaMenosPessoas(Supermercado *S, Estatisticas *E)
     }
 }
 
-void ObterNumeroProdutosOferecidos(Supermercado *S, Estatisticas *E)
+void ObterNumeroProdutosOferecidos(ListaProdutos *L, Estatisticas *E)
 {
     E->numeroProdutosOferecidos = 0;
 
-    if (S == NULL || S->LProdutos == NULL)
+    if (L == NULL)
         return;
-    E->numeroProdutosOferecidos = S->LProdutos->NEL;
+
+    E->numeroProdutosOferecidos = L->NEL;
 }
 
-void OperadorMenosPessoas(Supermercado *S, Estatisticas *E)
+void OperadorMenosPessoas(Hashing *H, Estatisticas *E)
 {
     E->operadorMenosPessoas = -1;
 
-    if (S == NULL || S->HCaixas == NULL || S->HCaixas->Tabela == NULL)
+    if (H == NULL || H->Tabela == NULL)
         return;
 
     int minPessoas = -1;
 
-    for (int i = 0; i < S->HCaixas->tamanho; i++)
+    for (int i = 0; i < H->tamanho; i++)
     {
-        Caixa *caixa = &S->HCaixas->Tabela[i];
-        /* Só considera caixas abertas (com operador activo). */
+        Caixa *caixa = &H->Tabela[i];
+
         if (!caixa->aberta)
             continue;
 
@@ -141,18 +155,19 @@ void OperadorMenosPessoas(Supermercado *S, Estatisticas *E)
     }
 }
 
-void ObterOperadorMaisProdutos(Supermercado *S, Estatisticas *E)
+void ObterOperadorMaisProdutos(Hashing *H, Estatisticas *E)
 {
     E->operadorMaisProdutos = -1;
 
-    if (S == NULL || S->HCaixas == NULL || S->HCaixas->Tabela == NULL)
+    if (H == NULL || H->Tabela == NULL)
         return;
 
     int maxProd = -1;
 
-    for (int i = 0; i < S->HCaixas->tamanho; i++)
+    for (int i = 0; i < H->tamanho; i++)
     {
-        Caixa *caixa = &S->HCaixas->Tabela[i];
+        Caixa *caixa = &H->Tabela[i];
+
         if (!caixa->aberta)
             continue;
 
@@ -164,83 +179,86 @@ void ObterOperadorMaisProdutos(Supermercado *S, Estatisticas *E)
     }
 }
 
-void ValorTotalProdutosOferecidos(Supermercado *S, Estatisticas *E)
+void ValorTotalProdutosOferecidos(ListaProdutos *L, Estatisticas *E)
 {
-    E->custoOferecidos = 0.0f;
+    E->custoOferecidos = 0.0;
 
-    if (S == NULL || S->LProdutos == NULL)
+    if (L == NULL)
         return;
 
-    NoProduto *no = S->LProdutos->Inicio;
+    NoProduto *no = L->Inicio;
+
     while (no != NULL)
     {
         if (no->Info != NULL)
             E->custoOferecidos += no->Info->preco;
+
         no = no->Prox;
     }
 }
 
-void TempoMedioEsperaCaixas(Supermercado *S, Estatisticas *E)
+void TempoMedioEsperaCaixas(Hashing *H, Estatisticas *E)
 {
-    E->tempoMedioEsperaCaixas = 0.0f;
+    E->tempoMedioEsperaCaixas = 0.0;
 
-    if (S == NULL || S->HCaixas == NULL || S->HCaixas->Tabela == NULL)
+    if (H == NULL || H->Tabela == NULL)
         return;
 
-    float totalTempo = 0.0f;
+    double totalTempo = 0.0;
     int totalPessoas = 0;
 
-    for (int i = 0; i < S->HCaixas->tamanho; i++)
+    for (int i = 0; i < H->tamanho; i++)
     {
-        Caixa *caixa = &S->HCaixas->Tabela[i];
+        Caixa *caixa = &H->Tabela[i];
+
         totalTempo += TempoEsperaCaixa(caixa);
         totalPessoas += caixa->totalPessoasAtendidas;
     }
 
     if (totalPessoas > 0)
-        E->tempoMedioEsperaCaixas = totalTempo / (float)totalPessoas;
+        E->tempoMedioEsperaCaixas = totalTempo / totalPessoas;
 }
 
-void NumeroTotalClientesAtendidos(Supermercado *S, Estatisticas *E)
+void NumeroTotalClientesAtendidos(Hashing *H, Estatisticas *E)
 {
     E->numeroTotalClientesAtendidos = 0;
 
-    if (S == NULL || S->HCaixas == NULL || S->HCaixas->Tabela == NULL)
+    if (H == NULL || H->Tabela == NULL)
         return;
 
-    for (int i = 0; i < S->HCaixas->tamanho; i++)
-        E->numeroTotalClientesAtendidos += S->HCaixas->Tabela[i].totalPessoasAtendidas;
+    for (int i = 0; i < H->tamanho; i++)
+        E->numeroTotalClientesAtendidos += H->Tabela[i].totalPessoasAtendidas;
 }
 
-void NumeroProdutosOferecidos(Supermercado *S, Estatisticas *E)
+void NumeroProdutosOferecidos(ListaProdutos *L, Estatisticas *E)
 {
-    ObterNumeroProdutosOferecidos(S, E);
+    ObterNumeroProdutosOferecidos(L, E);
 }
 
-void maxProdutosVendidos(Supermercado *S, Estatisticas *E)
+void maxProdutosVendidos(Hashing *H, Estatisticas *E)
 {
-    ObterCaixaMaisProdutos(S, E);
+    ObterCaixaMaisProdutos(H, E);
 }
 
-void MemoriaUtilizada(Supermercado *S, Estatisticas *E)
+// ==========================
+// MEMÓRIA
+// ==========================
+
+/*void MemoriaUtilizada(Supermercado *S, Estatisticas *E)
 {
     if (S == NULL || E == NULL)
         return;
 
     size_t mem = 0;
 
-    // Memória base do supermercado
     mem += sizeof(Supermercado);
 
-    // Nome do supermercado
     if (S->NOME)
         mem += strlen(S->NOME) + 1;
 
-    // Relógio
-    if (S->Rolex)
+    if (S->relogio)
         mem += sizeof(Relogio);
 
-    // Clientes
     if (S->LClientes)
     {
         mem += sizeof(ListaClientes);
@@ -263,7 +281,6 @@ void MemoriaUtilizada(Supermercado *S, Estatisticas *E)
         }
     }
 
-    // Funcionários
     if (S->LFuncionarios)
     {
         mem += sizeof(ListaFuncionarios);
@@ -286,7 +303,6 @@ void MemoriaUtilizada(Supermercado *S, Estatisticas *E)
         }
     }
 
-    // Produtos
     if (S->LProdutos)
     {
         mem += sizeof(ListaProdutos);
@@ -309,7 +325,6 @@ void MemoriaUtilizada(Supermercado *S, Estatisticas *E)
         }
     }
 
-    // Caixas (hashing)
     if (S->HCaixas)
     {
         mem += sizeof(Hashing);
@@ -343,77 +358,63 @@ void MemoriaUtilizada(Supermercado *S, Estatisticas *E)
         }
     }
 
-    // Resultado final
     E->memoriaUtilizada = mem;
 }
+*/
 
-/*
- * Cálculo global e apresentação
- *  */
-
-Estatisticas CalcularEstatisticas(Supermercado *S)
+// ==========================
+// PRINCIPAL
+// ==========================
+Estatisticas CalcularEstatisticas(Hashing *H, ListaProdutos *LP)
 {
-    Estatisticas E = {0}; /* inicializa todos os campos a zero */
+    Estatisticas E = {0};
 
-    ObterCaixaMaisProdutos(S, &E);
-    ObterCaixaMaisPessoas(S, &E);
-    ObterCaixaMenosPessoas(S, &E);
-    ObterNumeroProdutosOferecidos(S, &E);
-    ValorTotalProdutosOferecidos(S, &E);
-    TempoMedioEsperaCaixas(S, &E);
-    NumeroTotalClientesAtendidos(S, &E);
-    OperadorMenosPessoas(S, &E);
-    ObterOperadorMaisProdutos(S, &E);
-    MemoriaUtilizada(S, &E);
+    ObterCaixaMaisProdutos(H, &E);
+    ObterCaixaMaisPessoas(H, &E);
+    ObterCaixaMenosPessoas(H, &E);
+
+    ObterNumeroProdutosOferecidos(LP, &E);
+    ValorTotalProdutosOferecidos(LP, &E);
+
+    TempoMedioEsperaCaixas(H, &E);
+    NumeroTotalClientesAtendidos(H, &E);
+
+    OperadorMenosPessoas(H, &E);
+    ObterOperadorMaisProdutos(H, &E);
 
     return E;
 }
 
-void MostrarEstatisticasSupermercado(Supermercado *S)
+void MostrarEstatisticasSupermercado(Hashing *H, ListaProdutos *LP)
 {
-    Estatisticas E = CalcularEstatisticas(S);
+    Estatisticas E = CalcularEstatisticas(H, LP);
 
-    printf("\n===== ESTATÍSTICAS DO SUPERMERCADO =====\n");
+    printf("\n===== ESTATÍSTICAS DO SUPERMERCADO =====\n\n");
 
-    if (E.idCaixaMaisProdutos != -1)
-        printf("Caixa com mais produtos vendidos : Caixa %d (%d produtos)\n",
-               E.idCaixaMaisProdutos, E.maxProdutosVendidos);
-    else
-        printf("Caixa com mais produtos vendidos : N/D\n");
+    printf("Caixa com mais produtos vendidos : %d (%d)\n",
+           E.idCaixaMaisProdutos, E.maxProdutosVendidos);
 
-    if (E.idCaixaMaisPessoas != -1)
-        printf("Caixa com mais pessoas atendidas : Caixa %d\n",
-               E.idCaixaMaisPessoas);
-    else
-        printf("Caixa com mais pessoas atendidas : N/D\n");
+    printf("Caixa com mais pessoas atendidas : %d\n",
+           E.idCaixaMaisPessoas);
 
-    if (E.idCaixaMenosPessoas != -1)
-        printf("Caixa com menos pessoas atendidas: Caixa %d\n",
-               E.idCaixaMenosPessoas);
-    else
-        printf("Caixa com menos pessoas atendidas: N/D\n");
+    printf("Caixa com menos pessoas atendidas: %d\n",
+           E.idCaixaMenosPessoas);
 
     printf("Produtos no catálogo             : %d\n",
            E.numeroProdutosOferecidos);
+
     printf("Custo total do catálogo          : %.2f EUR\n",
            E.custoOferecidos);
-    printf("Tempo médio de espera nas caixas : %.2f s\n",
+
+    printf("Tempo médio de espera            : %.2f s\n",
            E.tempoMedioEsperaCaixas);
-    printf("Total de clientes atendidos      : %d\n",
+
+    printf("Total clientes atendidos         : %d\n",
            E.numeroTotalClientesAtendidos);
 
-    if (E.operadorMenosPessoas != -1)
-        printf("Operador com menos pessoas       : Caixa %d\n",
-               E.operadorMenosPessoas);
-    else
-        printf("Operador com menos pessoas       : N/D\n");
+    printf("Operador menos produtivo         : %d\n",
+           E.operadorMenosPessoas);
 
-    if (E.operadorMaisProdutos != -1)
-        printf("Operador com mais produtos       : Caixa %d\n",
-               E.operadorMaisProdutos);
-    else
-        printf("Operador com mais produtos       : N/D\n");
-
-    printf("Memória utilizada                : %zu bytes\n",
-           E.memoriaUtilizada);
+    printf("Operador mais produtivo          : %d\n",
+           E.operadorMaisProdutos);
 }

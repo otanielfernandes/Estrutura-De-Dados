@@ -1,4 +1,12 @@
 #include "../includes/Estatisticas.h"
+#include "../includes/Hashing.h"
+#include "../includes/ListaProdutos.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+/* =========================
+   FUNÇÕES AUXILIARES
+   ========================= */
 
 static void LimparTela(void)
 {
@@ -11,12 +19,16 @@ static void Pausar(void)
     getchar();
 }
 
+/* =========================
+   MENU
+   ========================= */
+
 static void MostrarMenuEstatisticas(void)
 {
     printf("===================================\n");
     printf("       MENU  ESTATISTICAS\n");
     printf("===================================\n\n");
-    printf(" 1  - Memoria utilizada\n");
+
     printf(" 2  - Caixa com mais produtos\n");
     printf(" 3  - Numero de produtos oferecidos\n");
     printf(" 4  - Custo produtos oferecidos\n");
@@ -30,9 +42,11 @@ static void MostrarMenuEstatisticas(void)
     printf(" 0  - Voltar\n");
 }
 
-// Menu de Estatísticas
+/* =========================
+   MENU PRINCIPAL
+   ========================= */
 
-void MenuEstatisticas(Supermercado *S)
+void MenuEstatisticas(Hashing *H, ListaProdutos *LP)
 {
     Estatisticas E;
     int opcao;
@@ -41,126 +55,93 @@ void MenuEstatisticas(Supermercado *S)
     {
         LimparTela();
         MostrarMenuEstatisticas();
+
         printf("\nEscolha uma opcao: ");
         scanf("%d", &opcao);
-        getchar(); /* consumir '\n' */
+        getchar();
+
         LimparTela();
 
         switch (opcao)
         {
-        /* 1  Memória*/
-        case 1:
-            MemoriaUtilizada(S, &E);
-            printf("MEMORIA UTILIZADA\n\n");
-            printf("Total: %zu bytes\n", E.memoriaUtilizada);
-            Pausar();
-            break;
-
-        /* 2 Caixa com mais produtos  */
         case 2:
-            ObterCaixaMaisProdutos(S, &E);
+            ObterCaixaMaisProdutos(H, &E);
             printf("CAIXA COM MAIS PRODUTOS\n\n");
-            if (E.idCaixaMaisProdutos != -1)
-            {
-                printf("Caixa           : %d\n", E.idCaixaMaisProdutos);
-                printf("Produtos vendidos: %d\n", E.maxProdutosVendidos);
-            }
-            else
-                printf("Nenhuma caixa encontrada.\n");
+            printf("Caixa: %d (%d produtos)\n",
+                   E.idCaixaMaisProdutos, E.maxProdutosVendidos);
             Pausar();
             break;
 
-        /* 3  Produtos oferecidos */
         case 3:
-            ObterNumeroProdutosOferecidos(S, &E);
+            ObterNumeroProdutosOferecidos(LP, &E);
             printf("PRODUTOS OFERECIDOS\n\n");
             printf("Total: %d\n", E.numeroProdutosOferecidos);
             Pausar();
             break;
 
-        /* 4  Custo produtos oferecidos */
         case 4:
-            ValorTotalProdutosOferecidos(S, &E);
+            ValorTotalProdutosOferecidos(LP, &E);
             printf("CUSTO PRODUTOS OFERECIDOS\n\n");
             printf("Custo total: %.2f EUR\n", E.custoOferecidos);
             Pausar();
             break;
 
-        /* 5  Tempo médio de espera */
         case 5:
-            TempoMedioEsperaCaixas(S, &E);
-            printf("TEMPO MEDIO DE ESPERA NAS CAIXAS\n\n");
-            printf("Tempo medio: %.2f s\n", E.tempoMedioEsperaCaixas);
+            TempoMedioEsperaCaixas(H, &E);
+            printf("TEMPO MEDIO DE ESPERA\n\n");
+            printf("Tempo: %.2f s\n", E.tempoMedioEsperaCaixas);
             Pausar();
             break;
 
-        /* 6  Total clientes atendidos */
         case 6:
-            NumeroTotalClientesAtendidos(S, &E);
+            NumeroTotalClientesAtendidos(H, &E);
             printf("TOTAL CLIENTES ATENDIDOS\n\n");
             printf("Total: %d\n", E.numeroTotalClientesAtendidos);
             Pausar();
             break;
 
-        /* 7  Operador com menos pessoas */
         case 7:
-            OperadorMenosPessoas(S, &E);
+            OperadorMenosPessoas(H, &E);
             printf("OPERADOR COM MENOS PESSOAS\n\n");
-            if (E.operadorMenosPessoas != -1)
-                printf("Caixa do operador: %d\n", E.operadorMenosPessoas);
-            else
-                printf("Nenhum operador ativo encontrado.\n");
+            printf("Caixa: %d\n", E.operadorMenosPessoas);
             Pausar();
             break;
 
-        /* 8  Operador com mais produtos */
         case 8:
-            ObterOperadorMaisProdutos(S, &E);
+            ObterOperadorMaisProdutos(H, &E);
             printf("OPERADOR COM MAIS PRODUTOS\n\n");
-            if (E.operadorMaisProdutos != -1)
-                printf("Caixa do operador: %d\n", E.operadorMaisProdutos);
-            else
-                printf("Nenhum operador ativo encontrado.\n");
+            printf("Caixa: %d\n", E.operadorMaisProdutos);
             Pausar();
             break;
 
-        /* 9  Caixa com menos pessoas */
         case 9:
-            ObterCaixaMenosPessoas(S, &E);
+            ObterCaixaMenosPessoas(H, &E);
             printf("CAIXA COM MENOS PESSOAS\n\n");
-            if (E.idCaixaMenosPessoas != -1)
-                printf("Caixa: %d\n", E.idCaixaMenosPessoas);
-            else
-                printf("Nenhuma caixa encontrada.\n");
+            printf("Caixa: %d\n", E.idCaixaMenosPessoas);
             Pausar();
             break;
 
-        /* 10  Caixa com mais pessoas */
         case 10:
-            ObterCaixaMaisPessoas(S, &E);
+            ObterCaixaMaisPessoas(H, &E);
             printf("CAIXA COM MAIS PESSOAS\n\n");
-            if (E.idCaixaMaisPessoas != -1)
-                printf("Caixa: %d\n", E.idCaixaMaisPessoas);
-            else
-                printf("Nenhuma caixa encontrada.\n");
+            printf("Caixa: %d\n", E.idCaixaMaisPessoas);
             Pausar();
             break;
 
-        /* 11  Estatísticas globais */
         case 11:
             printf("ESTATISTICAS GLOBAIS\n\n");
-            MostrarEstatisticasSupermercado(S);
+            MostrarEstatisticasSupermercado(H, LP);
             Pausar();
             break;
 
-        /* 0  Voltar */
         case 0:
-            printf("A voltar ao menu principal...\n");
+            printf("A sair...\n");
             break;
 
         default:
-            printf("Opcao invalida! Escolha entre 0 e 11.\n");
+            printf("Opcao invalida!\n");
             Pausar();
+            break;
         }
 
     } while (opcao != 0);

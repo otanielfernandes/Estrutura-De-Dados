@@ -2,55 +2,116 @@
 #define ESTATISTICAS_H
 
 #include <stdio.h>
-#include "Menu.h"
+#include <stdlib.h>
+#include <string.h>
+#include "Hashing.h"
+#include "ListaClientes.h"
+#include "ListaFuncionarios.h"
+#include "ListaProdutos.h"
 
 typedef struct
 {
     int idCaixaMaisPessoas;
     int idCaixaMenosPessoas;
+
     int produtosOferecidos;
     float custoOferecidos;
+
     int idCaixaMaisProdutos;
+
     int operadorMenosPessoas;
     int operadorMaisProdutos;
+
     float tempoMedioEsperaCaixas;
+
     int numeroTotalClientesAtendidos;
+
     int maxProdutosVendidos;
+
     int numeroProdutosOferecidos;
-    size_t memoriaUtilizada;
 
 } Estatisticas;
 
-// Funcoes para calcular estatisticas
+/* CRIAÇÃO */
 
-void MenuEstatisticas(Supermercado *S);
+Estatisticas *CriarEstatisticas();
+void ResetEstatisticas(Estatisticas *E);
+void DestruirEstatisticas(Estatisticas *E);
 
-void ObterCaixaMaisProdutos(Supermercado *S, Estatisticas *E);
+/* ATUALIZAÇÃO */
 
-Estatisticas CalcularEstatisticas(Supermercado *S);
+void AtualizarEstatisticasCaixas(Estatisticas *E, Hashing *H);
 
-void MostrarEstatisticasSupermercado(Supermercado *S);
+void AtualizarEstatisticasFuncionarios(Estatisticas *E,
+                                       ListaFuncionarios *LF, Hashing *H);
 
-void ObterCaixaMaisPessoas(Supermercado *S, Estatisticas *E);
+void AtualizarEstatisticasProdutos(Estatisticas *E,
+                                   ListaProdutos *LP);
 
-void ObterNumeroProdutosOferecidos(Supermercado *S, Estatisticas *E);
+void AtualizarEstatisticasClientes(Estatisticas *E,
+                                   ListaClientes *LC);
 
-void maxProdutosVendidos(Supermercado *S, Estatisticas *E);
+/* CÁLCULOS */
 
-void OperadorMenosPessoas(Supermercado *S, Estatisticas *E);
+float CalcularTempoMedioEspera(Hashing *H);
 
-void NumeroProdutosOferecidos(Supermercado *S, Estatisticas *E);
+/* VISUALIZAÇÃO */
 
-void ValorTotalProdutosOferecidos(Supermercado *S, Estatisticas *E);
+void MostrarEstatisticas(Estatisticas *E);
 
-void TempoMedioEsperaCaixas(Supermercado *S, Estatisticas *E);
+void MostrarResumoCaixas(Hashing *H);
 
-void NumeroTotalClientesAtendidos(Supermercado *S, Estatisticas *E);
+void MostrarResumoFuncionarios(ListaFuncionarios *LF);
 
-void MemoriaUtilizada(Supermercado *S, Estatisticas *E);
+void MostrarResumoProdutos(ListaProdutos *LP);
 
-void ObterCaixaMenosPessoas(Supermercado *S, Estatisticas *E);
+void MostrarResumoClientes(ListaClientes *LC);
 
-void ObterOperadorMaisProdutos(Supermercado *S, Estatisticas *E);
+/* ESTATÍSTICAS */
 
-#endif // ESTATISTICAS_H
+void ObterCaixaMaisProdutos(Hashing *H, Estatisticas *E);
+
+void ObterNumeroProdutosOferecidos(ListaProdutos *LP,
+                                   Estatisticas *E);
+
+void ValorTotalProdutosOferecidos(ListaProdutos *LP,
+                                  Estatisticas *E);
+
+void TempoMedioEsperaCaixas(Hashing *H,
+                            Estatisticas *E);
+
+void NumeroTotalClientesAtendidos(Hashing *H,
+                                  Estatisticas *E);
+
+void OperadorMenosPessoas(Hashing *H,
+                          Estatisticas *E);
+
+void ObterOperadorMaisProdutos(Hashing *H,
+                               Estatisticas *E);
+
+void ObterCaixaMenosPessoas(Hashing *H,
+                            Estatisticas *E);
+
+void ObterCaixaMaisPessoas(Hashing *H,
+                           Estatisticas *E);
+
+void MostrarEstatisticasSupermercado(Hashing *H,
+                                     ListaProdutos *LP);
+
+/* MENU */
+
+void MenuPrincipal();
+
+void MenuEstatisticas(Hashing *H, ListaProdutos *LP);
+
+void MenuCaixas();
+
+void MenuClientes();
+
+void MenuProdutos();
+
+void MenuFuncionarios();
+void MenuFicheiros(Supermercado *S);
+void ListarClientes(Supermercado *S);
+
+#endif
