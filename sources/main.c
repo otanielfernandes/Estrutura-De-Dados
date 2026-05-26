@@ -6,21 +6,21 @@
 #include "../includes/Uteis.h"
 
 /* =========================
-   MENU SIMPLES DE TESTE
+   MENU SIMPLES
    ========================= */
 
 int Menu()
 {
     printf("\n===== MENU SIMULACAO =====\n");
-    printf("1 - Executar Menu Principal\n");
-    printf("2 - Mostrar Estatisticas\n");
+    printf("1 - Menu Principal\n");
+    printf("2 - Estatisticas\n");
     printf("0 - Sair\n");
 
     return LerInteiro("Opcao: ");
 }
 
 /* =========================
-   EXECUÇÃO MENU
+   ACOES MENU
    ========================= */
 
 void ExecutaAccoesMenu(Supermercado *S)
@@ -30,7 +30,8 @@ void ExecutaAccoesMenu(Supermercado *S)
     switch (op)
     {
     case 1:
-        MenuPrincipal(S);
+        // MenuPrincipal(S);
+        printf("Ainda nao implementado.\n");
         break;
 
     case 2:
@@ -54,13 +55,14 @@ void ExecutaAccoesMenu(Supermercado *S)
 int main()
 {
     system("chcp 65001");
+
     printf("Projeto ED - Supermercado\n");
 
     srand((unsigned)time(NULL));
 
     Supermercado *S = CriarSupermercado("Lidl");
 
-    if (S == NULL)
+    if (!S)
     {
         printf("Erro ao criar supermercado.\n");
         return 1;
@@ -85,9 +87,6 @@ int main()
     }
 
     printf("\nSimulacao terminada.\n");
-
-    // Debug opcional
-    // MostrarHashing(S->HCaixas);
 
     DestruirSupermercado(S);
 

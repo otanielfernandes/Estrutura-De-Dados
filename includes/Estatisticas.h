@@ -11,11 +11,6 @@
 #include "ListaProdutos.h"
 
 /* IMPORTANTE: evita erro "unknown type name Supermercado" */
-typedef struct Supermercado Supermercado;
-
-/* =========================
-        STRUCT
-========================= */
 
 typedef struct
 {
