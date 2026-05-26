@@ -7,3 +7,4 @@ int LerProdutos(ListaProdutos *LP, char *ficheiro);
 int LerClientes(ListaClientes *LC, char *ficheiro);
 
 int LerFuncionarios(ListaFuncionarios *LF, char *ficheiro);
+void MenuFicheiros(ListaProdutos *LP, ListaClientes *LC, ListaFuncionarios *LF);

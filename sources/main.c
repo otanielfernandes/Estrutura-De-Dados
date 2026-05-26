@@ -5,23 +5,16 @@
 #include "../includes/Supermercado.h"
 #include "../includes/Uteis.h"
 
-/* =========================
-   MENU SIMPLES
-   ========================= */
-
 int Menu()
 {
     printf("\n===== MENU SIMULACAO =====\n");
     printf("1 - Menu Principal\n");
     printf("2 - Estatisticas\n");
+    printf("4 - Mostrar Memoria Utilizada\n");
     printf("0 - Sair\n");
 
     return LerInteiro("Opcao: ");
 }
-
-/* =========================
-   ACOES MENU
-   ========================= */
 
 void ExecutaAccoesMenu(Supermercado *S)
 {
@@ -30,12 +23,15 @@ void ExecutaAccoesMenu(Supermercado *S)
     switch (op)
     {
     case 1:
-        // MenuPrincipal(S);
-        printf("Ainda nao implementado.\n");
+        MenuPrincipal(S);
         break;
 
     case 2:
         MenuEstatisticas(S->HCaixas, S->LProdutos);
+        break;
+
+    case 4:
+        printf("Memoria Utilizada: %lu bytes\n", MemoriaUtilizada(S));
         break;
 
     case 0:
@@ -47,10 +43,6 @@ void ExecutaAccoesMenu(Supermercado *S)
         break;
     }
 }
-
-/* =========================
-   MAIN
-   ========================= */
 
 int main()
 {

@@ -14,11 +14,11 @@ Supermercado *CriarSupermercado(char *nome)
     return S;
 }
 
-
 int InicializarSupermercado(Supermercado *S, char *config)
 {
     FILE *f = fopen(config, "r");
-    if (f == NULL) {
+    if (f == NULL)
+    {
         printf("Erro fatal: Nao foi possivel abrir o ficheiro %s\n", config);
         return 0;
     }
@@ -26,13 +26,20 @@ int InicializarSupermercado(Supermercado *S, char *config)
     char tag[50];
     int valor;
 
-    while (fscanf(f, "%s %d", tag, &valor) != EOF) {
-        if (strcmp(tag, "MAX_ESPERA") == 0) S->max_espera = valor;
-        else if (strcmp(tag, "N_CAIXAS") == 0) S->n_caixas = valor;
-        else if (strcmp(tag, "TEMPO_ATENDIMENTO_PRODUTO") == 0) S->tempo_atendimento_produto = valor;
-        else if (strcmp(tag, "MAX_PRECO") == 0) S->max_preco = valor;
-        else if (strcmp(tag, "MAX_FILA") == 0) S->max_fila = valor;
-        else if (strcmp(tag, "MIN_FILA") == 0) S->min_fila = valor;
+    while (fscanf(f, "%s %d", tag, &valor) != EOF)
+    {
+        if (strcmp(tag, "MAX_ESPERA") == 0)
+            S->max_espera = valor;
+        else if (strcmp(tag, "N_CAIXAS") == 0)
+            S->n_caixas = valor;
+        else if (strcmp(tag, "TEMPO_ATENDIMENTO_PRODUTO") == 0)
+            S->tempo_atendimento_produto = valor;
+        else if (strcmp(tag, "MAX_PRECO") == 0)
+            S->max_preco = valor;
+        else if (strcmp(tag, "MAX_FILA") == 0)
+            S->max_fila = valor;
+        else if (strcmp(tag, "MIN_FILA") == 0)
+            S->min_fila = valor;
     }
 
     fclose(f);
@@ -49,9 +56,8 @@ int InicializarSupermercado(Supermercado *S, char *config)
     printf("MIN_FILA: %d\n", S->min_fila);
     printf("========================================\n\n");
 
-    
     S->LProdutos = CriarListaProdutos();
-    LerProdutos(S->LProdutos,"dados/Produtos.txt");
+    LerProdutos(S->LProdutos, "dados/Produtos.txt");
     printf("\nPRODUTOS CARREGADOS:\n");
     MostrarListaProdutos(S->LProdutos);
 
@@ -60,7 +66,6 @@ int InicializarSupermercado(Supermercado *S, char *config)
     printf("\nCLIENTES CARREGADOS:\n");
     MostrarListaClientes(S->LClientes);
 
-
     S->LFuncionarios = CriarListaFuncionarios();
     LerFuncionarios(S->LFuncionarios, "dados/Funcionarios.txt");
     printf("\nFUNCIONARIOS CARREGADOS:\n");
@@ -68,15 +73,14 @@ int InicializarSupermercado(Supermercado *S, char *config)
 
     S->CadenciaEntradaClientes = 30;
 
-    //Criando o Hash:
+    // Criando o Hash:
     S->HCaixas = CriarHashing(S->n_caixas);
-    
-    //Abrir caixas iniciais:
+
+    // Abrir caixas iniciais:
     ObterCaixa(S->HCaixas, 1)->aberta = 1;
     ObterCaixa(S->HCaixas, 2)->aberta = 1;
-    
 
-    //Ilustrar o estado das caixas:
+    // Ilustrar o estado das caixas:
     printf("\nCAIXAS INICIAIS ABERTAS:\n");
     MostrarHashing(S->HCaixas);
 
@@ -104,7 +108,7 @@ int IrCaixa(Pessoa *P, Supermercado *S)
 }
 */
 
-//Função para abrir uma nova caixa:
+// Função para abrir uma nova caixa:
 Caixa *AbrirNovaCaixa(Supermercado *S)
 {
     if (S == NULL)
@@ -127,8 +131,7 @@ Caixa *AbrirNovaCaixa(Supermercado *S)
     return NULL;
 }
 
-
-//Função que compara os tempos de cada caixa e escolhe a caixa com menor tempo:
+// Função que compara os tempos de cada caixa e escolhe a caixa com menor tempo:
 Caixa *EscolherCaixa(Supermercado *S)
 {
     if (S == NULL || S->HCaixas == NULL)
@@ -159,16 +162,16 @@ Caixa *EscolherCaixa(Supermercado *S)
 
 void EstadoPagamentoIrCaixa(Supermercado *S)
 {
-    //Para todas as Pessoas P da S->LClientes
-    //    Se (IrCaixa(P, S))
-        {
-            // Escolher Caixa e Retirar essa pessoa de S->Clientes
-            // e ir para o Hashing das Caixas
-        }
+    // Para todas as Pessoas P da S->LClientes
+    //     Se (IrCaixa(P, S))
+    {
+        // Escolher Caixa e Retirar essa pessoa de S->Clientes
+        // e ir para o Hashing das Caixas
+    }
 }
 
-//Função criada por Otaniel:
-//Agora cada cliente poderá ter: 2 produtos, 5 produtos ou 20 produtos aleatórios
+// Função criada por Otaniel:
+// Agora cada cliente poderá ter: 2 produtos, 5 produtos ou 20 produtos aleatórios
 void GerarCarrinhoCliente(Supermercado *S, Cliente *C, int quantidade)
 {
     if (S == NULL || C == NULL)
@@ -186,8 +189,7 @@ void GerarCarrinhoCliente(Supermercado *S, Cliente *C, int quantidade)
                     P->nome,
                     P->preco,
                     P->tempoCompra,
-                    P->tempoCaixa
-                );
+                    P->tempoCaixa);
 
             InserirProduto(C->carrinho, Novo);
         }
@@ -197,7 +199,7 @@ void GerarCarrinhoCliente(Supermercado *S, Cliente *C, int quantidade)
 void EntradaPessoaSupermercado(Supermercado *S)
 {
     int X = Aleatorio(0, 100);
-    //printf("X = %d\n", X);
+    // printf("X = %d\n", X);
     if (X < S->CadenciaEntradaClientes)
     {
         Cliente *C = ObterClienteAleatorio(S->LClientes);
@@ -237,14 +239,14 @@ void EntradaPessoaSupermercado(Supermercado *S)
                     printf("Tempo Caixa: %.2f\n", CalcularTempoCaixa(CX));
                 }
 
-                //A cada 5 ciclos o sistema mostra o estado atualizado das caixas.
-                static int contador = 0; 
-                contador++; 
-                if (contador % 5 == 0) 
-                { 
-                    MostrarHashing(S->HCaixas); 
+                // A cada 5 ciclos o sistema mostra o estado atualizado das caixas.
+                static int contador = 0;
+                contador++;
+                if (contador % 5 == 0)
+                {
+                    MostrarHashing(S->HCaixas);
                 }
-                
+
                 else
                 {
                     printf("\nTODAS AS CAIXAS ESTAO CHEIAS!\n");
@@ -255,9 +257,168 @@ void EntradaPessoaSupermercado(Supermercado *S)
     //---------------------
 }
 
+size_t MemoriaUtilizada(Supermercado *S)
+{
+    if (S == NULL)
+        return 0;
+
+    size_t mem = 0;
+
+    /* Estrutura principal */
+    mem += sizeof(Supermercado);
+
+    /* Nome do supermercado */
+    if (S->NOME != NULL)
+        mem += strlen(S->NOME) + 1;
+
+    /* Relógio */
+    if (S->Rolex != NULL)
+        mem += sizeof(Relogio);
+
+    /* =========================
+       LISTA DE CLIENTES
+       ========================= */
+    if (S->LClientes != NULL)
+    {
+        mem += sizeof(ListaClientes);
+
+        NoCliente *aux = S->LClientes->Inicio;
+
+        while (aux != NULL)
+        {
+            mem += sizeof(NoCliente);
+
+            if (aux->Cli != NULL)
+            {
+                mem += sizeof(Cliente);
+
+                if (aux->Cli->nome != NULL)
+                    mem += strlen(aux->Cli->nome) + 1;
+
+                /* Carrinho do cliente */
+                if (aux->Cli->carrinho != NULL)
+                {
+                    mem += sizeof(ListaProdutos);
+
+                    NoProduto *p = aux->Cli->carrinho->Inicio;
+
+                    while (p != NULL)
+                    {
+                        mem += sizeof(NoProduto);
+
+                        if (p->Info != NULL)
+                        {
+                            mem += sizeof(Produto);
+
+                            if (p->Info->nome != NULL)
+                                mem += strlen(p->Info->nome) + 1;
+                        }
+
+                        p = p->Prox;
+                    }
+                }
+            }
+
+            aux = aux->Prox;
+        }
+    }
+
+    /* =========================
+       LISTA DE FUNCIONÁRIOS
+       ========================= */
+    if (S->LFuncionarios != NULL)
+    {
+        mem += sizeof(ListaFuncionarios);
+
+        NoFuncionario *aux = S->LFuncionarios->Inicio;
+
+        while (aux != NULL)
+        {
+            mem += sizeof(NoFuncionario);
+
+            if (aux->Func != NULL)
+            {
+                mem += sizeof(Funcionario);
+
+                if (aux->Func->nome != NULL)
+                    mem += strlen(aux->Func->nome) + 1;
+            }
+
+            aux = aux->Prox;
+        }
+    }
+
+    /* =========================
+       LISTA DE PRODUTOS
+       ========================= */
+    if (S->LProdutos != NULL)
+    {
+        mem += sizeof(ListaProdutos);
+
+        NoProduto *aux = S->LProdutos->Inicio;
+
+        while (aux != NULL)
+        {
+            mem += sizeof(NoProduto);
+
+            if (aux->Info != NULL)
+            {
+                mem += sizeof(Produto);
+
+                if (aux->Info->nome != NULL)
+                    mem += strlen(aux->Info->nome) + 1;
+            }
+
+            aux = aux->Prox;
+        }
+    }
+
+    /* =========================
+       HASHING DAS CAIXAS
+       ========================= */
+    if (S->HCaixas != NULL)
+    {
+        mem += sizeof(Hashing);
+
+        if (S->HCaixas->Tabela != NULL)
+        {
+            mem += S->HCaixas->tamanho * sizeof(Caixa);
+
+            for (int i = 0; i < S->HCaixas->tamanho; i++)
+            {
+                Caixa *C = &S->HCaixas->Tabela[i];
+
+                /* Filas das caixas */
+                if (C->fila != NULL)
+                {
+                    mem += sizeof(ListaClientes);
+
+                    NoCliente *aux = C->fila->Inicio;
+
+                    while (aux != NULL)
+                    {
+                        /*
+                           IMPORTANTE:
+                           Só contamos o nó da fila.
+                           NÃO contamos Cliente novamente
+                           porque ele já foi contado
+                           na ListaClientes principal.
+                        */
+                        mem += sizeof(NoCliente);
+
+                        aux = aux->Prox;
+                    }
+                }
+            }
+        }
+    }
+
+    return mem;
+}
+
 int Supermercado_E_Para_Fechar(Supermercado *S)
 {
-        //... fazer
+    //... fazer
     return 0;
 }
 

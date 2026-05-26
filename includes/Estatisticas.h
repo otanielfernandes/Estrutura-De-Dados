@@ -10,7 +10,9 @@
 #include "ListaFuncionarios.h"
 #include "ListaProdutos.h"
 
-/* IMPORTANTE: evita erro "unknown type name Supermercado" */
+/* =========================
+        ESTRUTURA
+========================= */
 
 typedef struct
 {
@@ -118,9 +120,9 @@ void MostrarEstatisticasSupermercado(Hashing *H,
 
 void MenuEstatisticas(Hashing *H, ListaProdutos *LP);
 
-void MenuCaixas();
-void MenuClientes();
-void MenuProdutos();
-void MenuFuncionarios();
+void MenuCaixas(Hashing *H);
+void MenuClientes(ListaClientes *LC);
+void MenuProdutos(ListaProdutos *LP);
+void MenuFuncionarios(ListaFuncionarios *LF);
 
 #endif

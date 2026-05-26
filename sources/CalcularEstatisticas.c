@@ -1,26 +1,10 @@
 #include "../includes/Estatisticas.h"
 
-// Auxiliares para cálculo de estatísticas específicas
-static double CustoCarrinho(ListaProdutos *LP)
-{
-    if (LP == NULL)
-        return 0.0;
+// ==========================
+// FUNÇÃO AUXILIAR
+// ==========================
 
-    double total = 0.0;
-    NoProduto *no = LP->Inicio;
-
-    while (no != NULL)
-    {
-        if (no->Info != NULL)
-            total += no->Info->preco;
-
-        no = no->Prox;
-    }
-
-    return total;
-}
-
-// Função para calcular o tempo total de espera estimado numa caixa
+// Tempo total de espera estimado numa caixa
 static double TempoEsperaCaixa(Caixa *C)
 {
     if (C == NULL || C->fila == NULL)
@@ -53,9 +37,8 @@ static double TempoEsperaCaixa(Caixa *C)
 }
 
 // ==========================
-// ESTATÍSTICAS POR CAIXA
+// CAIXA MAIS PRODUTOS
 // ==========================
-
 void ObterCaixaMaisProdutos(Hashing *H, Estatisticas *E)
 {
     E->idCaixaMaisProdutos = -1;
@@ -79,6 +62,9 @@ void ObterCaixaMaisProdutos(Hashing *H, Estatisticas *E)
     }
 }
 
+// ==========================
+// CAIXA MAIS PESSOAS
+// ==========================
 void ObterCaixaMaisPessoas(Hashing *H, Estatisticas *E)
 {
     E->idCaixaMaisPessoas = -1;
@@ -100,6 +86,9 @@ void ObterCaixaMaisPessoas(Hashing *H, Estatisticas *E)
     }
 }
 
+// ==========================
+// CAIXA MENOS PESSOAS
+// ==========================
 void ObterCaixaMenosPessoas(Hashing *H, Estatisticas *E)
 {
     E->idCaixaMenosPessoas = -1;
@@ -121,16 +110,35 @@ void ObterCaixaMenosPessoas(Hashing *H, Estatisticas *E)
     }
 }
 
+// ==========================
+// PRODUTOS
+// ==========================
 void ObterNumeroProdutosOferecidos(ListaProdutos *L, Estatisticas *E)
 {
-    E->numeroProdutosOferecidos = 0;
+    E->numeroProdutosOferecidos = (L != NULL) ? L->NEL : 0;
+}
+
+void ValorTotalProdutosOferecidos(ListaProdutos *L, Estatisticas *E)
+{
+    E->custoOferecidos = 0.0;
 
     if (L == NULL)
         return;
 
-    E->numeroProdutosOferecidos = L->NEL;
+    NoProduto *no = L->Inicio;
+
+    while (no != NULL)
+    {
+        if (no->Info != NULL)
+            E->custoOferecidos += no->Info->preco;
+
+        no = no->Prox;
+    }
 }
 
+// ==========================
+// FUNCIONÁRIOS / OPERADORES
+// ==========================
 void OperadorMenosPessoas(Hashing *H, Estatisticas *E)
 {
     E->operadorMenosPessoas = -1;
@@ -179,24 +187,9 @@ void ObterOperadorMaisProdutos(Hashing *H, Estatisticas *E)
     }
 }
 
-void ValorTotalProdutosOferecidos(ListaProdutos *L, Estatisticas *E)
-{
-    E->custoOferecidos = 0.0;
-
-    if (L == NULL)
-        return;
-
-    NoProduto *no = L->Inicio;
-
-    while (no != NULL)
-    {
-        if (no->Info != NULL)
-            E->custoOferecidos += no->Info->preco;
-
-        no = no->Prox;
-    }
-}
-
+// ==========================
+// TEMPO MÉDIO
+// ==========================
 void TempoMedioEsperaCaixas(Hashing *H, Estatisticas *E)
 {
     E->tempoMedioEsperaCaixas = 0.0;
@@ -219,6 +212,9 @@ void TempoMedioEsperaCaixas(Hashing *H, Estatisticas *E)
         E->tempoMedioEsperaCaixas = totalTempo / totalPessoas;
 }
 
+// ==========================
+// CLIENTES
+// ==========================
 void NumeroTotalClientesAtendidos(Hashing *H, Estatisticas *E)
 {
     E->numeroTotalClientesAtendidos = 0;
@@ -229,138 +225,6 @@ void NumeroTotalClientesAtendidos(Hashing *H, Estatisticas *E)
     for (int i = 0; i < H->tamanho; i++)
         E->numeroTotalClientesAtendidos += H->Tabela[i].totalPessoasAtendidas;
 }
-
-void NumeroProdutosOferecidos(ListaProdutos *L, Estatisticas *E)
-{
-    ObterNumeroProdutosOferecidos(L, E);
-}
-
-void maxProdutosVendidos(Hashing *H, Estatisticas *E)
-{
-    ObterCaixaMaisProdutos(H, E);
-}
-
-// ==========================
-// MEMÓRIA
-// ==========================
-
-/*void MemoriaUtilizada(Supermercado *S, Estatisticas *E)
-{
-    if (S == NULL || E == NULL)
-        return;
-
-    size_t mem = 0;
-
-    mem += sizeof(Supermercado);
-
-    if (S->NOME)
-        mem += strlen(S->NOME) + 1;
-
-    if (S->relogio)
-        mem += sizeof(Relogio);
-
-    if (S->LClientes)
-    {
-        mem += sizeof(ListaClientes);
-
-        NoCliente *aux = S->LClientes->Inicio;
-
-        while (aux)
-        {
-            mem += sizeof(NoCliente);
-
-            if (aux->Cli)
-            {
-                mem += sizeof(Cliente);
-
-                if (aux->Cli->nome)
-                    mem += strlen(aux->Cli->nome) + 1;
-            }
-
-            aux = aux->Prox;
-        }
-    }
-
-    if (S->LFuncionarios)
-    {
-        mem += sizeof(ListaFuncionarios);
-
-        NoFuncionario *aux = S->LFuncionarios->Inicio;
-
-        while (aux)
-        {
-            mem += sizeof(NoFuncionario);
-
-            if (aux->Func)
-            {
-                mem += sizeof(Funcionario);
-
-                if (aux->Func->nome)
-                    mem += strlen(aux->Func->nome) + 1;
-            }
-
-            aux = aux->Prox;
-        }
-    }
-
-    if (S->LProdutos)
-    {
-        mem += sizeof(ListaProdutos);
-
-        NoProduto *aux = S->LProdutos->Inicio;
-
-        while (aux)
-        {
-            mem += sizeof(NoProduto);
-
-            if (aux->Info)
-            {
-                mem += sizeof(Produto);
-
-                if (aux->Info->nome)
-                    mem += strlen(aux->Info->nome) + 1;
-            }
-
-            aux = aux->Prox;
-        }
-    }
-
-    if (S->HCaixas)
-    {
-        mem += sizeof(Hashing);
-        mem += (size_t)S->HCaixas->tamanho * sizeof(Caixa);
-
-        for (int i = 0; i < S->HCaixas->tamanho; i++)
-        {
-            Caixa *C = &S->HCaixas->Tabela[i];
-
-            if (C->fila)
-            {
-                mem += sizeof(ListaClientes);
-
-                NoCliente *aux = C->fila->Inicio;
-
-                while (aux)
-                {
-                    mem += sizeof(NoCliente);
-
-                    if (aux->Cli)
-                    {
-                        mem += sizeof(Cliente);
-
-                        if (aux->Cli->nome)
-                            mem += strlen(aux->Cli->nome) + 1;
-                    }
-
-                    aux = aux->Prox;
-                }
-            }
-        }
-    }
-
-    E->memoriaUtilizada = mem;
-}
-*/
 
 // ==========================
 // PRINCIPAL
@@ -385,11 +249,14 @@ Estatisticas CalcularEstatisticas(Hashing *H, ListaProdutos *LP)
     return E;
 }
 
+// ==========================
+// OUTPUT
+// ==========================
 void MostrarEstatisticasSupermercado(Hashing *H, ListaProdutos *LP)
 {
     Estatisticas E = CalcularEstatisticas(H, LP);
 
-    printf("\n===== ESTATÍSTICAS DO SUPERMERCADO =====\n\n");
+    printf("\n===== ESTATISTICAS DO SUPERMERCADO =====\n\n");
 
     printf("Caixa com mais produtos vendidos : %d (%d)\n",
            E.idCaixaMaisProdutos, E.maxProdutosVendidos);
@@ -400,13 +267,13 @@ void MostrarEstatisticasSupermercado(Hashing *H, ListaProdutos *LP)
     printf("Caixa com menos pessoas atendidas: %d\n",
            E.idCaixaMenosPessoas);
 
-    printf("Produtos no catálogo             : %d\n",
+    printf("Produtos no catalogo             : %d\n",
            E.numeroProdutosOferecidos);
 
-    printf("Custo total do catálogo          : %.2f EUR\n",
+    printf("Custo total do catalogo          : %.2f EUR\n",
            E.custoOferecidos);
 
-    printf("Tempo médio de espera            : %.2f s\n",
+    printf("Tempo medio de espera            : %.2f s\n",
            E.tempoMedioEsperaCaixas);
 
     printf("Total clientes atendidos         : %d\n",
