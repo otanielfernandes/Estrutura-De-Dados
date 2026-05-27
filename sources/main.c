@@ -5,10 +5,7 @@
 #include "../includes/Supermercado.h"
 #include "../includes/Uteis.h"
 
-/* =========================================
-   MENU
-========================================= */
-
+// MENU
 int Menu()
 {
     printf("\n====================================\n");
@@ -28,13 +25,8 @@ int Menu()
     return LerInteiro("");
 }
 
-/* =========================================
-   EXECUTAR OPCOES
-========================================= */
-
-void ExecutaAccoesMenu(Supermercado *S,
-                       int *simulacaoAtiva,
-                       int *programaAtivo)
+// EXECUTAR OPCOES
+void ExecutaAccoesMenu(Supermercado *S, int *simulacaoAtiva, int *programaAtivo)
 {
     int op = Menu();
 
@@ -99,10 +91,7 @@ void ExecutaAccoesMenu(Supermercado *S,
     getchar();
 }
 
-/* =========================================
-   MAIN
-========================================= */
-
+// MAIN
 int main()
 {
 #ifdef _WIN32
@@ -172,8 +161,7 @@ int main()
     printf("        ESTATISTICAS FINAIS\n");
     printf("========================================\n");
 
-    MenuEstatisticas(S->HCaixas,
-                     S->LProdutos);
+    MenuEstatisticas(S->HCaixas, S->LProdutos);
 
     DestruirSupermercado(S);
 

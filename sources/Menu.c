@@ -23,9 +23,7 @@ static void LimparTela(void)
 #endif
 }
 
-/* =========================
-   MENU PRINCIPAL
-   ========================= */
+/* MENU PRINCIPAL */
 
 void MenuPrincipal(Supermercado *S)
 {
@@ -88,9 +86,7 @@ void MenuPrincipal(Supermercado *S)
     } while (op != 0);
 }
 
-/* =========================
-   CAIXAS
-   ========================= */
+/* CAIXAS */
 
 static void ListarCaixas(Hashing *H)
 {
@@ -216,9 +212,7 @@ void MenuCaixas(Hashing *H)
     } while (op != 0);
 }
 
-/* =========================
-   CLIENTES
-   ========================= */
+/* CLIENTES */
 
 static void ListarClientesMenu(ListaClientes *LC)
 {
@@ -281,9 +275,7 @@ void MenuClientes(ListaClientes *LC)
     } while (op != 0);
 }
 
-/* =========================
-   FICHEIROS
-   ========================= */
+/* FICHEIROS */
 
 void MenuFicheiros(ListaProdutos *LP, ListaClientes *LC, ListaFuncionarios *LF)
 {

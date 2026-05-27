@@ -4,10 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* =========================
-   FUNÇÕES AUXILIARES
-   ========================= */
-
+/*FUNÇÕES AUXILIARES */
 /*static void LimparTela(void)
 {
     system("cls || clear");
@@ -19,10 +16,7 @@ static void Pausar(void)
     getchar();
 }
 
-// =====================================================
-// MENU ESTATISTICAS
-// =====================================================
-
+// MENU ESTATISTICA
 static void MostrarMenuEstatisticas(void)
 {
     printf("=========================================\n");
@@ -48,10 +42,7 @@ static void MostrarMenuEstatisticas(void)
     printf("\n 0  - Voltar\n");
 }
 
-// =====================================================
 // MENU PRINCIPAL ESTATISTICAS
-// =====================================================
-
 void MenuEstatisticas(Hashing *H,
                       ListaProdutos *LP)
 {
