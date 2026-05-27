@@ -17,12 +17,12 @@
 /*
 //Estrurura para as caixas:
 typedef struct {
-    int id;                         // Número da caixa (1, 2, 3...)
+    int id;                         // NÃºmero da caixa (1, 2, 3...)
     int aberta;                     // 1 para ativa, 0 para desativada [cite: 22, 45]
     ListaPessoas *fila;             // A fila de clientes nesta caixa
-    int totalPessoasAtendidas;      // Para as estatísticas finais [cite: 72]
-    int totalProdutosVendidos;      // Para as estatísticas finais [cite: 73]
-    // Podes adicionar o nome do operador aqui para o requisito da pág 2 [cite: 75]
+    int totalPessoasAtendidas;      // Para as estatÃ­sticas finais [cite: 72]
+    int totalProdutosVendidos;      // Para as estatÃ­sticas finais [cite: 73]
+    // Podes adicionar o nome do operador aqui para o requisito da pÃ¡g 2 [cite: 75]
 } Caixa;
 */
 
@@ -34,12 +34,12 @@ typedef struct
     ListaFuncionarios *LFuncionarios;
     ListaProdutos *LProdutos;
 
-    Hashing *HCaixas; // Tabela de Hash para as caixas (Já tinhas)
+    Hashing *HCaixas; // Tabela de Hash para as caixas (JÃ¡ tinhas)
 
-    // Horários (Já tinhas)
+    // HorÃ¡rios (JÃ¡ tinhas)
     int HoraInicio, HoraFim;
 
-    // NOVOS CAMPOS (Configuração):
+    // NOVOS CAMPOS (ConfiguraÃ§Ã£o):
     int max_espera;                // MAX_ESPERA
     int n_caixas;                  // N_CAIXAS
     int tempo_atendimento_produto; // TEMPO_ATENDIMENTO_PRODUTO
@@ -49,6 +49,15 @@ typedef struct
 
     int CadenciaEntradaClientes;
     Relogio *Rolex;
+
+    /* Controlo da duraÃ§Ã£o da simulaÃ§Ã£o */
+    int duracao_simulacao; /* ciclos atÃ© fechar portas (lido do ficheiro) */
+    int ciclo_atual;       /* ciclo em que estamos agora                  */
+    int simulacao_ativa;   /* 1 = sem novas entradas, a aguardar filas    */
+
+    int totalClientesGerados;
+    int maxClientesSimulacao;
+    int terminarPrograma;
 
 } Supermercado;
 

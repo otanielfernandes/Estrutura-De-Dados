@@ -16,11 +16,19 @@ typedef struct Caixa
     int totalPessoasAtendidas;
     int totalProdutosVendidos;
 
+    /* NOVOS */
+
+    float tempoTotalAtendimento;
+
+    float tempoMedioFila;
+
+    int maxClientesFila;
+
 } Caixa;
 
 typedef struct Hashing
-{   
-    //Será um vector dinâmico para caixas:
+{
+    // Será um vector dinâmico para caixas:
     Caixa *Tabela;
     int tamanho;
 } Hashing;

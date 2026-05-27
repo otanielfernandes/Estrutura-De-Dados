@@ -36,7 +36,7 @@ void MenuPrincipal(Supermercado *S)
 
     do
     {
-        LimparTela();
+        // LimparTela();
 
         printf("\n===================================\n");
         printf("        MENU PRINCIPAL\n");
@@ -172,7 +172,7 @@ void MenuCaixas(Hashing *H)
 
     do
     {
-        LimparTela();
+        // LimparTela();
 
         printf("\n===== MENU CAIXAS =====\n");
 
@@ -249,7 +249,7 @@ void MenuClientes(ListaClientes *LC)
 
     do
     {
-        LimparTela();
+        // LimparTela();
 
         printf("\n===== MENU CLIENTES =====\n");
 
@@ -293,7 +293,7 @@ void MenuFicheiros(ListaProdutos *LP, ListaClientes *LC, ListaFuncionarios *LF)
 
     do
     {
-        LimparTela();
+        // LimparTela();
 
         printf("\n===== MENU FICHEIROS =====\n");
 
@@ -307,7 +307,7 @@ void MenuFicheiros(ListaProdutos *LP, ListaClientes *LC, ListaFuncionarios *LF)
         scanf("%d", &op);
         getchar();
 
-        LimparTela();
+        // LimparTela();
 
         switch (op)
         {
@@ -381,7 +381,7 @@ void MenuProdutos(ListaProdutos *LP)
 
     do
     {
-        LimparTela();
+        // LimparTela();
 
         printf("\n===== MENU PRODUTOS =====\n");
         printf("1 - Listar produtos\n");

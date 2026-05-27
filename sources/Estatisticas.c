@@ -8,10 +8,10 @@
    FUNÇÕES AUXILIARES
    ========================= */
 
-static void LimparTela(void)
+/*static void LimparTela(void)
 {
     system("cls || clear");
-}
+}*/
 
 static void Pausar(void)
 {
@@ -19,130 +19,245 @@ static void Pausar(void)
     getchar();
 }
 
-/* =========================
-   MENU
-   ========================= */
+// =====================================================
+// MENU ESTATISTICAS
+// =====================================================
 
 static void MostrarMenuEstatisticas(void)
 {
-    printf("===================================\n");
-    printf("       MENU  ESTATISTICAS\n");
-    printf("===================================\n\n");
+    printf("=========================================\n");
+    printf("         MENU ESTATISTICAS\n");
+    printf("=========================================\n\n");
 
-    printf(" 2  - Caixa com mais produtos\n");
-    printf(" 3  - Numero de produtos oferecidos\n");
-    printf(" 4  - Custo produtos oferecidos\n");
-    printf(" 5  - Tempo medio espera caixas\n");
-    printf(" 6  - Total clientes atendidos\n");
-    printf(" 7  - Operador com menos pessoas\n");
-    printf(" 8  - Operador com mais produtos\n");
-    printf(" 9  - Caixa com menos pessoas\n");
-    printf("10  - Caixa com mais pessoas\n");
-    printf("11  - Estatisticas globais\n");
-    printf(" 0  - Voltar\n");
+    printf(" 1  - Caixa com mais produtos\n");
+    printf(" 2  - Caixa com mais clientes\n");
+    printf(" 3  - Caixa com menos clientes\n");
+    printf(" 4  - Numero produtos oferecidos\n");
+    printf(" 5  - Valor produtos oferecidos\n");
+    printf(" 6  - Numero produtos vendidos\n");
+    printf(" 7  - Tempo medio espera\n");
+    printf(" 8  - Tempo total atendimento\n");
+    printf(" 9  - Total clientes atendidos\n");
+    printf("10  - Numero caixas abertas\n");
+    printf("11  - Numero caixas fechadas\n");
+    printf("12  - Maior fila\n");
+    printf("13  - Operador menos clientes\n");
+    printf("14  - Operador mais produtos\n");
+    printf("15  - Estatisticas globais\n");
+
+    printf("\n 0  - Voltar\n");
 }
 
-/* =========================
-   MENU PRINCIPAL
-   ========================= */
+// =====================================================
+// MENU PRINCIPAL ESTATISTICAS
+// =====================================================
 
-void MenuEstatisticas(Hashing *H, ListaProdutos *LP)
+void MenuEstatisticas(Hashing *H,
+                      ListaProdutos *LP)
 {
     Estatisticas E;
     int opcao;
 
     do
     {
-        LimparTela();
         MostrarMenuEstatisticas();
 
         printf("\nEscolha uma opcao: ");
         scanf("%d", &opcao);
         getchar();
 
-        LimparTela();
+        // LimparTela();
 
         switch (opcao)
         {
-        case 2:
+        case 1:
+
             ObterCaixaMaisProdutos(H, &E);
+
             printf("CAIXA COM MAIS PRODUTOS\n\n");
-            printf("Caixa: %d (%d produtos)\n",
-                   E.idCaixaMaisProdutos, E.maxProdutosVendidos);
-            Pausar();
+
+            printf("Caixa: %d\n",
+                   E.idCaixaMaisProdutos);
+
+            printf("Produtos vendidos: %d\n",
+                   E.maxProdutosVendidos);
+
+            break;
+
+        case 2:
+
+            ObterCaixaMaisPessoas(H, &E);
+
+            printf("CAIXA COM MAIS CLIENTES\n\n");
+
+            printf("Caixa: %d\n",
+                   E.idCaixaMaisPessoas);
+
+            printf("Clientes atendidos: %d\n",
+                   E.maxPessoasAtendidas);
+
             break;
 
         case 3:
-            ObterNumeroProdutosOferecidos(LP, &E);
-            printf("PRODUTOS OFERECIDOS\n\n");
-            printf("Total: %d\n", E.numeroProdutosOferecidos);
-            Pausar();
+
+            ObterCaixaMenosPessoas(H, &E);
+
+            printf("CAIXA COM MENOS CLIENTES\n\n");
+
+            printf("Caixa: %d\n",
+                   E.idCaixaMenosPessoas);
+
+            printf("Clientes atendidos: %d\n",
+                   E.minPessoasAtendidas);
+
             break;
 
         case 4:
-            ValorTotalProdutosOferecidos(LP, &E);
-            printf("CUSTO PRODUTOS OFERECIDOS\n\n");
-            printf("Custo total: %.2f EUR\n", E.custoOferecidos);
-            Pausar();
+
+            ObterNumeroProdutosOferecidos(LP, &E);
+
+            printf("NUMERO PRODUTOS OFERECIDOS\n\n");
+
+            printf("Total: %d\n",
+                   E.numeroProdutosOferecidos);
+
             break;
 
         case 5:
-            TempoMedioEsperaCaixas(H, &E);
-            printf("TEMPO MEDIO DE ESPERA\n\n");
-            printf("Tempo: %.2f s\n", E.tempoMedioEsperaCaixas);
-            Pausar();
+
+            ValorTotalProdutosOferecidos(LP, &E);
+
+            printf("VALOR PRODUTOS OFERECIDOS\n\n");
+
+            printf("Valor: %.2f EUR\n",
+                   E.custoOferecidos);
+
             break;
 
         case 6:
-            NumeroTotalClientesAtendidos(H, &E);
-            printf("TOTAL CLIENTES ATENDIDOS\n\n");
-            printf("Total: %d\n", E.numeroTotalClientesAtendidos);
-            Pausar();
+
+            ObterNumeroProdutosVendidos(H, &E);
+
+            printf("NUMERO PRODUTOS VENDIDOS\n\n");
+
+            printf("Produtos vendidos: %d\n",
+                   E.numeroTotalProdutosVendidos);
+
             break;
 
         case 7:
-            OperadorMenosPessoas(H, &E);
-            printf("OPERADOR COM MENOS PESSOAS\n\n");
-            printf("Caixa: %d\n", E.operadorMenosPessoas);
-            Pausar();
+
+            TempoMedioEsperaCaixas(H, &E);
+
+            printf("TEMPO MEDIO ESPERA\n\n");
+
+            printf("Tempo medio: %.2f segundos\n",
+                   E.tempoMedioEsperaCaixas);
+
             break;
 
         case 8:
-            ObterOperadorMaisProdutos(H, &E);
-            printf("OPERADOR COM MAIS PRODUTOS\n\n");
-            printf("Caixa: %d\n", E.operadorMaisProdutos);
-            Pausar();
+
+            ObterTempoTotalAtendimento(H, &E);
+
+            printf("TEMPO TOTAL ATENDIMENTO\n\n");
+
+            printf("Tempo total: %.2f segundos\n",
+                   E.tempoTotalAtendimento);
+
             break;
 
         case 9:
-            ObterCaixaMenosPessoas(H, &E);
-            printf("CAIXA COM MENOS PESSOAS\n\n");
-            printf("Caixa: %d\n", E.idCaixaMenosPessoas);
-            Pausar();
+
+            NumeroTotalClientesAtendidos(H, &E);
+
+            printf("TOTAL CLIENTES ATENDIDOS\n\n");
+
+            printf("Clientes: %d\n",
+                   E.numeroTotalClientesAtendidos);
+
             break;
 
         case 10:
-            ObterCaixaMaisPessoas(H, &E);
-            printf("CAIXA COM MAIS PESSOAS\n\n");
-            printf("Caixa: %d\n", E.idCaixaMaisPessoas);
-            Pausar();
+
+            ObterNumeroCaixasAbertas(H, &E);
+
+            printf("CAIXAS ABERTAS\n\n");
+
+            printf("Total: %d\n",
+                   E.numeroCaixasAbertas);
+
             break;
 
         case 11:
-            printf("ESTATISTICAS GLOBAIS\n\n");
+
+            ObterNumeroCaixasFechadas(H, &E);
+
+            printf("CAIXAS FECHADAS\n\n");
+
+            printf("Total: %d\n",
+                   E.numeroCaixasFechadas);
+
+            break;
+
+        case 12:
+
+            ObterMaiorFila(H, &E);
+
+            printf("MAIOR FILA\n\n");
+
+            printf("Maior fila registada: %d clientes\n",
+                   E.maiorFila);
+
+            break;
+
+        case 13:
+
+            OperadorMenosPessoas(H, &E);
+
+            printf("OPERADOR MENOS CLIENTES\n\n");
+
+            printf("Caixa: %d\n",
+                   E.operadorMenosPessoas);
+
+            break;
+
+        case 14:
+
+            ObterOperadorMaisProdutos(H, &E);
+
+            printf("OPERADOR MAIS PRODUTOS\n\n");
+
+            printf("Caixa: %d\n",
+                   E.operadorMaisProdutos);
+
+            break;
+
+        case 15:
+
             MostrarEstatisticasSupermercado(H, LP);
-            Pausar();
+
             break;
 
         case 0:
+
             printf("A sair...\n");
+
             break;
 
         default:
+
             printf("Opcao invalida!\n");
-            Pausar();
+
             break;
         }
+
+        if (opcao != 0)
+        {
+            Pausar();
+        }
+
+        // LimparTela();
 
     } while (opcao != 0);
 }

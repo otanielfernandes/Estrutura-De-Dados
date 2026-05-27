@@ -16,24 +16,45 @@
 
 typedef struct
 {
+    /* CAIXAS */
     int idCaixaMaisPessoas;
-    int idCaixaMenosPessoas;
+    int maxPessoasAtendidas;
 
-    int produtosOferecidos;
-    float custoOferecidos;
+    int idCaixaMenosPessoas;
+    int minPessoasAtendidas;
 
     int idCaixaMaisProdutos;
-
-    int operadorMenosPessoas;
-    int operadorMaisProdutos;
-
-    float tempoMedioEsperaCaixas;
-
-    int numeroTotalClientesAtendidos;
-
     int maxProdutosVendidos;
 
+    /* OPERADORES */
+    int operadorMaisPessoas;
+    int operadorMenosPessoas;
+
+    int operadorMaisProdutos;
+    int operadorMenosProdutos;
+
+    /* PRODUTOS */
     int numeroProdutosOferecidos;
+    float custoOferecidos;
+
+    int numeroTotalProdutosVendidos;
+
+    /* CLIENTES */
+    int numeroTotalClientesAtendidos;
+
+    /* TEMPOS */
+    float tempoMedioEsperaCaixas;
+    float tempoTotalAtendimento;
+
+    /* FILAS */
+    int maiorFila;
+
+    /* CAIXAS */
+    int numeroCaixasAbertas;
+    int numeroCaixasFechadas;
+
+    /* EXTRA */
+    int numeroMudancasFila;
 
 } Estatisticas;
 
@@ -51,15 +72,11 @@ void DestruirEstatisticas(Estatisticas *E);
 
 void AtualizarEstatisticasCaixas(Estatisticas *E, Hashing *H);
 
-void AtualizarEstatisticasFuncionarios(Estatisticas *E,
-                                       ListaFuncionarios *LF,
-                                       Hashing *H);
+void AtualizarEstatisticasFuncionarios(Estatisticas *E, ListaFuncionarios *LF, Hashing *H);
 
-void AtualizarEstatisticasProdutos(Estatisticas *E,
-                                   ListaProdutos *LP);
+void AtualizarEstatisticasProdutos(Estatisticas *E, ListaProdutos *LP);
 
-void AtualizarEstatisticasClientes(Estatisticas *E,
-                                   ListaClientes *LC);
+void AtualizarEstatisticasClientes(Estatisticas *E, ListaClientes *LC);
 
 /* =========================
         CÁLCULOS
@@ -87,33 +104,33 @@ void MostrarResumoClientes(ListaClientes *LC);
 
 void ObterCaixaMaisProdutos(Hashing *H, Estatisticas *E);
 
-void ObterNumeroProdutosOferecidos(ListaProdutos *LP,
-                                   Estatisticas *E);
+void ObterNumeroProdutosOferecidos(ListaProdutos *LP, Estatisticas *E);
 
-void ValorTotalProdutosOferecidos(ListaProdutos *LP,
-                                  Estatisticas *E);
+void ValorTotalProdutosOferecidos(ListaProdutos *LP, Estatisticas *E);
 
-void TempoMedioEsperaCaixas(Hashing *H,
-                            Estatisticas *E);
+void TempoMedioEsperaCaixas(Hashing *H, Estatisticas *E);
 
-void NumeroTotalClientesAtendidos(Hashing *H,
-                                  Estatisticas *E);
+void NumeroTotalClientesAtendidos(Hashing *H, Estatisticas *E);
 
-void OperadorMenosPessoas(Hashing *H,
-                          Estatisticas *E);
+void OperadorMenosPessoas(Hashing *H, Estatisticas *E);
 
-void ObterOperadorMaisProdutos(Hashing *H,
-                               Estatisticas *E);
+void ObterOperadorMaisProdutos(Hashing *H, Estatisticas *E);
 
-void ObterCaixaMenosPessoas(Hashing *H,
-                            Estatisticas *E);
+void ObterCaixaMenosPessoas(Hashing *H, Estatisticas *E);
 
-void ObterCaixaMaisPessoas(Hashing *H,
-                           Estatisticas *E);
+void ObterCaixaMaisPessoas(Hashing *H, Estatisticas *E);
 
-void MostrarEstatisticasSupermercado(Hashing *H,
-                                     ListaProdutos *LP);
+void MostrarEstatisticasSupermercado(Hashing *H, ListaProdutos *LP);
 
+void ObterNumeroProdutosVendidos(Hashing *H, Estatisticas *E);
+
+void ObterNumeroCaixasAbertas(Hashing *H, Estatisticas *E);
+
+void ObterNumeroCaixasFechadas(Hashing *H, Estatisticas *E);
+
+void ObterMaiorFila(Hashing *H, Estatisticas *E);
+
+void ObterTempoTotalAtendimento(Hashing *H, Estatisticas *E);
 /* =========================
         MENUS
 ========================= */

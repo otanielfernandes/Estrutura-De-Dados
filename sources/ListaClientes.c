@@ -7,7 +7,7 @@ extern int Aleatorio(int min, int max);
 
 ListaClientes *CriarListaClientes()
 {
-    ListaClientes *LC =  (ListaClientes *)malloc(sizeof(ListaClientes));
+    ListaClientes *LC = (ListaClientes *)malloc(sizeof(ListaClientes));
 
     if (LC == NULL)
         return NULL;
@@ -97,13 +97,9 @@ void MostrarListaClientes(ListaClientes *LC)
     }
 }
 
-
 int RemoverClienteInicio(ListaClientes *LC)
 {
-    if (LC == NULL)
-        return 0;
-
-    if (LC->Inicio == NULL)
+    if (LC == NULL || LC->Inicio == NULL)
         return 0;
 
     NoCliente *Aux = LC->Inicio;
