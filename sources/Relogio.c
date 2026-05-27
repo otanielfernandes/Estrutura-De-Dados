@@ -17,5 +17,6 @@ void DestruirRelogio(Relogio *R)
 time_t GetTempo(Relogio *R)
 {
     // return R->Tinicio + R->Velocidade * (Agora - R->Tinicio);
-    return 0;
+    (void)R;
+    return time(NULL);
 }

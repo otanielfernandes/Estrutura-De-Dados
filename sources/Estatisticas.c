@@ -110,7 +110,7 @@ void MenuEstatisticas(Hashing *H,
             printf("NUMERO PRODUTOS OFERECIDOS\n\n");
 
             printf("Total: %d\n",
-                   E.numeroProdutosOferecidos);
+                   E.produtosOferecidos);
 
             break;
 

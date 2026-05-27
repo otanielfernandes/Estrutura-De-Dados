@@ -65,8 +65,6 @@ void InverterListaFuncionarios(ListaFuncionarios *LF)
     LF->Inicio = anterior;
 }
 
-
-
 void MostrarListaFuncionarios(ListaFuncionarios *LF)
 {
     if (LF == NULL)

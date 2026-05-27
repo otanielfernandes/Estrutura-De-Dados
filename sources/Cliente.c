@@ -26,7 +26,7 @@ Cliente *CriarCliente(int id, char *nome)
     return C;
 }
 
-//Função para calcular o tempo total de caixa de cada cliente:
+// Função para calcular o tempo total de caixa de cada cliente:
 float CalcularTempoCliente(Cliente *C)
 {
     if (C == NULL || C->carrinho == NULL)
@@ -40,7 +40,7 @@ float CalcularTempoCliente(Cliente *C)
     {
         Produto *P = Aux->Info;
 
-        total += 2 + (P->preco * (4.0/40.0));
+        total += 2 + (P->preco * (4.0 / 40.0));
 
         Aux = Aux->Prox;
     }

@@ -10,14 +10,12 @@ typedef struct NoFuncionario
 
 } NoFuncionario;
 
-
 typedef struct
 {
     NoFuncionario *Inicio;
     int NEL;
 
 } ListaFuncionarios;
-
 
 ListaFuncionarios *CriarListaFuncionarios();
 

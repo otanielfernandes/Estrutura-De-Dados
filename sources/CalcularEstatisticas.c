@@ -165,14 +165,32 @@ void ObterMaiorFila(Hashing *H, Estatisticas *E)
 }
 
 // PRODUTOS
-void ObterNumeroProdutosOferecidos(ListaProdutos *L, Estatisticas *E)
+void ObterNumeroProdutosOferecidos(ListaProdutos *LP, Estatisticas *E)
 {
-    E->numeroProdutosOferecidos = (L != NULL) ? L->NEL : 0;
+    E->produtosOferecidos = 0;
+
+    if (LP == NULL)
+        return;
+
+    NoProduto *Aux = LP->Inicio;
+
+    while (Aux != NULL)
+    {
+        if (Aux->Info != NULL)
+        {
+            if (Aux->Info->oferecido)
+            {
+                E->produtosOferecidos++;
+            }
+        }
+
+        Aux = Aux->Prox;
+    }
 }
 
 void ValorTotalProdutosOferecidos(ListaProdutos *L, Estatisticas *E)
 {
-    E->custoOferecidos = 0.0;
+    E->custoOferecidos = 0;
 
     if (L == NULL)
         return;
@@ -182,18 +200,22 @@ void ValorTotalProdutosOferecidos(ListaProdutos *L, Estatisticas *E)
     while (no != NULL)
     {
         if (no->Info != NULL)
-            E->custoOferecidos += no->Info->preco;
+        {
+            if (no->Info->oferecido)
+            {
+                E->custoOferecidos += no->Info->preco;
+            }
+        }
 
         no = no->Prox;
     }
 }
-
 void ObterNumeroProdutosVendidos(Hashing *H, Estatisticas *E)
 {
-    E->numeroTotalProdutosVendidos = 0;
-
-    if (H == NULL)
+    if (H == NULL || E == NULL)
         return;
+
+    E->numeroTotalProdutosVendidos = 0;
 
     for (int i = 0; i < H->tamanho; i++)
     {
@@ -322,8 +344,7 @@ Estatisticas CalcularEstatisticas(Hashing *H, ListaProdutos *LP)
 }
 
 // OUTPUT
-void MostrarEstatisticasSupermercado(Hashing *H,
-                                     ListaProdutos *LP)
+void MostrarEstatisticasSupermercado(Hashing *H, ListaProdutos *LP)
 {
     Estatisticas E = CalcularEstatisticas(H, LP);
 
@@ -342,7 +363,7 @@ void MostrarEstatisticasSupermercado(Hashing *H,
     printf("-----------------------------------------\n");
 
     printf("Produtos oferecidos : %d\n",
-           E.numeroProdutosOferecidos);
+           E.produtosOferecidos);
 
     printf("Valor produtos      : %.2f EUR\n",
            E.custoOferecidos);

@@ -2,6 +2,7 @@
 #include "../includes/Ficheiro.h"
 
 extern int Aleatorio(int min, int max);
+static void OferecerProduto(Cliente *C);
 
 // CRIAR SUPERMERCADO
 Supermercado *CriarSupermercado(char *nome)
@@ -281,8 +282,13 @@ void EntradaPessoaSupermercado(Supermercado *S)
 
     float tempoCaixa = CalcularTempoCaixa(CX);
 
+    /* ULTRAPASSOU O MAX_ESPERA */
     if ((tempoCaixa + tempoCliente) > S->max_espera)
     {
+        /* oferecer produto */
+        OferecerProduto(C);
+
+        /* tentar abrir nova caixa */
         Caixa *Nova = AbrirNovaCaixa(S);
 
         if (Nova != NULL)
@@ -310,6 +316,35 @@ int ExecutarSimulacao(Supermercado *S)
     ProcessarCaixas(S->HCaixas);
 
     return 1;
+}
+
+// Produtos oferecidos
+static void OferecerProduto(Cliente *C)
+{
+    if (C == NULL)
+        return;
+
+    if (C->carrinho == NULL)
+        return;
+
+    if (C->carrinho->NEL <= 0)
+        return;
+
+    NoProduto *Aux = C->carrinho->Inicio;
+
+    while (Aux->Prox != NULL)
+    {
+        Aux = Aux->Prox;
+    }
+
+    if (Aux->Info != NULL)
+    {
+        Aux->Info->oferecido = 1;
+
+        printf("\nProduto OFERECIDO ao cliente %s: %s\n",
+               C->nome,
+               Aux->Info->nome);
+    }
 }
 
 // MEMORIA

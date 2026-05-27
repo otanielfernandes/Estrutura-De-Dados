@@ -2,13 +2,13 @@
 
 Produto *CriarProduto(int codigo, char *nome, float preco, float tempoCompra, float tempoCaixa)
 {
-    Produto *Prod =(Produto *)malloc(sizeof(Produto));
+    Produto *Prod = (Produto *)malloc(sizeof(Produto));
 
     if (Prod == NULL)
         return NULL;
 
     Prod->codigo = codigo;
-    Prod->nome =(char *)malloc(strlen(nome) + 1);
+    Prod->nome = (char *)malloc(strlen(nome) + 1);
     if (Prod->nome == NULL)
     {
         free(Prod);
@@ -20,11 +20,11 @@ Produto *CriarProduto(int codigo, char *nome, float preco, float tempoCompra, fl
     Prod->preco = preco;
     Prod->tempoCompra = tempoCompra;
     Prod->tempoCaixa = tempoCaixa;
-
+    Prod->oferecido = 0;
     return Prod;
 }
 
-//Função para calcular o tempo de caixa de cada produto:
+// Função para calcular o tempo de caixa de cada produto:
 float CalcularTempoProduto(Produto *P)
 {
     if (P == NULL)
@@ -44,15 +44,14 @@ void MostrarProduto(Produto *Prod)
         Prod->nome,
         Prod->preco,
         Prod->tempoCompra,
-        Prod->tempoCaixa
-    );
+        Prod->tempoCaixa);
 }
 
 void DestruirProduto(Produto *Prod)
 {
-    if (Prod != NULL){
+    if (Prod != NULL)
+    {
         free(Prod->nome);
         free(Prod);
     }
-        
 }
