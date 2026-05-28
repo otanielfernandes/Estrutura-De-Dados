@@ -104,9 +104,9 @@ void MostrarResumoClientes(ListaClientes *LC);
 
 void ObterCaixaMaisProdutos(Hashing *H, Estatisticas *E);
 
-void ObterNumeroProdutosOferecidos(ListaProdutos *LP, Estatisticas *E);
+void ObterNumeroProdutosOferecidos(Hashing *H, Estatisticas *E);
 
-void ValorTotalProdutosOferecidos(ListaProdutos *LP, Estatisticas *E);
+void ValorTotalProdutosOferecidos(Hashing *H, Estatisticas *E);
 
 void TempoMedioEsperaCaixas(Hashing *H, Estatisticas *E);
 

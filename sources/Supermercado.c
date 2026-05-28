@@ -268,6 +268,7 @@ void EntradaPessoaSupermercado(Supermercado *S)
     GerarCarrinhoCliente(S, C, nProdutos);
 
     C->tempoTotalCaixa = CalcularTempoCliente(C);
+    C->tempoInicialCaixa = C->tempoTotalCaixa;
 
     Caixa *CX = EscolherCaixa(S);
 
@@ -322,6 +323,12 @@ size_t MemoriaUtilizada(Supermercado *S)
 
     if (S->NOME != NULL)
         mem += strlen(S->NOME) + 1;
+
+        if (S->HCaixas != NULL)
+        {
+            mem += sizeof(Hashing);
+            mem += sizeof(Caixa) * S->HCaixas->tamanho;
+        }
 
     return mem;
 }

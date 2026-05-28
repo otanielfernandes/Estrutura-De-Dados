@@ -154,6 +154,12 @@ static void FecharCaixa(Hashing *H)
         return;
     }
 
+    if (C->fila != NULL && C->fila->NEL > 0)
+    {
+        printf("\nNao pode fechar caixa com clientes.\n");
+        return;
+    }
+    
     C->aberta = 0;
 
     printf("\nCaixa fechada com sucesso.\n");

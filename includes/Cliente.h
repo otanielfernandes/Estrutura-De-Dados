@@ -9,7 +9,9 @@ typedef struct
     int id;
     char *nome;
     ListaProdutos *carrinho;
-    int tempoTotalCaixa;
+    //Alterei o tipo de dado do campo abaixo, era int, passou a ser float:
+    float tempoTotalCaixa;
+    float tempoInicialCaixa;
     time_t tempoEntrada;
 
 } Cliente;

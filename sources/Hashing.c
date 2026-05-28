@@ -25,6 +25,7 @@ Hashing *CriarHashing(int tamanho)
         H->Tabela[i].totalPessoasAtendidas = 0;
         H->Tabela[i].totalProdutosVendidos = 0;
         H->Tabela[i].maxClientesFila = 0;
+        H->Tabela[i].tempoTotalAtendimento = 0;
     }
     return H;
 }
@@ -92,13 +93,16 @@ void ProcessarCaixas(Hashing *H)
 
         if (Cli->tempoTotalCaixa <= 0)
         {
+            //Somar tempo total de atendimento:
+            C->tempoTotalAtendimento += Cli->tempoInicialCaixa;
             /* Contar produtos vendidos */
             if (Cli->carrinho != NULL)
                 C->totalProdutosVendidos += Cli->carrinho->NEL;
 
             printf("\nCliente %s terminou atendimento na Caixa %d\n",
                    Cli->nome, C->id);
-
+            
+            
             RemoverClienteInicio(C->fila);
             C->totalPessoasAtendidas++;
         }
@@ -135,7 +139,7 @@ void DestruirHashing(Hashing *H)
     if (H == NULL)
         return;
     for (int i = 0; i < H->tamanho; i++)
-        DestruirListaClientes(H->Tabela[i].fila);
+        DestruirListaClientesSemClientes(H->Tabela[i].fila);
     free(H->Tabela);
     free(H);
 }

@@ -106,6 +106,7 @@ int RemoverClienteInicio(ListaClientes *LC)
 
     LC->Inicio = Aux->Prox;
 
+    //DestruirCliente(Aux->Cli);
     free(Aux);
 
     LC->NEL--;
@@ -127,6 +128,24 @@ void DestruirListaClientes(ListaClientes *LC)
         Aux = Aux->Prox;
 
         DestruirCliente(Temp->Cli);
+
+        free(Temp);
+    }
+
+    free(LC);
+}
+
+void DestruirListaClientesSemClientes(ListaClientes *LC)
+{
+    if (LC == NULL)
+        return;
+
+    NoCliente *Aux = LC->Inicio;
+
+    while (Aux != NULL)
+    {
+        NoCliente *Temp = Aux;
+        Aux = Aux->Prox;
 
         free(Temp);
     }
