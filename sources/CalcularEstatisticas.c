@@ -165,49 +165,70 @@ void ObterMaiorFila(Hashing *H, Estatisticas *E)
 }
 
 // PRODUTOS
-void ObterNumeroProdutosOferecidos(ListaProdutos *LP, Estatisticas *E)
+void ObterNumeroProdutosOferecidos(Hashing *H, Estatisticas *E)
 {
-    E->produtosOferecidos = 0;
+    E->numeroProdutosOferecidos = 0;
 
-    if (LP == NULL)
+    if (H == NULL)
         return;
 
-    NoProduto *Aux = LP->Inicio;
-
-    while (Aux != NULL)
+    for (int i = 0; i < H->tamanho; i++)
     {
-        if (Aux->Info != NULL)
-        {
-            if (Aux->Info->oferecido)
-            {
-                E->produtosOferecidos++;
-            }
-        }
+        Caixa *C = &H->Tabela[i];
 
-        Aux = Aux->Prox;
+        if (C->fila == NULL)
+            continue;
+
+        NoCliente *NC = C->fila->Inicio;
+
+        while (NC != NULL)
+        {
+            if (NC->Cli != NULL &&
+                NC->Cli->carrinho != NULL)
+            {
+                E->numeroProdutosOferecidos += NC->Cli->carrinho->NEL;
+            }
+
+            NC = NC->Prox;
+        }
     }
 }
 
-void ValorTotalProdutosOferecidos(ListaProdutos *L, Estatisticas *E)
+void ValorTotalProdutosOferecidos(Hashing *H, Estatisticas *E)
 {
     E->custoOferecidos = 0;
 
-    if (L == NULL)
+    if (H == NULL)
         return;
 
-    NoProduto *no = L->Inicio;
-
-    while (no != NULL)
+    for (int i = 0; i < H->tamanho; i++)
     {
-        if (no->Info != NULL)
-        {
-            if (no->Info->oferecido)
-            {
-                E->custoOferecidos += no->Info->preco;
-            }
-        }
+        Caixa *C = &H->Tabela[i];
 
-        no = no->Prox;
+        if (C->fila == NULL)
+            continue;
+
+        NoCliente *NC = C->fila->Inicio;
+
+        while (NC != NULL)
+        {
+            if (NC->Cli != NULL &&
+                NC->Cli->carrinho != NULL)
+            {
+                NoProduto *NP =
+                    NC->Cli->carrinho->Inicio;
+
+                while (NP != NULL)
+                {
+                    E->custoOferecidos +=
+                        NP->Info->preco;
+
+                    NP = NP->Prox;
+                }
+            }
+
+            NC = NC->Prox;
+        }
     }
 }
 void ObterNumeroProdutosVendidos(Hashing *H, Estatisticas *E)
@@ -219,8 +240,7 @@ void ObterNumeroProdutosVendidos(Hashing *H, Estatisticas *E)
 
     for (int i = 0; i < H->tamanho; i++)
     {
-        E->numeroTotalProdutosVendidos +=
-            H->Tabela[i].totalProdutosVendidos;
+        E->numeroTotalProdutosVendidos += H->Tabela[i].totalProdutosVendidos;
     }
 }
 
@@ -293,7 +313,7 @@ void TempoMedioEsperaCaixas(Hashing *H, Estatisticas *E)
 
     if (totalClientes > 0)
     {
-        E->tempoMedioEsperaCaixas = tempoTotal / (totalClientes - 1);
+        E->tempoMedioEsperaCaixas = tempoTotal / totalClientes;
     }
 }
 
@@ -325,8 +345,8 @@ Estatisticas CalcularEstatisticas(Hashing *H, ListaProdutos *LP)
     ObterMaiorFila(H, &E);
 
     // PRODUTOS
-    ObterNumeroProdutosOferecidos(LP, &E);
-    ValorTotalProdutosOferecidos(LP, &E);
+    ObterNumeroProdutosOferecidos(H, &E);
+    ValorTotalProdutosOferecidos(H, &E);
     ObterNumeroProdutosVendidos(H, &E);
 
     // TEMPOS
@@ -400,7 +420,7 @@ void MostrarEstatisticasSupermercado(Hashing *H, ListaProdutos *LP)
     printf("TEMPOS\n");
     printf("-----------------------------------------\n");
 
-    printf("Tempo medio espera  : %.2f segundos\n",
+    printf("Tempo medio atendimento : %.2f segundos\n",
            E.tempoMedioEsperaCaixas);
 
     printf("Tempo total caixa   : %.2f segundos\n\n",

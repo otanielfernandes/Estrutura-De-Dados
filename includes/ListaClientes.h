@@ -25,5 +25,6 @@ Cliente *ObterClienteAleatorio(ListaClientes *LC);
 void MostrarListaClientes(ListaClientes *LC);
 int RemoverClienteInicio(ListaClientes *LC);
 void DestruirListaClientes(ListaClientes *LC);
+void DestruirListaClientesSemClientes(ListaClientes *LC);
 
 #endif

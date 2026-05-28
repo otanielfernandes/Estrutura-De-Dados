@@ -104,8 +104,7 @@ void MenuEstatisticas(Hashing *H,
             break;
 
         case 4:
-
-            ObterNumeroProdutosOferecidos(LP, &E);
+            ObterNumeroProdutosOferecidos(H, &E);
 
             printf("NUMERO PRODUTOS OFERECIDOS\n\n");
 
@@ -116,7 +115,7 @@ void MenuEstatisticas(Hashing *H,
 
         case 5:
 
-            ValorTotalProdutosOferecidos(LP, &E);
+            ValorTotalProdutosOferecidos(H, &E);
 
             printf("VALOR PRODUTOS OFERECIDOS\n\n");
 

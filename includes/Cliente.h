@@ -9,7 +9,8 @@ typedef struct
     int id;
     char *nome;
     ListaProdutos *carrinho;
-    int tempoTotalCaixa; // tempoAtendimento
+    float tempoTotalCaixa;   // Tempo total que o cliente passará na caixa (soma dos tempos dos produtos)
+    float tempoInicialCaixa; // Tempo inicial calculado para a caixa (sem descontos)
     time_t tempoEntrada;
 
 } Cliente;
