@@ -9,7 +9,7 @@ typedef struct
     int id;
     char *nome;
     ListaProdutos *carrinho;
-    int tempoTotalCaixa;
+    int tempoTotalCaixa; // tempoAtendimento
     time_t tempoEntrada;
 
 } Cliente;

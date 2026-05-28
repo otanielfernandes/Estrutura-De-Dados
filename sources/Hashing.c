@@ -29,6 +29,7 @@ Hashing *CriarHashing(int tamanho)
     return H;
 }
 
+// Calcula o tempo total de atendimento de uma caixa somando o tempo de cada cliente na fila
 float CalcularTempoCaixa(Caixa *C)
 {
     if (C == NULL || C->fila == NULL)

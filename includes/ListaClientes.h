@@ -12,6 +12,9 @@ typedef struct NoCliente
 typedef struct
 {
     NoCliente *Inicio;
+    /* NOVO CAMPO possivel para a estrutura da lista de clientes:
+        NoCliente *Fim; // Para facilitar inserções no final da fila
+    */
     int NEL;
 } ListaClientes;
 

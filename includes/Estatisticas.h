@@ -71,11 +71,9 @@ void AtualizarEstatisticasCaixas(Estatisticas *E, Hashing *H);
 void AtualizarEstatisticasFuncionarios(Estatisticas *E, ListaFuncionarios *LF,
                                        Hashing *H);
 
-void AtualizarEstatisticasProdutos(Estatisticas *E,
-                                   ListaProdutos *LP);
+void AtualizarEstatisticasProdutos(Estatisticas *E, ListaProdutos *LP);
 
-void AtualizarEstatisticasClientes(Estatisticas *E,
-                                   ListaClientes *LC);
+void AtualizarEstatisticasClientes(Estatisticas *E, ListaClientes *LC);
 
 /* CÁLCULOS */
 float CalcularTempoMedioEspera(Hashing *H);

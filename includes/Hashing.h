@@ -17,12 +17,14 @@ typedef struct Caixa
     int totalProdutosVendidos;
 
     /* NOVOS */
-
     float tempoTotalAtendimento;
-
     float tempoMedioFila;
-
     int maxClientesFila;
+
+    /*outros campos possiveis para a estrutura caixa:
+        Funcionario *operador;
+        struct Caixa *CaixaSeguinte;
+    */
 
 } Caixa;
 
