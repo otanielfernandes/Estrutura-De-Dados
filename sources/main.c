@@ -5,7 +5,10 @@
 #include "../includes/Supermercado.h"
 #include "../includes/Uteis.h"
 
-// MENU
+/* =========================================
+   MENU
+========================================= */
+
 int Menu()
 {
     printf("\n====================================\n");
@@ -25,8 +28,12 @@ int Menu()
     return LerInteiro("");
 }
 
-// EXECUTAR OPCOES
-void ExecutaAccoesMenu(Supermercado *S, int *simulacaoAtiva, int *programaAtivo)
+/* =========================================
+   EXECUTAR OPCOES
+========================================= */
+
+void ExecutaAccoesMenu(Supermercado *S, int *simulacaoAtiva,
+                       int *programaAtivo)
 {
     int op = Menu();
 
@@ -40,8 +47,7 @@ void ExecutaAccoesMenu(Supermercado *S, int *simulacaoAtiva, int *programaAtivo)
 
     case 2:
 
-        MenuEstatisticas(S->HCaixas,
-                         S->LProdutos);
+        MenuEstatisticas(S->HCaixas, S->LProdutos);
 
         break;
 
@@ -91,11 +97,14 @@ void ExecutaAccoesMenu(Supermercado *S, int *simulacaoAtiva, int *programaAtivo)
     getchar();
 }
 
-// MAIN
+/* =========================================
+   MAIN
+========================================= */
+
 int main()
 {
 #ifdef _WIN32
-    system("chcp 65001");
+    system("chcp 65001 > nul");
 #endif
 
     srand((unsigned)time(NULL));
@@ -113,8 +122,7 @@ int main()
         return 1;
     }
 
-    if (!InicializarSupermercado(S,
-                                 "dados/Configuracao.txt"))
+    if (!InicializarSupermercado(S, "dados/Configuracao.txt"))
     {
         printf("Erro ao inicializar supermercado.\n");
 
@@ -123,35 +131,35 @@ int main()
         return 1;
     }
 
-    printf("\nProdutos carregados: %d\n",
-           S->LProdutos->NEL);
+    printf("\nProdutos carregados: %d\n", S->LProdutos->NEL);
 
-    printf("Clientes carregados: %d\n",
-           S->LClientes->NEL);
+    printf("Clientes carregados: %d\n", S->LClientes->NEL);
+
+    printf("\n========================================\n");
+    printf(" SIMULACAO INICIADA\n");
+    printf(" Prima qualquer tecla para abrir menu\n");
+    printf("========================================\n");
 
     int programaAtivo = 1;
 
     int simulacaoAtiva = 1;
 
-    printf("\n========================================\n");
-    printf("Simulacao iniciada...\n");
-    printf("Prima qualquer tecla para abrir o menu.\n");
-    printf("========================================\n");
-
     while (programaAtivo)
     {
-        /* SIMULACAO */
+        /* EXECUTA SIMULACAO */
+
         if (simulacaoAtiva)
         {
             ExecutarSimulacao(S);
         }
 
-        /* MENU APENAS COM TECLA */
+        /* MENU APENAS SE CLICAR TECLA */
+
         if (TeclaPressionada())
         {
-            ExecutaAccoesMenu(S,
-                              &simulacaoAtiva,
-                              &programaAtivo);
+            ExecutaAccoesMenu(S, &simulacaoAtiva, &programaAtivo);
+
+            printf("\nSimulacao retomada...\n");
         }
 
         wait_segundos(1);

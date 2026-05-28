@@ -9,13 +9,11 @@ typedef struct NoCliente
     struct NoCliente *Prox;
 } NoCliente;
 
-
 typedef struct
 {
     NoCliente *Inicio;
     int NEL;
 } ListaClientes;
-
 
 ListaClientes *CriarListaClientes();
 int InserirCliente(ListaClientes *LC, Cliente *C);

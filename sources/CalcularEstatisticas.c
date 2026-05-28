@@ -231,13 +231,12 @@ void ValorTotalProdutosOferecidos(Hashing *H, Estatisticas *E)
         }
     }
 }
-
 void ObterNumeroProdutosVendidos(Hashing *H, Estatisticas *E)
 {
-    E->numeroTotalProdutosVendidos = 0;
-
-    if (H == NULL)
+    if (H == NULL || E == NULL)
         return;
+
+    E->numeroTotalProdutosVendidos = 0;
 
     for (int i = 0; i < H->tamanho; i++)
     {
@@ -365,8 +364,7 @@ Estatisticas CalcularEstatisticas(Hashing *H, ListaProdutos *LP)
 }
 
 // OUTPUT
-void MostrarEstatisticasSupermercado(Hashing *H,
-                                     ListaProdutos *LP)
+void MostrarEstatisticasSupermercado(Hashing *H, ListaProdutos *LP)
 {
     Estatisticas E = CalcularEstatisticas(H, LP);
 
@@ -385,7 +383,7 @@ void MostrarEstatisticasSupermercado(Hashing *H,
     printf("-----------------------------------------\n");
 
     printf("Produtos oferecidos : %d\n",
-           E.numeroProdutosOferecidos);
+           E.produtosOferecidos);
 
     printf("Valor produtos      : %.2f EUR\n",
            E.custoOferecidos);

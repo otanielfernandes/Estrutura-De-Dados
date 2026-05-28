@@ -16,78 +16,71 @@
 
 typedef struct
 {
-    /* CAIXAS */
-    int idCaixaMaisPessoas;
-    int maxPessoasAtendidas;
+        /* CAIXAS */
+        int idCaixaMaisPessoas;
+        int maxPessoasAtendidas;
 
-    int idCaixaMenosPessoas;
-    int minPessoasAtendidas;
+        int idCaixaMenosPessoas;
+        int minPessoasAtendidas;
 
-    int idCaixaMaisProdutos;
-    int maxProdutosVendidos;
+        int idCaixaMaisProdutos;
+        int maxProdutosVendidos;
 
-    /* OPERADORES */
-    int operadorMaisPessoas;
-    int operadorMenosPessoas;
+        /* OPERADORES */
+        int operadorMaisPessoas;
+        int operadorMenosPessoas;
 
-    int operadorMaisProdutos;
-    int operadorMenosProdutos;
+        int operadorMaisProdutos;
+        int operadorMenosProdutos;
 
-    /* PRODUTOS */
-    int numeroProdutosOferecidos;
-    float custoOferecidos;
+        /* PRODUTOS */
+        float custoOferecidos;
+        int produtosOferecidos;
 
-    int numeroTotalProdutosVendidos;
+        int numeroTotalProdutosVendidos;
 
-    /* CLIENTES */
-    int numeroTotalClientesAtendidos;
+        /* CLIENTES */
+        int numeroTotalClientesAtendidos;
 
-    /* TEMPOS */
-    float tempoMedioEsperaCaixas;
-    float tempoTotalAtendimento;
+        /* TEMPOS */
+        float tempoMedioEsperaCaixas;
+        float tempoTotalAtendimento;
 
-    /* FILAS */
-    int maiorFila;
+        /* FILAS */
+        int maiorFila;
 
-    /* CAIXAS */
-    int numeroCaixasAbertas;
-    int numeroCaixasFechadas;
+        /* CAIXAS */
+        int numeroCaixasAbertas;
+        int numeroCaixasFechadas;
 
-    /* EXTRA */
-    int numeroMudancasFila;
+        /* EXTRA */
+        int numeroMudancasFila;
 
 } Estatisticas;
 
-/* =========================
-        BASE
-========================= */
-
+/* BASE */
 Estatisticas *CriarEstatisticas();
+
 void ResetEstatisticas(Estatisticas *E);
+
 void DestruirEstatisticas(Estatisticas *E);
 
-/* =========================
-        ATUALIZAÇÃO
-========================= */
-
+/* ATUALIZAÇÃO */
 void AtualizarEstatisticasCaixas(Estatisticas *E, Hashing *H);
 
-void AtualizarEstatisticasFuncionarios(Estatisticas *E, ListaFuncionarios *LF, Hashing *H);
+void AtualizarEstatisticasFuncionarios(Estatisticas *E, ListaFuncionarios *LF,
+                                       Hashing *H);
 
-void AtualizarEstatisticasProdutos(Estatisticas *E, ListaProdutos *LP);
+void AtualizarEstatisticasProdutos(Estatisticas *E,
+                                   ListaProdutos *LP);
 
-void AtualizarEstatisticasClientes(Estatisticas *E, ListaClientes *LC);
+void AtualizarEstatisticasClientes(Estatisticas *E,
+                                   ListaClientes *LC);
 
-/* =========================
-        CÁLCULOS
-========================= */
-
+/* CÁLCULOS */
 float CalcularTempoMedioEspera(Hashing *H);
 
-/* =========================
-        VISUALIZAÇÃO
-========================= */
-
+/* VISUALIZAÇÃO */
 void MostrarEstatisticas(Estatisticas *E);
 
 void MostrarResumoCaixas(Hashing *H);
@@ -98,10 +91,7 @@ void MostrarResumoProdutos(ListaProdutos *LP);
 
 void MostrarResumoClientes(ListaClientes *LC);
 
-/* =========================
-        ESTATÍSTICAS
-========================= */
-
+/* ESTATÍSTICAS */
 void ObterCaixaMaisProdutos(Hashing *H, Estatisticas *E);
 
 void ObterNumeroProdutosOferecidos(Hashing *H, Estatisticas *E);
@@ -131,15 +121,16 @@ void ObterNumeroCaixasFechadas(Hashing *H, Estatisticas *E);
 void ObterMaiorFila(Hashing *H, Estatisticas *E);
 
 void ObterTempoTotalAtendimento(Hashing *H, Estatisticas *E);
-/* =========================
-        MENUS
-========================= */
 
+/* MENUS */
 void MenuEstatisticas(Hashing *H, ListaProdutos *LP);
 
 void MenuCaixas(Hashing *H);
+
 void MenuClientes(ListaClientes *LC);
+
 void MenuProdutos(ListaProdutos *LP);
+
 void MenuFuncionarios(ListaFuncionarios *LF);
 
 #endif

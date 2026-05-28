@@ -6,4 +6,5 @@ int LerInteiro(char *txt);
 char ToMaiscula(char x);
 void wait_segundos(int seconds);
 int TeclaPressionada();
+
 #endif

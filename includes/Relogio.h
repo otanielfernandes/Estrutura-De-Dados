@@ -10,7 +10,7 @@ typedef struct
 {
     time_t Tinicio;
     int Velocidade;
-}Relogio;
+} Relogio;
 Relogio *CriarRelogio(int _velocidade);
 void DestruirRelogio(Relogio *R);
 time_t GetTempo(Relogio *R);
