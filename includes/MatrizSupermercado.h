@@ -1,5 +1,5 @@
-#ifndef HASHING_H
-#define HASHING_H
+#ifndef _H
+#define _H
 
 #include "Cliente.h"
 #include "ListaClientes.h"
@@ -28,27 +28,27 @@ typedef struct Caixa
 
 } Caixa;
 
-typedef struct Hashing
+typedef struct MatrizSupermercado
 {
     // Será um vector dinâmico para caixas:
     Caixa *Tabela;
     int tamanho;
-} Hashing;
+} MatrizSupermercado;
 
-Hashing *CriarHashing(int tamanho);
+MatrizSupermercado *CriarMatrizSupermercado(int tamanho);
 
 float CalcularTempoCaixa(Caixa *C);
 
-int FuncaoHash(Hashing *H, int idCaixa);
+int FuncaoEspalharCaixa(MatrizSupermercado *H, int idCaixa);
 
 int InserirClienteCaixa(Caixa *C, Cliente *Cli);
 
-void ProcessarCaixas(Hashing *H);
+void ProcessarCaixas(MatrizSupermercado *H);
 
-Caixa *ObterCaixa(Hashing *H, int idCaixa);
+Caixa *ObterCaixa(MatrizSupermercado *H, int idCaixa);
 
-void MostrarHashing(Hashing *H);
+void MostrarMatrizSupermercado(MatrizSupermercado *H);
 
-void DestruirHashing(Hashing *H);
+void DestruirMatrizSupermercado(MatrizSupermercado *H);
 
 #endif

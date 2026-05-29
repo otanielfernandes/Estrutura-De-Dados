@@ -106,7 +106,7 @@ int RemoverClienteInicio(ListaClientes *LC)
 
     LC->Inicio = Aux->Prox;
 
-    //DestruirCliente(Aux->Cli);
+    // DestruirCliente(Aux->Cli);
     free(Aux);
 
     LC->NEL--;

@@ -1,11 +1,11 @@
-#include "../includes/Hashing.h"
+#include "../includes/MatrizSupermercado.h"
 #include "../includes/Cliente.h"
 
 extern float CalcularTempoCliente(Cliente *C);
 
-Hashing *CriarHashing(int tamanho)
+MatrizSupermercado *CriarMatrizSupermercado(int tamanho)
 {
-    Hashing *H = (Hashing *)malloc(sizeof(Hashing));
+    MatrizSupermercado *H = (MatrizSupermercado *)malloc(sizeof(MatrizSupermercado));
     if (H == NULL)
         return NULL;
 
@@ -50,7 +50,7 @@ float CalcularTempoCaixa(Caixa *C)
     return total;
 }
 
-int FuncaoHash(Hashing *H, int idCaixa)
+int FuncaoHash(MatrizSupermercado *H, int idCaixa)
 {
     return (idCaixa - 1) % H->tamanho;
 }
@@ -71,7 +71,7 @@ int InserirClienteCaixa(Caixa *C, Cliente *Cli)
 }
 
 /* A cada ciclo desconta TICK de tempo ao cliente na frente de cada caixa */
-void ProcessarCaixas(Hashing *H)
+void ProcessarCaixas(MatrizSupermercado *H)
 {
     if (H == NULL)
         return;
@@ -94,7 +94,7 @@ void ProcessarCaixas(Hashing *H)
 
         if (Cli->tempoTotalCaixa <= 0)
         {
-            //Somar tempo total de atendimento:
+            // Somar tempo total de atendimento:
             C->tempoTotalAtendimento += Cli->tempoInicialCaixa;
             /* Contar produtos vendidos */
             if (Cli->carrinho != NULL)
@@ -102,21 +102,20 @@ void ProcessarCaixas(Hashing *H)
 
             printf("\nCliente %s terminou atendimento na Caixa %d\n",
                    Cli->nome, C->id);
-            
-            
+
             RemoverClienteInicio(C->fila);
             C->totalPessoasAtendidas++;
         }
     }
 }
 
-Caixa *ObterCaixa(Hashing *H, int idCaixa)
+Caixa *ObterCaixa(MatrizSupermercado *H, int idCaixa)
 {
     int indice = FuncaoHash(H, idCaixa);
     return &H->Tabela[indice];
 }
 
-void MostrarHashing(Hashing *H)
+void MostrarMatrizSupermercado(MatrizSupermercado *H)
 {
     if (H == NULL)
         return;
@@ -135,7 +134,7 @@ void MostrarHashing(Hashing *H)
     printf("========================================\n");
 }
 
-void DestruirHashing(Hashing *H)
+void DestruirMatrizSupermercado(MatrizSupermercado *H)
 {
     if (H == NULL)
         return;

@@ -9,7 +9,7 @@
 #include "ListaProdutos.h"
 #include "ListaFuncionarios.h"
 #include "Relogio.h"
-#include "Hashing.h"
+#include "MatrizSupermercado.h"
 #include "Estatisticas.h"
 
 // doxygen
@@ -34,7 +34,7 @@ typedef struct
     ListaFuncionarios *LFuncionarios;
     ListaProdutos *LProdutos;
 
-    Hashing *HCaixas; // Tabela de Hash para as caixas (JÃ¡ tinhas)
+    MatrizSupermercado *HCaixas; // Tabela de Hash para as caixas (JÃ¡ tinhas)
 
     // HorÃ¡rios (JÃ¡ tinhas)
     int HoraInicio, HoraFim;

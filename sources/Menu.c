@@ -2,7 +2,7 @@
 #include "../includes/Supermercado.h"
 #include "../includes/Ficheiro.h"
 #include "../includes/ListaClientes.h"
-#include "../includes/Hashing.h"
+#include "../includes/MatrizSupermercado.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -63,7 +63,7 @@ void MenuPrincipal(Supermercado *S)
             break;
 
         case 3:
-            MenuEstatisticas(S->HCaixas, S->LProdutos);
+            MenuEstatisticas(S->HCaixas);
             break;
 
         case 4:
@@ -88,7 +88,7 @@ void MenuPrincipal(Supermercado *S)
 
 /* CAIXAS */
 
-static void ListarCaixas(Hashing *H)
+static void ListarCaixas(MatrizSupermercado *H)
 {
     if (H == NULL || H->Tabela == NULL)
     {
@@ -111,7 +111,7 @@ static void ListarCaixas(Hashing *H)
     }
 }
 
-static void AbrirCaixa(Hashing *H)
+static void AbrirCaixa(MatrizSupermercado *H)
 {
     int id;
 
@@ -135,7 +135,7 @@ static void AbrirCaixa(Hashing *H)
     printf("\nCaixa aberta com sucesso.\n");
 }
 
-static void FecharCaixa(Hashing *H)
+static void FecharCaixa(MatrizSupermercado *H)
 {
     int id;
 
@@ -159,13 +159,13 @@ static void FecharCaixa(Hashing *H)
         printf("\nNao pode fechar caixa com clientes.\n");
         return;
     }
-    
+
     C->aberta = 0;
 
     printf("\nCaixa fechada com sucesso.\n");
 }
 
-void MenuCaixas(Hashing *H)
+void MenuCaixas(MatrizSupermercado *H)
 {
     int op;
 

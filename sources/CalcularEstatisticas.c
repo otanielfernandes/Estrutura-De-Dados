@@ -35,7 +35,7 @@
 }*/
 
 // Tempo total de Atendimento
-void ObterTempoTotalAtendimento(Hashing *H, Estatisticas *E)
+void ObterTempoTotalAtendimento(MatrizSupermercado *H, Estatisticas *E)
 {
     E->tempoTotalAtendimento = 0;
 
@@ -50,7 +50,7 @@ void ObterTempoTotalAtendimento(Hashing *H, Estatisticas *E)
 }
 
 // CAIXA MAIS PRODUTOS
-void ObterCaixaMaisProdutos(Hashing *H, Estatisticas *E)
+void ObterCaixaMaisProdutos(MatrizSupermercado *H, Estatisticas *E)
 {
     E->idCaixaMaisProdutos = -1;
     E->maxProdutosVendidos = 0;
@@ -74,7 +74,7 @@ void ObterCaixaMaisProdutos(Hashing *H, Estatisticas *E)
 }
 
 // CAIXA MAIS PESSOAS
-void ObterCaixaMaisPessoas(Hashing *H, Estatisticas *E)
+void ObterCaixaMaisPessoas(MatrizSupermercado *H, Estatisticas *E)
 {
     E->idCaixaMaisPessoas = -1;
     E->maxPessoasAtendidas = 0;
@@ -96,7 +96,7 @@ void ObterCaixaMaisPessoas(Hashing *H, Estatisticas *E)
 }
 
 // CAIXA MENOS PESSOAS
-void ObterCaixaMenosPessoas(Hashing *H, Estatisticas *E)
+void ObterCaixaMenosPessoas(MatrizSupermercado *H, Estatisticas *E)
 {
     E->idCaixaMenosPessoas = -1;
     E->minPessoasAtendidas = 999999;
@@ -118,7 +118,7 @@ void ObterCaixaMenosPessoas(Hashing *H, Estatisticas *E)
 }
 
 // CAIXAS ABERTAS
-void ObterNumeroCaixasAbertas(Hashing *H, Estatisticas *E)
+void ObterNumeroCaixasAbertas(MatrizSupermercado *H, Estatisticas *E)
 {
     E->numeroCaixasAbertas = 0;
 
@@ -133,7 +133,7 @@ void ObterNumeroCaixasAbertas(Hashing *H, Estatisticas *E)
 }
 
 // CAIXAS FECHADAS
-void ObterNumeroCaixasFechadas(Hashing *H, Estatisticas *E)
+void ObterNumeroCaixasFechadas(MatrizSupermercado *H, Estatisticas *E)
 {
     E->numeroCaixasFechadas = 0;
 
@@ -147,7 +147,7 @@ void ObterNumeroCaixasFechadas(Hashing *H, Estatisticas *E)
     }
 }
 // MAIOR FILA
-void ObterMaiorFila(Hashing *H, Estatisticas *E)
+void ObterMaiorFila(MatrizSupermercado *H, Estatisticas *E)
 {
     E->maiorFila = 0;
 
@@ -165,7 +165,7 @@ void ObterMaiorFila(Hashing *H, Estatisticas *E)
 }
 
 // PRODUTOS
-void ObterNumeroProdutosOferecidos(Hashing *H, Estatisticas *E)
+void ObterNumeroProdutosOferecidos(MatrizSupermercado *H, Estatisticas *E)
 {
     E->numeroProdutosOferecidos = 0;
 
@@ -194,7 +194,7 @@ void ObterNumeroProdutosOferecidos(Hashing *H, Estatisticas *E)
     }
 }
 
-void ValorTotalProdutosOferecidos(Hashing *H, Estatisticas *E)
+void ValorTotalProdutosOferecidos(MatrizSupermercado *H, Estatisticas *E)
 {
     E->custoOferecidos = 0;
 
@@ -231,7 +231,7 @@ void ValorTotalProdutosOferecidos(Hashing *H, Estatisticas *E)
         }
     }
 }
-void ObterNumeroProdutosVendidos(Hashing *H, Estatisticas *E)
+void ObterNumeroProdutosVendidos(MatrizSupermercado *H, Estatisticas *E)
 {
     if (H == NULL || E == NULL)
         return;
@@ -245,7 +245,7 @@ void ObterNumeroProdutosVendidos(Hashing *H, Estatisticas *E)
 }
 
 // FUNCIONÁRIOS / OPERADORES
-void OperadorMenosPessoas(Hashing *H, Estatisticas *E)
+void OperadorMenosPessoas(MatrizSupermercado *H, Estatisticas *E)
 {
     E->operadorMenosPessoas = -1;
 
@@ -269,7 +269,7 @@ void OperadorMenosPessoas(Hashing *H, Estatisticas *E)
     }
 }
 
-void ObterOperadorMaisProdutos(Hashing *H, Estatisticas *E)
+void ObterOperadorMaisProdutos(MatrizSupermercado *H, Estatisticas *E)
 {
     E->operadorMaisProdutos = -1;
 
@@ -294,7 +294,7 @@ void ObterOperadorMaisProdutos(Hashing *H, Estatisticas *E)
 }
 
 // TEMPO MÉDIO DE ESPERA
-void TempoMedioEsperaCaixas(Hashing *H, Estatisticas *E)
+void TempoMedioEsperaCaixas(MatrizSupermercado *H, Estatisticas *E)
 {
     E->tempoMedioEsperaCaixas = 0;
 
@@ -318,7 +318,7 @@ void TempoMedioEsperaCaixas(Hashing *H, Estatisticas *E)
 }
 
 // CLIENTES
-void NumeroTotalClientesAtendidos(Hashing *H, Estatisticas *E)
+void NumeroTotalClientesAtendidos(MatrizSupermercado *H, Estatisticas *E)
 {
     E->numeroTotalClientesAtendidos = 0;
 
@@ -330,7 +330,7 @@ void NumeroTotalClientesAtendidos(Hashing *H, Estatisticas *E)
 }
 
 // PRINCIPAL
-Estatisticas CalcularEstatisticas(Hashing *H, ListaProdutos *LP)
+Estatisticas CalcularEstatisticas(MatrizSupermercado *H)
 {
     Estatisticas E = {0};
 
@@ -364,9 +364,9 @@ Estatisticas CalcularEstatisticas(Hashing *H, ListaProdutos *LP)
 }
 
 // OUTPUT
-void MostrarEstatisticasSupermercado(Hashing *H, ListaProdutos *LP)
+void MostrarEstatisticasSupermercado(MatrizSupermercado *H)
 {
-    Estatisticas E = CalcularEstatisticas(H, LP);
+    Estatisticas E = CalcularEstatisticas(H);
 
     printf("\n=========================================\n");
     printf("     ESTATISTICAS DO SUPERMERCADO\n");
@@ -383,7 +383,7 @@ void MostrarEstatisticasSupermercado(Hashing *H, ListaProdutos *LP)
     printf("-----------------------------------------\n");
 
     printf("Produtos oferecidos : %d\n",
-           E.produtosOferecidos);
+           E.numeroProdutosOferecidos);
 
     printf("Valor produtos      : %.2f EUR\n",
            E.custoOferecidos);

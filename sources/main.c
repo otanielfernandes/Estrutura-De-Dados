@@ -47,13 +47,13 @@ void ExecutaAccoesMenu(Supermercado *S, int *simulacaoAtiva,
 
     case 2:
 
-        MenuEstatisticas(S->HCaixas, S->LProdutos);
+        MenuEstatisticas(S->HCaixas);
 
         break;
 
     case 3:
 
-        MostrarHashing(S->HCaixas);
+        MostrarMatrizSupermercado(S->HCaixas);
 
         break;
 
@@ -169,7 +169,7 @@ int main()
     printf("        ESTATISTICAS FINAIS\n");
     printf("========================================\n");
 
-    MenuEstatisticas(S->HCaixas, S->LProdutos);
+    MenuEstatisticas(S->HCaixas);
 
     DestruirSupermercado(S);
 

@@ -101,9 +101,9 @@ int InicializarSupermercado(Supermercado *S, char *config)
     LerClientes(S->LClientes, "dados/Clientes.txt");
     LerFuncionarios(S->LFuncionarios, "dados/Funcionarios.txt");
 
-    /* HASHING */
+    /* MatrizSupermercado */
 
-    S->HCaixas = CriarHashing(S->n_caixas);
+    S->HCaixas = CriarMatrizSupermercado(S->n_caixas);
 
     if (S->HCaixas != NULL)
     {
@@ -200,8 +200,7 @@ Caixa *EscolherCaixa(Supermercado *S)
 }
 
 // GERAR CARRINHO
-void GerarCarrinhoCliente(Supermercado *S,
-                          Cliente *C,
+void GerarCarrinhoCliente(Supermercado *S, Cliente *C,
                           int quantidade)
 {
     if (S == NULL || C == NULL)
@@ -359,11 +358,11 @@ size_t MemoriaUtilizada(Supermercado *S)
     if (S->NOME != NULL)
         mem += strlen(S->NOME) + 1;
 
-        if (S->HCaixas != NULL)
-        {
-            mem += sizeof(Hashing);
-            mem += sizeof(Caixa) * S->HCaixas->tamanho;
-        }
+    if (S->HCaixas != NULL)
+    {
+        mem += sizeof(MatrizSupermercado);
+        mem += sizeof(Caixa) * S->HCaixas->tamanho;
+    }
 
     return mem;
 }
@@ -399,7 +398,7 @@ void DestruirSupermercado(Supermercado *S)
         DestruirListaProdutos(S->LProdutos);
 
     if (S->HCaixas != NULL)
-        DestruirHashing(S->HCaixas);
+        DestruirMatrizSupermercado(S->HCaixas);
 
     free(S);
 }

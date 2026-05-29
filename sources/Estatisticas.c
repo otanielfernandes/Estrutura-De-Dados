@@ -1,5 +1,5 @@
 #include "../includes/Estatisticas.h"
-#include "../includes/Hashing.h"
+#include "../includes/MatrizSupermercado.h"
 #include "../includes/ListaProdutos.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -43,8 +43,7 @@ static void MostrarMenuEstatisticas(void)
 }
 
 // MENU PRINCIPAL ESTATISTICAS
-void MenuEstatisticas(Hashing *H,
-                      ListaProdutos *LP)
+void MenuEstatisticas(MatrizSupermercado *H)
 {
     Estatisticas E;
     int opcao;
@@ -109,7 +108,7 @@ void MenuEstatisticas(Hashing *H,
             printf("NUMERO PRODUTOS OFERECIDOS\n\n");
 
             printf("Total: %d\n",
-                   E.produtosOferecidos);
+                   E.numeroProdutosOferecidos);
 
             break;
 
@@ -225,7 +224,7 @@ void MenuEstatisticas(Hashing *H,
 
         case 15:
 
-            MostrarEstatisticasSupermercado(H, LP);
+            MostrarEstatisticasSupermercado(H);
 
             break;
 

@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "Hashing.h"
+#include "MatrizSupermercado.h"
 #include "ListaClientes.h"
 #include "ListaFuncionarios.h"
 #include "ListaProdutos.h"
@@ -35,7 +35,7 @@ typedef struct
 
         /* PRODUTOS */
         float custoOferecidos;
-        int produtosOferecidos;
+        int numeroProdutosOferecidos;
 
         int numeroTotalProdutosVendidos;
 
@@ -66,22 +66,22 @@ void ResetEstatisticas(Estatisticas *E);
 void DestruirEstatisticas(Estatisticas *E);
 
 /* ATUALIZAÇÃO */
-void AtualizarEstatisticasCaixas(Estatisticas *E, Hashing *H);
+void AtualizarEstatisticasCaixas(Estatisticas *E, MatrizSupermercado *H);
 
 void AtualizarEstatisticasFuncionarios(Estatisticas *E, ListaFuncionarios *LF,
-                                       Hashing *H);
+                                       MatrizSupermercado *H);
 
 void AtualizarEstatisticasProdutos(Estatisticas *E, ListaProdutos *LP);
 
 void AtualizarEstatisticasClientes(Estatisticas *E, ListaClientes *LC);
 
 /* CÁLCULOS */
-float CalcularTempoMedioEspera(Hashing *H);
+float CalcularTempoMedioEspera(MatrizSupermercado *H);
 
 /* VISUALIZAÇÃO */
 void MostrarEstatisticas(Estatisticas *E);
 
-void MostrarResumoCaixas(Hashing *H);
+void MostrarResumoCaixas(MatrizSupermercado *H);
 
 void MostrarResumoFuncionarios(ListaFuncionarios *LF);
 
@@ -90,40 +90,40 @@ void MostrarResumoProdutos(ListaProdutos *LP);
 void MostrarResumoClientes(ListaClientes *LC);
 
 /* ESTATÍSTICAS */
-void ObterCaixaMaisProdutos(Hashing *H, Estatisticas *E);
+void ObterCaixaMaisProdutos(MatrizSupermercado *H, Estatisticas *E);
 
-void ObterNumeroProdutosOferecidos(Hashing *H, Estatisticas *E);
+void ObterNumeroProdutosOferecidos(MatrizSupermercado *H, Estatisticas *E);
 
-void ValorTotalProdutosOferecidos(Hashing *H, Estatisticas *E);
+void ValorTotalProdutosOferecidos(MatrizSupermercado *H, Estatisticas *E);
 
-void TempoMedioEsperaCaixas(Hashing *H, Estatisticas *E);
+void TempoMedioEsperaCaixas(MatrizSupermercado *H, Estatisticas *E);
 
-void NumeroTotalClientesAtendidos(Hashing *H, Estatisticas *E);
+void NumeroTotalClientesAtendidos(MatrizSupermercado *H, Estatisticas *E);
 
-void OperadorMenosPessoas(Hashing *H, Estatisticas *E);
+void OperadorMenosPessoas(MatrizSupermercado *H, Estatisticas *E);
 
-void ObterOperadorMaisProdutos(Hashing *H, Estatisticas *E);
+void ObterOperadorMaisProdutos(MatrizSupermercado *H, Estatisticas *E);
 
-void ObterCaixaMenosPessoas(Hashing *H, Estatisticas *E);
+void ObterCaixaMenosPessoas(MatrizSupermercado *H, Estatisticas *E);
 
-void ObterCaixaMaisPessoas(Hashing *H, Estatisticas *E);
+void ObterCaixaMaisPessoas(MatrizSupermercado *H, Estatisticas *E);
 
-void MostrarEstatisticasSupermercado(Hashing *H, ListaProdutos *LP);
+void MostrarEstatisticasSupermercado(MatrizSupermercado *H);
 
-void ObterNumeroProdutosVendidos(Hashing *H, Estatisticas *E);
+void ObterNumeroProdutosVendidos(MatrizSupermercado *H, Estatisticas *E);
 
-void ObterNumeroCaixasAbertas(Hashing *H, Estatisticas *E);
+void ObterNumeroCaixasAbertas(MatrizSupermercado *H, Estatisticas *E);
 
-void ObterNumeroCaixasFechadas(Hashing *H, Estatisticas *E);
+void ObterNumeroCaixasFechadas(MatrizSupermercado *H, Estatisticas *E);
 
-void ObterMaiorFila(Hashing *H, Estatisticas *E);
+void ObterMaiorFila(MatrizSupermercado *H, Estatisticas *E);
 
-void ObterTempoTotalAtendimento(Hashing *H, Estatisticas *E);
+void ObterTempoTotalAtendimento(MatrizSupermercado *H, Estatisticas *E);
 
 /* MENUS */
-void MenuEstatisticas(Hashing *H, ListaProdutos *LP);
+void MenuEstatisticas(MatrizSupermercado *H);
 
-void MenuCaixas(Hashing *H);
+void MenuCaixas(MatrizSupermercado *H);
 
 void MenuClientes(ListaClientes *LC);
 
