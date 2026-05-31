@@ -22,6 +22,9 @@ Cliente *CriarCliente(int id, char *nome)
     C->carrinho = CriarListaProdutos();
     C->tempoTotalCaixa = 0;
     C->tempoEntrada = time(NULL);
+    C->mudouCaixa = 0;
+    C->tempoEspera = 0;
+    C->emAtendimento = 0;
 
     return C;
 }

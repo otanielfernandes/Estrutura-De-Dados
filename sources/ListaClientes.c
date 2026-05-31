@@ -134,6 +134,78 @@ void DestruirListaClientes(ListaClientes *LC)
 
     free(LC);
 }
+Cliente *RetirarClienteFim(ListaClientes *LC)
+{
+    if (LC == NULL || LC->Inicio == NULL)
+        return NULL;
+
+    NoCliente *Atual = LC->Inicio;
+    NoCliente *Anterior = NULL;
+
+    while (Atual->Prox != NULL)
+    {
+        Anterior = Atual;
+        Atual = Atual->Prox;
+    }
+
+    Cliente *C = Atual->Cli;
+
+    if (Anterior == NULL)
+    {
+        LC->Inicio = NULL;
+    }
+    else
+    {
+        Anterior->Prox = NULL;
+    }
+
+    free(Atual);
+
+    LC->NEL--;
+
+    return C;
+}
+
+Cliente *RetirarClientePosicao(ListaClientes *LC, int posicao)
+{
+    if (LC == NULL)
+        return NULL;
+
+    if (LC->Inicio == NULL)
+        return NULL;
+
+    if (posicao < 0)
+        return NULL;
+
+    if (posicao >= LC->NEL)
+        return NULL;
+
+    NoCliente *Atual = LC->Inicio;
+    NoCliente *Anterior = NULL;
+
+    for (int i = 0; i < posicao; i++)
+    {
+        Anterior = Atual;
+        Atual = Atual->Prox;
+    }
+
+    Cliente *C = Atual->Cli;
+
+    if (Anterior == NULL)
+    {
+        LC->Inicio = Atual->Prox;
+    }
+    else
+    {
+        Anterior->Prox = Atual->Prox;
+    }
+
+    free(Atual);
+
+    LC->NEL--;
+
+    return C;
+}
 
 void DestruirListaClientesSemClientes(ListaClientes *LC)
 {

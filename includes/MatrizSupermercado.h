@@ -51,4 +51,5 @@ void MostrarMatrizSupermercado(MatrizSupermercado *H);
 
 void DestruirMatrizSupermercado(MatrizSupermercado *H);
 
+int NumeroClientesFila(Caixa *C);
 #endif

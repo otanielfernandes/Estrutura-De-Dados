@@ -26,5 +26,7 @@ void MostrarListaClientes(ListaClientes *LC);
 int RemoverClienteInicio(ListaClientes *LC);
 void DestruirListaClientes(ListaClientes *LC);
 void DestruirListaClientesSemClientes(ListaClientes *LC);
+Cliente *RetirarClienteFim(ListaClientes *LC);
+Cliente *RetirarClientePosicao(ListaClientes *LC, int posicao);
 
 #endif

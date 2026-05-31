@@ -81,12 +81,28 @@ void ProcessarCaixas(MatrizSupermercado *H)
     for (int i = 0; i < H->tamanho; i++)
     {
         Caixa *C = &H->Tabela[i];
+
         if (!C->aberta)
             continue;
-        if (C->fila == NULL || C->fila->Inicio == NULL)
+
+        if (C->fila == NULL)
             continue;
 
+        if (C->fila->Inicio == NULL)
+            continue;
+
+        /* Atualizar tempo de espera de todos */
+        NoCliente *Aux = C->fila->Inicio;
+
+        while (Aux != NULL)
+        {
+            Aux->Cli->tempoEspera += TICK;
+            Aux = Aux->Prox;
+        }
+
+        /* Cliente que está a ser atendido */
         Cliente *Cli = C->fila->Inicio->Cli;
+
         if (Cli == NULL)
             continue;
 
@@ -94,21 +110,47 @@ void ProcessarCaixas(MatrizSupermercado *H)
 
         if (Cli->tempoTotalCaixa <= 0)
         {
-            // Somar tempo total de atendimento:
+            /* Estatísticas da caixa */
             C->tempoTotalAtendimento += Cli->tempoInicialCaixa;
-            /* Contar produtos vendidos */
+
             if (Cli->carrinho != NULL)
                 C->totalProdutosVendidos += Cli->carrinho->NEL;
 
             printf("\nCliente %s terminou atendimento na Caixa %d\n",
-                   Cli->nome, C->id);
+                   Cli->nome,
+                   C->id);
 
+            /* Libertar carrinho utilizado */
+            if (Cli->carrinho != NULL)
+            {
+                DestruirListaProdutos(Cli->carrinho);
+                Cli->carrinho = NULL;
+            }
+
+            /* Reiniciar dados do cliente */
+            Cli->tempoTotalCaixa = 0;
+            Cli->tempoInicialCaixa = 0;
+            Cli->tempoEspera = 0;
+            Cli->mudouCaixa = 0;
+
+            /* Remover da fila */
             RemoverClienteInicio(C->fila);
+
             C->totalPessoasAtendidas++;
         }
     }
 }
 
+/*Numero de Clientes na Fila*/
+int NumeroClientesFila(Caixa *C)
+{
+    if (C == NULL || C->fila == NULL)
+        return 0;
+
+    return C->fila->NEL;
+}
+
+/*Obter Caixa por ID*/
 Caixa *ObterCaixa(MatrizSupermercado *H, int idCaixa)
 {
     int indice = FuncaoHash(H, idCaixa);

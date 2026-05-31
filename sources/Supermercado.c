@@ -236,7 +236,6 @@ void EntradaPessoaSupermercado(Supermercado *S)
         return;
 
     Cliente *C = NULL;
-
     int tentativas = 0;
 
     while (tentativas < 20)
@@ -254,7 +253,8 @@ void EntradaPessoaSupermercado(Supermercado *S)
 
     if (C == NULL)
         return;
-
+    C->mudouCaixa = 0;
+    C->tempoEspera = 0;
     if (ClienteJaNaFila(S, C))
         return;
 
@@ -269,7 +269,8 @@ void EntradaPessoaSupermercado(Supermercado *S)
 
     C->tempoTotalCaixa = CalcularTempoCliente(C);
     C->tempoInicialCaixa = C->tempoTotalCaixa;
-
+    C->mudouCaixa = 0;
+    C->tempoEspera = 0;
     Caixa *CX = EscolherCaixa(S);
 
     if (CX == NULL)
@@ -302,18 +303,265 @@ void EntradaPessoaSupermercado(Supermercado *S)
            CX->id);
 }
 
+/*Numero de Caixas Abertas */
+static int NumeroCaixasAbertas(Supermercado *S)
+{
+    if (S == NULL || S->HCaixas == NULL)
+        return 0;
+
+    int count = 0;
+    for (int i = 0; i < S->HCaixas->tamanho; i++)
+    {
+        if (S->HCaixas->Tabela[i].aberta)
+            count++;
+    }
+    return count;
+}
+
+/*Caixa Menor Fila*/
+static Caixa *CaixaMenorFila(Supermercado *S)
+{
+    Caixa *melhor = NULL;
+
+    int menor = 99999;
+
+    for (int i = 0; i < S->HCaixas->tamanho; i++)
+    {
+        Caixa *C = &S->HCaixas->Tabela[i];
+
+        if (!C->aberta)
+            continue;
+
+        if (C->fila->NEL < menor)
+        {
+            menor = C->fila->NEL;
+            melhor = C;
+        }
+    }
+
+    return melhor;
+}
+
+static Caixa *CaixaMaiorFila(Supermercado *S)
+{
+    Caixa *maior = NULL;
+
+    int clientes = -1;
+
+    for (int i = 0; i < S->HCaixas->tamanho; i++)
+    {
+        Caixa *C = &S->HCaixas->Tabela[i];
+
+        if (!C->aberta)
+            continue;
+
+        if (C->fila->NEL > clientes)
+        {
+            clientes = C->fila->NEL;
+            maior = C;
+        }
+    }
+
+    return maior;
+}
+
+/*Abertura Automática de Caixa*/
+static void VerificarAberturaCaixas(Supermercado *S)
+{
+    int abertas = NumeroCaixasAbertas(S);
+
+    if (abertas == 0)
+        return;
+
+    int soma = 0;
+
+    for (int i = 0; i < S->HCaixas->tamanho; i++)
+    {
+        Caixa *C = &S->HCaixas->Tabela[i];
+
+        if (C->aberta)
+            soma += C->fila->NEL;
+    }
+
+    float media = (float)soma / abertas;
+
+    if (media > S->max_fila)
+    {
+        Caixa *Nova = AbrirNovaCaixa(S);
+
+        if (Nova != NULL)
+        {
+            printf("\nNova caixa aberta automaticamente.\n");
+        }
+    }
+}
+
+/*Equilibrar Filas */
+static void EquilibrarFilas(Supermercado *S)
+{
+    Caixa *Maior = CaixaMaiorFila(S);
+    Caixa *Menor = CaixaMenorFila(S);
+
+    if (Maior == NULL || Menor == NULL)
+        return;
+
+    while ((Maior->fila->NEL - Menor->fila->NEL) >= 3)
+    {
+        Cliente *C = RetirarClienteFim(Maior->fila);
+
+        if (C == NULL)
+            return;
+
+        InserirCliente(Menor->fila, C);
+
+        printf("\nCliente mudou da Caixa %d para Caixa %d\n",
+               Maior->id,
+               Menor->id);
+
+        Maior = CaixaMaiorFila(S);
+        Menor = CaixaMenorFila(S);
+
+        if (Maior == NULL || Menor == NULL)
+            return;
+    }
+}
+
+/*Fecho Automático de Caixa*/
+static void VerificarFechoCaixas(Supermercado *S)
+{
+    int abertas = NumeroCaixasAbertas(S);
+
+    if (abertas <= 2)
+        return;
+
+    int soma = 0;
+
+    for (int i = 0; i < S->HCaixas->tamanho; i++)
+    {
+        Caixa *C = &S->HCaixas->Tabela[i];
+
+        if (C->aberta)
+            soma += C->fila->NEL;
+    }
+
+    float media = (float)soma / abertas;
+
+    if (media >= S->min_fila)
+        return;
+
+    for (int i = S->HCaixas->tamanho - 1; i >= 0; i--)
+    {
+        Caixa *C = &S->HCaixas->Tabela[i];
+
+        if (!C->aberta)
+            continue;
+
+        if (C->fila->NEL != 0)
+            continue;
+
+        C->aberta = 0;
+
+        printf("\nCaixa %d fechada.\n",
+               C->id);
+
+        return;
+    }
+}
+
+/*Mudança de Fila */
+static void VerificarMudancasFila(Supermercado *S)
+{
+    for (int i = 0; i < S->HCaixas->tamanho; i++)
+    {
+        Caixa *Origem = &S->HCaixas->Tabela[i];
+
+        if (!Origem->aberta)
+            continue;
+
+        if (Origem->fila->NEL < 4)
+            continue;
+
+        Caixa *Destino = CaixaMenorFila(S);
+
+        if (Destino == NULL)
+            continue;
+
+        if (Destino == Origem)
+            continue;
+
+        if ((Origem->fila->NEL - Destino->fila->NEL) < 3)
+            continue;
+
+        NoCliente *Aux = Origem->fila->Inicio;
+
+        if (Aux == NULL)
+            continue;
+
+        Aux = Aux->Prox;
+
+        if (Aux == NULL)
+            continue;
+        Cliente *C = RetirarClientePosicao(Origem->fila, 1);
+
+        if (C == NULL)
+            continue;
+
+        if (C->mudouCaixa)
+        {
+            InserirCliente(Origem->fila, C);
+            continue;
+        }
+
+        int podeMudar = 0;
+
+        if ((Origem->fila->NEL - Destino->fila->NEL) >= 3)
+        {
+            podeMudar = 1;
+        }
+
+        float tempoDestino = CalcularTempoCaixa(Destino);
+
+        if (C->tempoEspera >= (S->max_espera * 0.75) &&
+            tempoDestino < C->tempoEspera)
+        {
+            podeMudar = 1;
+        }
+
+        if (podeMudar)
+        {
+            C->mudouCaixa = 1;
+
+            InserirCliente(Destino->fila, C);
+
+            printf("\nCliente %s mudou da Caixa %d para Caixa %d\n",
+                   C->nome,
+                   Origem->id,
+                   Destino->id);
+        }
+        else
+        {
+            InserirCliente(Origem->fila, C);
+        }
+    }
+}
+
 // EXECUTAR SIMULACAO
 int ExecutarSimulacao(Supermercado *S)
 {
     if (S == NULL)
         return 0;
 
-    if (!S->simulacao_ativa)
-        return 0;
-
     EntradaPessoaSupermercado(S);
 
+    VerificarAberturaCaixas(S);
+
+    VerificarMudancasFila(S);
+
+    EquilibrarFilas(S);
+
     ProcessarCaixas(S->HCaixas);
+
+    VerificarFechoCaixas(S);
 
     return 1;
 }
