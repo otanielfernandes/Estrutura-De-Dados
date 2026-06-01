@@ -227,9 +227,33 @@ void GerarCarrinhoCliente(Supermercado *S, Cliente *C,
     }
 }
 
+//Nova função para calcular a media de clientes nas filas:
+static float MediaClientesFila(Supermercado *S)
+{
+    int totalClientes = 0;
+    int caixasAbertas = 0;
+
+    for (int i = 0; i < S->HCaixas->tamanho; i++)
+    {
+        Caixa *C = &S->HCaixas->Tabela[i];
+
+        if (C->aberta)
+        {
+            caixasAbertas++;
+            totalClientes += C->fila->NEL;
+        }
+    }
+
+    if (caixasAbertas == 0)
+        return 0;
+
+    return (float)totalClientes / caixasAbertas;
+}
+
 // ENTRADA CLIENTE
 void EntradaPessoaSupermercado(Supermercado *S)
 {
+
     if (S == NULL)
         return;
 
@@ -282,23 +306,16 @@ void EntradaPessoaSupermercado(Supermercado *S)
         return;
     }
 
-    float tempoCliente = CalcularTempoCliente(C);
+    float media = MediaClientesFila(S);
 
-    float tempoCaixa = CalcularTempoCaixa(CX);
-
-    /* ULTRAPASSOU O MAX_ESPERA */
-    if ((tempoCaixa + tempoCliente) > S->max_espera)
+    if (media >= S->max_fila)
     {
-        /* oferecer produto */
-        OferecerProduto(C);
-
-        /* tentar abrir nova caixa */
         Caixa *Nova = AbrirNovaCaixa(S);
 
         if (Nova != NULL)
             CX = Nova;
     }
-
+    
     InserirClienteCaixa(CX, C);
 
     printf("\n[ENTRADA] - %-20s -> Caixa %d\n",

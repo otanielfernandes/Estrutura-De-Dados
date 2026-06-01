@@ -76,7 +76,8 @@ void ProcessarCaixas(MatrizSupermercado *H)
     if (H == NULL)
         return;
 
-    const int TICK = 5;
+    //A diferença entre TICk = 5 e TICK é que o TICK 1 faz com que o cliente demore mais tempoa para sair da fila/caixa:
+    const int TICK = 1;
 
     for (int i = 0; i < H->tamanho; i++)
     {
