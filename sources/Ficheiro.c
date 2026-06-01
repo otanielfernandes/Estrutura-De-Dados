@@ -3,50 +3,44 @@
 int LerProdutos(ListaProdutos *LProd, char *ficheiro)
 {
     FILE *f = fopen(ficheiro, "r");
+
     if (f == NULL)
     {
-        printf("Erro ao abrir %s\n", ficheiro);
+        printf("[ERRO] Não foi possível abrir: %s\n", ficheiro);
         return 0;
     }
 
     char linha[512];
     int contador = 0;
-    const int MAX_PRODUTOS = 60;
+    const int MAX_PRODUTOS = 600;
 
     while (fgets(linha, sizeof(linha), f) && contador < MAX_PRODUTOS)
     {
         int codigo;
         char nome[300];
-        float preco;
-        float tempoCompra;
-        float tempoCaixa;
+        float preco, tempoCompra, tempoCaixa;
 
-        int lidos = sscanf(
-            linha,
-            "%d %[^\t]\t%f\t%f\t%f",
-            &codigo,
-            nome,
-            &preco,
-            &tempoCompra,
-            &tempoCaixa);
+        int lidos = sscanf(linha,
+                           "%d %[^\t]\t%f\t%f\t%f",
+                           &codigo,
+                           nome,
+                           &preco,
+                           &tempoCompra,
+                           &tempoCaixa);
 
         if (lidos == 5)
         {
-            Produto *Prod = CriarProduto(
-                codigo,
-                nome,
-                preco,
-                tempoCompra,
-                tempoCaixa);
-
+            Produto *Prod = CriarProduto(codigo, nome, preco, tempoCompra, tempoCaixa);
             InserirProduto(LProd, Prod);
             contador++;
         }
     }
+
     InverterListaProdutos(LProd);
 
     fclose(f);
 
+    printf("[INFO] Produtos carregados: %d\n", contador);
     return 1;
 }
 
@@ -57,14 +51,14 @@ int LerClientes(ListaClientes *LC, char *ficheiro)
 
     if (f == NULL)
     {
-        printf("\nErro ao abrir ficheiro de clientes!\n");
+        printf("[ERRO] Ficheiro de clientes não encontrado!\n");
         return 0;
     }
 
     int id;
     char nome[200];
     int contador = 0;
-    const int MAX_CLIENTES = 20;
+    const int MAX_CLIENTES = 120;
 
     while (fscanf(f, "%d\t%[^\n]\n", &id, nome) == 2 && contador < MAX_CLIENTES)
     {
@@ -72,10 +66,12 @@ int LerClientes(ListaClientes *LC, char *ficheiro)
         InserirCliente(LC, C);
         contador++;
     }
+
     InverterListaClientes(LC);
 
     fclose(f);
 
+    printf("[INFO] Clientes carregados: %d\n", contador);
     return 1;
 }
 
@@ -85,7 +81,7 @@ int LerFuncionarios(ListaFuncionarios *LF, char *ficheiro)
 
     if (f == NULL)
     {
-        printf("Erro ao abrir Funcionarios.txt\n");
+        printf("[ERRO] Não foi possível abrir Funcionarios.txt\n");
         return 0;
     }
 
@@ -100,9 +96,11 @@ int LerFuncionarios(ListaFuncionarios *LF, char *ficheiro)
         InserirFuncionario(LF, F);
         contador++;
     }
+
     InverterListaFuncionarios(LF);
 
     fclose(f);
 
+    printf("[INFO] Funcionários carregados: %d\n", contador);
     return 1;
 }

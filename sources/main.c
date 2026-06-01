@@ -4,102 +4,93 @@
 
 #include "../includes/Supermercado.h"
 #include "../includes/Uteis.h"
-
-/* =========================================
-   MENU
-========================================= */
+#include "../includes/UI.h"
 
 int Menu()
 {
-    printf("\n====================================\n");
-    printf("         MENU PRINCIPAL\n");
-    printf("====================================\n");
+    int op;
 
-    printf("1 - Menu Principal\n");
-    printf("2 - Estatisticas\n");
-    printf("3 - Estado das Caixas\n");
-    printf("4 - Memoria Utilizada\n");
-    printf("5 - Parar Simulacao\n");
-    printf("6 - Continuar Simulacao\n");
-    printf("0 - Sair\n");
+    printf("\n╔════════════════════════════════════╗\n");
+    printf("║     SUPERMERCADO SIMULADOR        ║\n");
+    printf("╠════════════════════════════════════╣\n");
+    printf("║ 1  - Menu Principal               ║\n");
+    printf("║ 2  - Estatísticas                 ║\n");
+    printf("║ 3  - Estado das Caixas           ║\n");
+    printf("║ 4  - Memória Utilizada           ║\n");
+    printf("║ 5  - Parar Simulação             ║\n");
+    printf("║ 6  - Continuar Simulação         ║\n");
+    printf("║ 0  - Sair                        ║\n");
+    printf("╚════════════════════════════════════╝\n");
 
-    printf("\nOpcao: ");
+    printf("Opção: ");
+    scanf("%d", &op);
+    getchar();
 
-    return LerInteiro("");
+    return op;
 }
 
-/* =========================================
-   EXECUTAR OPCOES
-========================================= */
-
-void ExecutaAccoesMenu(Supermercado *S, int *simulacaoAtiva,
-                       int *programaAtivo)
+void ExecutaAccoesMenu(Supermercado *S, int *simulacaoAtiva, int *programaAtivo)
 {
     int op = Menu();
+
+    limparTela();
 
     switch (op)
     {
     case 1:
-
+        cor(9);
+        printf("\n[MENU PRINCIPAL]\n");
+        resetCor();
         MenuPrincipal(S);
-
         break;
 
     case 2:
-
+        cor(10);
+        printf("\n[ESTATÍSTICAS]\n");
+        resetCor();
         MenuEstatisticas(S->HCaixas);
-
         break;
 
     case 3:
-
+        cor(11);
+        printf("\n[CAIXAS]\n");
+        resetCor();
         MostrarMatrizSupermercado(S->HCaixas);
-
         break;
 
     case 4:
-
-        printf("\nMemoria Utilizada: %lu bytes\n",
+        cor(14);
+        printf("\n[MEMÓRIA]\n");
+        resetCor();
+        printf("Utilizada: %lu bytes\n",
                (unsigned long)MemoriaUtilizada(S));
-
         break;
 
     case 5:
-
         *simulacaoAtiva = 0;
-
-        printf("\nSimulacao parada.\n");
-
+        cor(12);
+        printf("\nSimulação parada.\n");
+        resetCor();
         break;
 
     case 6:
-
         *simulacaoAtiva = 1;
-
-        printf("\nSimulacao retomada.\n");
-
+        cor(10);
+        printf("\nSimulação retomada.\n");
+        resetCor();
         break;
 
     case 0:
-
         *programaAtivo = 0;
-
-        printf("\nA sair do programa...\n");
-
+        cor(12);
+        printf("\nA sair...\n");
+        resetCor();
         break;
-
-    default:
-
-        printf("\nOpcao invalida.\n");
     }
 
-    printf("\nPrima ENTER para continuar...");
+    printf("\nENTER para continuar...");
     getchar();
 }
-
-/* =========================================
-   MAIN
-========================================= */
 
 int main()
 {
@@ -108,70 +99,50 @@ int main()
 #endif
 
     srand((unsigned)time(NULL));
+    limparTela();
 
-    printf("========================================\n");
-    printf("   PROJETO ED - SUPERMERCADO\n");
-    printf("========================================\n");
+    cor(11);
+    printf("====================================\n");
+    printf("   PROJETO SUPERMERCADO SIMULADOR  \n");
+    printf("====================================\n");
+    resetCor();
 
     Supermercado *S = CriarSupermercado("Lidl");
 
-    if (S == NULL)
+    if (!S || !InicializarSupermercado(S, "dados/Configuracao.txt"))
     {
-        printf("Erro ao criar supermercado.\n");
-
+        cor(12);
+        printf("Erro ao iniciar sistema.\n");
+        resetCor();
         return 1;
     }
 
-    if (!InicializarSupermercado(S, "dados/Configuracao.txt"))
-    {
-        printf("Erro ao inicializar supermercado.\n");
-
-        DestruirSupermercado(S);
-
-        return 1;
-    }
-
-    printf("\nProdutos carregados: %d\n", S->LProdutos->NEL);
-
-    printf("Clientes carregados: %d\n", S->LClientes->NEL);
-
-    printf("\n========================================\n");
-    printf(" SIMULACAO INICIADA\n");
-    printf(" Prima qualquer tecla para abrir menu\n");
-    printf("========================================\n");
+    printf("\nProdutos: %d | Clientes: %d\n",
+           S->LProdutos->NEL,
+           S->LClientes->NEL);
 
     int programaAtivo = 1;
-
     int simulacaoAtiva = 1;
 
     while (programaAtivo)
     {
-        /* EXECUTA SIMULACAO */
-
         if (simulacaoAtiva)
-        {
             ExecutarSimulacao(S);
-        }
-
-        /* MENU APENAS SE CLICAR TECLA */
 
         if (TeclaPressionada())
-        {
             ExecutaAccoesMenu(S, &simulacaoAtiva, &programaAtivo);
-
-            printf("\nSimulacao retomada...\n");
-        }
 
         wait_segundos(1);
     }
 
-    printf("\n========================================\n");
-    printf("        ESTATISTICAS FINAIS\n");
-    printf("========================================\n");
+    limparTela();
+
+    cor(10);
+    printf("\n=== ESTATÍSTICAS FINAIS ===\n");
+    resetCor();
 
     MenuEstatisticas(S->HCaixas);
 
     DestruirSupermercado(S);
-
     return 0;
 }

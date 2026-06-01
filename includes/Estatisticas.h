@@ -59,21 +59,7 @@ typedef struct
 } Estatisticas;
 
 /* BASE */
-Estatisticas *CriarEstatisticas();
-
-void ResetEstatisticas(Estatisticas *E);
-
 void DestruirEstatisticas(Estatisticas *E);
-
-/* ATUALIZAÇÃO */
-void AtualizarEstatisticasCaixas(Estatisticas *E, MatrizSupermercado *H);
-
-void AtualizarEstatisticasFuncionarios(Estatisticas *E, ListaFuncionarios *LF,
-                                       MatrizSupermercado *H);
-
-void AtualizarEstatisticasProdutos(Estatisticas *E, ListaProdutos *LP);
-
-void AtualizarEstatisticasClientes(Estatisticas *E, ListaClientes *LC);
 
 /* CÁLCULOS */
 float CalcularTempoMedioEspera(MatrizSupermercado *H);

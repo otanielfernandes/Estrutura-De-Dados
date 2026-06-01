@@ -368,73 +368,44 @@ void MostrarEstatisticasSupermercado(MatrizSupermercado *H)
 {
     Estatisticas E = CalcularEstatisticas(H);
 
-    printf("\n=========================================\n");
-    printf("     ESTATISTICAS DO SUPERMERCADO\n");
-    printf("=========================================\n\n");
+    printf("\n╔════════════════════════════════════╗\n");
+    printf("║     ESTATÍSTICAS SUPERMERCADO     ║\n");
+    printf("╚════════════════════════════════════╝\n");
 
-    // CLIENTES
-    printf("TOTAL CLIENTES ATENDIDOS\n");
-    printf("-----------------------------------------\n");
-    printf("Clientes atendidos : %d\n\n",
+    printf("\n[CLIENTES]\n");
+    printf("Total atendidos: %d\n",
            E.numeroTotalClientesAtendidos);
 
-    // PRODUTOS
-    printf("PRODUTOS\n");
-    printf("-----------------------------------------\n");
+    printf("\n[PRODUTOS]\n");
+    printf("Oferecidos : %d\n", E.numeroProdutosOferecidos);
+    printf("Vendidos   : %d\n", E.numeroTotalProdutosVendidos);
+    printf("Valor      : %.2f €\n", E.custoOferecidos);
 
-    printf("Produtos oferecidos : %d\n",
-           E.numeroProdutosOferecidos);
+    printf("\n[CAIXAS]\n");
+    printf("Mais produtos : Caixa %d (%d)\n",
+           E.idCaixaMaisProdutos, E.maxProdutosVendidos);
 
-    printf("Valor produtos      : %.2f EUR\n",
-           E.custoOferecidos);
+    printf("Mais clientes : Caixa %d (%d)\n",
+           E.idCaixaMaisPessoas, E.maxPessoasAtendidas);
 
-    printf("Produtos vendidos   : %d\n\n",
-           E.numeroTotalProdutosVendidos);
+    printf("Menos clientes: Caixa %d (%d)\n",
+           E.idCaixaMenosPessoas, E.minPessoasAtendidas);
 
-    // CAIXAS
-    printf("CAIXAS\n");
-    printf("-----------------------------------------\n");
+    printf("Abertas       : %d\n", E.numeroCaixasAbertas);
+    printf("Fechadas      : %d\n", E.numeroCaixasFechadas);
+    printf("Maior fila    : %d\n", E.maiorFila);
 
-    printf("Caixa mais produtos : %d (%d produtos)\n",
-           E.idCaixaMaisProdutos,
-           E.maxProdutosVendidos);
-
-    printf("Caixa mais clientes : %d (%d clientes)\n",
-           E.idCaixaMaisPessoas,
-           E.maxPessoasAtendidas);
-
-    printf("Caixa menos clientes: %d (%d clientes)\n",
-           E.idCaixaMenosPessoas,
-           E.minPessoasAtendidas);
-
-    printf("Caixas abertas      : %d\n",
-           E.numeroCaixasAbertas);
-
-    printf("Caixas fechadas     : %d\n",
-           E.numeroCaixasFechadas);
-
-    printf("Maior fila registada: %d clientes\n\n",
-           E.maiorFila);
-
-    // TEMPOS
-    printf("TEMPOS\n");
-    printf("-----------------------------------------\n");
-
-    printf("Tempo medio atendimento : %.2f segundos\n",
+    printf("\n[TEMPOS]\n");
+    printf("Médio atendimento: %.2f s\n",
            E.tempoMedioEsperaCaixas);
 
-    printf("Tempo total caixa   : %.2f segundos\n\n",
+    printf("Total sistema    : %.2f s\n",
            E.tempoTotalAtendimento);
 
-    // OPERADORES
-    printf("OPERADORES\n");
-    printf("-----------------------------------------\n");
-
-    printf("Operador menos clientes : Caixa %d\n",
+    printf("\n[OPERADORES]\n");
+    printf("Menos clientes : Caixa %d\n",
            E.operadorMenosPessoas);
 
-    printf("Operador mais produtos  : Caixa %d\n",
+    printf("Mais produtos  : Caixa %d\n",
            E.operadorMaisProdutos);
-
-    printf("\n=========================================\n");
 }

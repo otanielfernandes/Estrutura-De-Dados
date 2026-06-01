@@ -162,18 +162,23 @@ void MostrarMatrizSupermercado(MatrizSupermercado *H)
     if (H == NULL)
         return;
 
-    printf("\n========== ESTADO DAS CAIXAS ==========\n");
+    printf("\n╔════════════════════════════════════════════════╗\n");
+    printf("║            ESTADO DAS CAIXAS                 ║\n");
+    printf("╚════════════════════════════════════════════════╝\n");
+
     for (int i = 0; i < H->tamanho; i++)
     {
         Caixa *C = &H->Tabela[i];
-        printf("Caixa %d | %s | Fila: %d | Atendidos: %d | Produtos vendidos: %d\n",
-               C->id,
-               C->aberta ? "ABERTA " : "FECHADA",
-               C->fila ? C->fila->NEL : 0,
-               C->totalPessoasAtendidas,
-               C->totalProdutosVendidos);
+
+        printf("\n[CAIXA %d]\n", C->id);
+        printf("Estado      : %s\n", C->aberta ? "ABERTA" : "FECHADA");
+        printf("Fila        : %d clientes\n", C->fila ? C->fila->NEL : 0);
+        printf("Atendidos   : %d\n", C->totalPessoasAtendidas);
+        printf("Vendidos    : %d produtos\n", C->totalProdutosVendidos);
+        printf("Máx fila    : %d\n", C->maxClientesFila);
     }
-    printf("========================================\n");
+
+    printf("\n╚════════════════════════════════════════════════╝\n");
 }
 
 void DestruirMatrizSupermercado(MatrizSupermercado *H)

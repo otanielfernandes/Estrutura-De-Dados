@@ -50,7 +50,7 @@ int InicializarSupermercado(Supermercado *S, char *config)
 
     if (f == NULL)
     {
-        printf("Erro ao abrir ficheiro %s\n", config);
+        printf("\n[ERRO] Nao foi possivel abrir: %s\n", config);
         return 0;
     }
 
@@ -80,14 +80,18 @@ int InicializarSupermercado(Supermercado *S, char *config)
 
     fclose(f);
 
-    printf("\n===== CONFIGURACOES =====\n");
+    printf("\n==================================================\n");
+    printf("              CONFIGURACAO CARREGADA\n");
+    printf("==================================================\n");
 
-    printf("MAX_ESPERA: %d\n", S->max_espera);
-    printf("N_CAIXAS: %d\n", S->n_caixas);
-    printf("TEMPO_ATENDIMENTO_PRODUTO: %d\n", S->tempo_atendimento_produto);
-    printf("MAX_PRECO: %d\n", S->max_preco);
-    printf("MAX_FILA: %d\n", S->max_fila);
-    printf("MIN_FILA: %d\n", S->min_fila);
+    printf("Maximo de espera          : %d\n", S->max_espera);
+    printf("Numero de caixas          : %d\n", S->n_caixas);
+    printf("Tempo por produto         : %d\n", S->tempo_atendimento_produto);
+    printf("Preco maximo              : %d\n", S->max_preco);
+    printf("Maximo medio de fila      : %d\n", S->max_fila);
+    printf("Minimo medio de fila      : %d\n", S->min_fila);
+
+    printf("==================================================\n");
 
     /* LISTAS */
 
@@ -161,7 +165,7 @@ Caixa *AbrirNovaCaixa(Supermercado *S)
         {
             C->aberta = 1;
 
-            printf("\nCaixa %d aberta.\n", C->id);
+            printf("\n[CAIXA] Caixa %d aberta.\n", C->id);
 
             return C;
         }
@@ -275,7 +279,7 @@ void EntradaPessoaSupermercado(Supermercado *S)
 
     if (CX == NULL)
     {
-        printf("\nNao existe caixa aberta.\n");
+        printf("\n[AVISO] Nao existe nenhuma caixa aberta.\n");
         return;
     }
 
@@ -298,7 +302,7 @@ void EntradaPessoaSupermercado(Supermercado *S)
 
     InserirClienteCaixa(CX, C);
 
-    printf("\nCliente %s entrou na Caixa %d\n",
+    printf("\n[ENTRADA] %-20s -> Caixa %d\n",
            C->nome,
            CX->id);
 }
@@ -391,7 +395,7 @@ static void VerificarAberturaCaixas(Supermercado *S)
 
         if (Nova != NULL)
         {
-            printf("\nNova caixa aberta automaticamente.\n");
+            printf("\n[CAIXA] Nova caixa aberta automaticamente.\n");
         }
     }
 }
@@ -414,7 +418,7 @@ static void EquilibrarFilas(Supermercado *S)
 
         InserirCliente(Menor->fila, C);
 
-        printf("\nCliente mudou da Caixa %d para Caixa %d\n",
+        printf("\n[CLIENTE] Cliente mudou da Caixa %d para Caixa %d\n",
                Maior->id,
                Menor->id);
 
@@ -461,7 +465,7 @@ static void VerificarFechoCaixas(Supermercado *S)
 
         C->aberta = 0;
 
-        printf("\nCaixa %d fechada.\n",
+        printf("\n[CAIXA] Caixa %d fechada.\n",
                C->id);
 
         return;
@@ -532,8 +536,7 @@ static void VerificarMudancasFila(Supermercado *S)
             C->mudouCaixa = 1;
 
             InserirCliente(Destino->fila, C);
-
-            printf("\nCliente %s mudou da Caixa %d para Caixa %d\n",
+            printf("\n[MUDANCA] %-20s | Caixa %d -> Caixa %d\n",
                    C->nome,
                    Origem->id,
                    Destino->id);
@@ -588,10 +591,8 @@ static void OferecerProduto(Cliente *C)
     if (Aux->Info != NULL)
     {
         Aux->Info->oferecido = 1;
-
-        printf("\nProduto OFERECIDO ao cliente %s: %s\n",
-               C->nome,
-               Aux->Info->nome);
+        printf("\n[OFERTA] Cliente: %s\n", C->nome);
+        printf("         Produto: %s\n", Aux->Info->nome);
     }
 }
 
@@ -601,15 +602,111 @@ size_t MemoriaUtilizada(Supermercado *S)
     if (S == NULL)
         return 0;
 
-    size_t mem = sizeof(Supermercado);
+    size_t mem = 0;
 
+    /* Estrutura principal */
+    mem += sizeof(Supermercado);
+
+    /* Nome do supermercado */
     if (S->NOME != NULL)
         mem += strlen(S->NOME) + 1;
 
+    /* Relógio */
+    if (S->Rolex != NULL)
+        mem += sizeof(Relogio);
+
+    /* Lista de Produtos */
+    if (S->LProdutos != NULL)
+    {
+        mem += sizeof(ListaProdutos);
+
+        NoProduto *NP = S->LProdutos->Inicio;
+
+        while (NP != NULL)
+        {
+            mem += sizeof(NoProduto);
+
+            if (NP->Info != NULL)
+            {
+                mem += sizeof(Produto);
+
+                if (NP->Info->nome != NULL)
+                    mem += strlen(NP->Info->nome) + 1;
+            }
+
+            NP = NP->Prox;
+        }
+    }
+
+    /* Lista de Clientes */
+    if (S->LClientes != NULL)
+    {
+        mem += sizeof(ListaClientes);
+
+        NoCliente *NC = S->LClientes->Inicio;
+
+        while (NC != NULL)
+        {
+            mem += sizeof(NoCliente);
+
+            if (NC->Cli != NULL)
+            {
+                mem += sizeof(Cliente);
+
+                if (NC->Cli->nome != NULL)
+                    mem += strlen(NC->Cli->nome) + 1;
+            }
+
+            NC = NC->Prox;
+        }
+    }
+
+    /* Lista de Funcionários */
+    if (S->LFuncionarios != NULL)
+    {
+        mem += sizeof(ListaFuncionarios);
+
+        NoFuncionario *NF = S->LFuncionarios->Inicio;
+
+        while (NF != NULL)
+        {
+            mem += sizeof(NoFuncionario);
+
+            if (NF->Func != NULL)
+            {
+                mem += sizeof(Funcionario);
+
+                if (NF->Func->nome != NULL)
+                    mem += strlen(NF->Func->nome) + 1;
+            }
+
+            NF = NF->Prox;
+        }
+    }
+
+    /* Matriz de Caixas */
     if (S->HCaixas != NULL)
     {
         mem += sizeof(MatrizSupermercado);
         mem += sizeof(Caixa) * S->HCaixas->tamanho;
+
+        for (int i = 0; i < S->HCaixas->tamanho; i++)
+        {
+            Caixa *C = &S->HCaixas->Tabela[i];
+
+            if (C->fila != NULL)
+            {
+                mem += sizeof(ListaClientes);
+
+                NoCliente *NC = C->fila->Inicio;
+
+                while (NC != NULL)
+                {
+                    mem += sizeof(NoCliente);
+                    NC = NC->Prox;
+                }
+            }
+        }
     }
 
     return mem;
