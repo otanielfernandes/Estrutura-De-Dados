@@ -56,7 +56,7 @@ void MostrarCliente(Cliente *C)
     if (C == NULL)
         return;
 
-    printf("[CLIENTE] ID: %d | Nome: %s\n",
+    printf("[CLIENTE] - ID: %d | Nome: %s\n",
            C->id,
            C->nome);
 }

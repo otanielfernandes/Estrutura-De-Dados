@@ -40,12 +40,12 @@ void MenuPrincipal(Supermercado *S)
         printf("        MENU PRINCIPAL\n");
         printf("===================================\n\n");
 
-        printf("1 - Caixas\n");
-        printf("2 - Clientes\n");
-        printf("3 - Estatisticas\n");
-        printf("4 - Ficheiros\n");
-        printf("5 - Produtos\n");
-        printf("0 - Sair\n");
+        printf("1  | Caixas\n");
+        printf("2  | Clientes\n");
+        printf("3  | Estatisticas\n");
+        printf("4  | Ficheiros\n");
+        printf("5  | Produtos\n");
+        printf("0  | Sair\n");
 
         printf("\nOpcao: ");
 
@@ -126,7 +126,7 @@ static void AbrirCaixa(MatrizSupermercado *H)
 
     if (C == NULL)
     {
-        printf("\nCaixa nao encontrada.\n");
+        printf("\n[CAIXA] - Caixa nao encontrada.\n");
         return;
     }
 
@@ -178,10 +178,10 @@ void MenuCaixas(MatrizSupermercado *H)
 
         printf("\n===== MENU CAIXAS =====\n");
 
-        printf("1 - Listar caixas\n");
-        printf("2 - Abrir caixa\n");
-        printf("3 - Fechar caixa\n");
-        printf("0 - Voltar\n");
+        printf("1 | Listar caixas\n");
+        printf("2 | Abrir caixa\n");
+        printf("3 | Fechar caixa\n");
+        printf("0 | Voltar\n");
 
         printf("Opcao: ");
 
@@ -253,8 +253,8 @@ void MenuClientes(ListaClientes *LC)
 
         printf("\n===== MENU CLIENTES =====\n");
 
-        printf("1 - Listar clientes\n");
-        printf("0 - Voltar\n");
+        printf("1 | Listar clientes\n");
+        printf("0 | Voltar\n");
 
         printf("Opcao: ");
 
@@ -295,10 +295,10 @@ void MenuFicheiros(ListaProdutos *LP, ListaClientes *LC, ListaFuncionarios *LF)
 
         printf("\n===== MENU FICHEIROS =====\n");
 
-        printf("1 - Carregar produtos\n");
-        printf("2 - Carregar clientes\n");
-        printf("3 - Carregar funcionarios\n");
-        printf("0 - Voltar\n");
+        printf("1 | Carregar produtos\n");
+        printf("2 | Carregar clientes\n");
+        printf("3 | Carregar funcionarios\n");
+        printf("0 | Voltar\n");
 
         printf("\nOpcao: ");
 
@@ -351,7 +351,7 @@ void MenuFicheiros(ListaProdutos *LP, ListaClientes *LC, ListaFuncionarios *LF)
 
             LerFuncionarios(LF, ficheiro);
 
-            printf("\nFuncionarios carregados com sucesso.\n");
+            printf("\n[FUNCIONARIOS] - Funcionarios carregados com sucesso.\n");
 
             Pausar();
 
@@ -382,8 +382,8 @@ void MenuProdutos(ListaProdutos *LP)
         // LimparTela();
 
         printf("\n===== MENU PRODUTOS =====\n");
-        printf("1 - Listar produtos\n");
-        printf("0 - Voltar\n");
+        printf("1 | Listar produtos\n");
+        printf("0 | Voltar\n");
         printf("Opcao: ");
 
         scanf("%d", &op);

@@ -1,6 +1,6 @@
-gcc -I./includes sources/*.c -o programa
+gcc -Wall -Wextra -I./includes sources/*.c -o supermercado
 
-./programa.exe
+.\supermercado.exe
 
 
 Para as listas de produtos, clientes e funcionários, a lista deve fazer sempre a insersão no início e depois inverter as listas

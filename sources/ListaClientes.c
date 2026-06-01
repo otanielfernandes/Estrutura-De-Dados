@@ -134,6 +134,7 @@ void DestruirListaClientes(ListaClientes *LC)
 
     free(LC);
 }
+
 Cliente *RetirarClienteFim(ListaClientes *LC)
 {
     if (LC == NULL || LC->Inicio == NULL)

@@ -50,7 +50,7 @@ int InicializarSupermercado(Supermercado *S, char *config)
 
     if (f == NULL)
     {
-        printf("\n[ERRO] Nao foi possivel abrir: %s\n", config);
+        printf("\n[ERRO] - Nao foi possivel abrir: %s\n", config);
         return 0;
     }
 
@@ -79,10 +79,9 @@ int InicializarSupermercado(Supermercado *S, char *config)
     }
 
     fclose(f);
-
-    printf("\n==================================================\n");
-    printf("              CONFIGURACAO CARREGADA\n");
-    printf("==================================================\n");
+    printf("\n╔════════════════════════════════════════════════╗\n");
+    printf("║          CONFIGURACAO CARREGADA                ║\n");
+    printf("╚════════════════════════════════════════════════╝\n");
 
     printf("Maximo de espera          : %d\n", S->max_espera);
     printf("Numero de caixas          : %d\n", S->n_caixas);
@@ -91,7 +90,7 @@ int InicializarSupermercado(Supermercado *S, char *config)
     printf("Maximo medio de fila      : %d\n", S->max_fila);
     printf("Minimo medio de fila      : %d\n", S->min_fila);
 
-    printf("==================================================\n");
+    printf("╚════════════════════════════════════════════════╝\n");
 
     /* LISTAS */
 
@@ -165,7 +164,7 @@ Caixa *AbrirNovaCaixa(Supermercado *S)
         {
             C->aberta = 1;
 
-            printf("\n[CAIXA] Caixa %d aberta.\n", C->id);
+            printf("\n[CAIXA] - Caixa %d aberta.\n", C->id);
 
             return C;
         }
@@ -279,7 +278,7 @@ void EntradaPessoaSupermercado(Supermercado *S)
 
     if (CX == NULL)
     {
-        printf("\n[AVISO] Nao existe nenhuma caixa aberta.\n");
+        printf("\n[AVISO] - Nao existe nenhuma caixa aberta.\n");
         return;
     }
 
@@ -302,7 +301,7 @@ void EntradaPessoaSupermercado(Supermercado *S)
 
     InserirClienteCaixa(CX, C);
 
-    printf("\n[ENTRADA] %-20s -> Caixa %d\n",
+    printf("\n[ENTRADA] - %-20s -> Caixa %d\n",
            C->nome,
            CX->id);
 }
@@ -395,7 +394,7 @@ static void VerificarAberturaCaixas(Supermercado *S)
 
         if (Nova != NULL)
         {
-            printf("\n[CAIXA] Nova caixa aberta automaticamente.\n");
+            printf("\n[CAIXA] - Nova caixa aberta automaticamente.\n");
         }
     }
 }
@@ -418,7 +417,7 @@ static void EquilibrarFilas(Supermercado *S)
 
         InserirCliente(Menor->fila, C);
 
-        printf("\n[CLIENTE] Cliente mudou da Caixa %d para Caixa %d\n",
+        printf("\n[CLIENTE] - Cliente mudou da Caixa %d para Caixa %d\n",
                Maior->id,
                Menor->id);
 
@@ -465,7 +464,7 @@ static void VerificarFechoCaixas(Supermercado *S)
 
         C->aberta = 0;
 
-        printf("\n[CAIXA] Caixa %d fechada.\n",
+        printf("\n[CAIXA] - Caixa %d fechada.\n",
                C->id);
 
         return;
@@ -536,7 +535,7 @@ static void VerificarMudancasFila(Supermercado *S)
             C->mudouCaixa = 1;
 
             InserirCliente(Destino->fila, C);
-            printf("\n[MUDANCA] %-20s | Caixa %d -> Caixa %d\n",
+            printf("\n[MUDANCA] - %-20s | Caixa %d -> Caixa %d\n",
                    C->nome,
                    Origem->id,
                    Destino->id);
@@ -591,7 +590,7 @@ static void OferecerProduto(Cliente *C)
     if (Aux->Info != NULL)
     {
         Aux->Info->oferecido = 1;
-        printf("\n[OFERTA] Cliente: %s\n", C->nome);
+        printf("\n[OFERTA] - Cliente: %s\n", C->nome);
         printf("         Produto: %s\n", Aux->Info->nome);
     }
 }

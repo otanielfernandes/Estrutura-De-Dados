@@ -19,9 +19,9 @@
 // MENU ESTATISTICA
 static void MostrarMenuEstatisticas(void)
 {
-    printf("\n=================================================\n");
-    printf("              PAINEL DE ESTATISTICAS\n");
-    printf("=================================================\n");
+    printf("\n╔════════════════════════════════════╗\n");
+    printf("║     PAINEL DE ESTATISTICAS         ║\n");
+    printf("╚════════════════════════════════════╝\n");
 
     printf("  1  | Caixa com mais produtos\n");
     printf("  2  | Caixa com mais clientes\n");
@@ -40,7 +40,7 @@ static void MostrarMenuEstatisticas(void)
     printf(" 15  | Resumo global do supermercado\n");
 
     printf("\n  0  | Voltar\n");
-    printf("=================================================\n");
+    printf("╚════════════════════════════════════╝\n");
 }
 
 // MENU PRINCIPAL ESTATISTICAS

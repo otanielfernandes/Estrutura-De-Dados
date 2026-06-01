@@ -369,7 +369,7 @@ void MostrarEstatisticasSupermercado(MatrizSupermercado *H)
     Estatisticas E = CalcularEstatisticas(H);
 
     printf("\n╔════════════════════════════════════╗\n");
-    printf("║     ESTATÍSTICAS SUPERMERCADO     ║\n");
+    printf("║     ESTATÍSTICAS SUPERMERCADO      ║\n");
     printf("╚════════════════════════════════════╝\n");
 
     printf("\n[CLIENTES]\n");

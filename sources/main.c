@@ -11,15 +11,15 @@ int Menu()
     int op;
 
     printf("\n╔════════════════════════════════════╗\n");
-    printf("║     SUPERMERCADO SIMULADOR        ║\n");
+    printf("║     SUPERMERCADO SIMULADOR         ║\n");
     printf("╠════════════════════════════════════╣\n");
-    printf("║ 1  - Menu Principal               ║\n");
-    printf("║ 2  - Estatísticas                 ║\n");
-    printf("║ 3  - Estado das Caixas           ║\n");
-    printf("║ 4  - Memória Utilizada           ║\n");
-    printf("║ 5  - Parar Simulação             ║\n");
-    printf("║ 6  - Continuar Simulação         ║\n");
-    printf("║ 0  - Sair                        ║\n");
+    printf("║ 1  - Menu Principal                ║\n");
+    printf("║ 2  - Estatísticas                  ║\n");
+    printf("║ 3  - Estado das Caixas             ║\n");
+    printf("║ 4  - Memória Utilizada             ║\n");
+    printf("║ 5  - Parar Simulação               ║\n");
+    printf("║ 6  - Continuar Simulação           ║\n");
+    printf("║ 0  - Sair                          ║\n");
     printf("╚════════════════════════════════════╝\n");
 
     printf("Opção: ");
@@ -102,9 +102,9 @@ int main()
     limparTela();
 
     cor(11);
-    printf("====================================\n");
-    printf("   PROJETO SUPERMERCADO SIMULADOR  \n");
-    printf("====================================\n");
+    printf("\n╔════════════════════════════════════╗\n");
+    printf("║   PROJETO SUPERMERCADO SIMULADOR   ║\n");
+    printf("╚════════════════════════════════════╝\n");
     resetCor();
 
     Supermercado *S = CriarSupermercado("Lidl");
@@ -138,7 +138,9 @@ int main()
     limparTela();
 
     cor(10);
-    printf("\n=== ESTATÍSTICAS FINAIS ===\n");
+    printf("\n╔════════════════════════════════════╗\n");
+    printf("║\t\tESTATÍSTICAS FINAIS             ║\n");
+    printf("╚════════════════════════════════════╝\n");
     resetCor();
 
     MenuEstatisticas(S->HCaixas);

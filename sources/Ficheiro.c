@@ -6,7 +6,7 @@ int LerProdutos(ListaProdutos *LProd, char *ficheiro)
 
     if (f == NULL)
     {
-        printf("[ERRO] Não foi possível abrir: %s\n", ficheiro);
+        printf("[ERRO] - Não foi possível abrir: %s\n", ficheiro);
         return 0;
     }
 
@@ -40,7 +40,7 @@ int LerProdutos(ListaProdutos *LProd, char *ficheiro)
 
     fclose(f);
 
-    printf("[INFO] Produtos carregados: %d\n", contador);
+    printf("[INFO] - Produtos carregados: %d\n", contador);
     return 1;
 }
 
@@ -51,7 +51,7 @@ int LerClientes(ListaClientes *LC, char *ficheiro)
 
     if (f == NULL)
     {
-        printf("[ERRO] Ficheiro de clientes não encontrado!\n");
+        printf("[ERRO] - Ficheiro de clientes não encontrado!\n");
         return 0;
     }
 
@@ -71,7 +71,7 @@ int LerClientes(ListaClientes *LC, char *ficheiro)
 
     fclose(f);
 
-    printf("[INFO] Clientes carregados: %d\n", contador);
+    printf("[INFO] - Clientes carregados: %d\n", contador);
     return 1;
 }
 
@@ -101,6 +101,6 @@ int LerFuncionarios(ListaFuncionarios *LF, char *ficheiro)
 
     fclose(f);
 
-    printf("[INFO] Funcionários carregados: %d\n", contador);
+    printf("[INFO] - Funcionários carregados: %d\n", contador);
     return 1;
 }

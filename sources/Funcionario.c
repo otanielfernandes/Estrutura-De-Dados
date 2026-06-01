@@ -34,7 +34,7 @@ void MostrarFuncionario(Funcionario *F)
     if (F == NULL)
         return;
 
-    printf("Funcionario: %d | %s | Caixa: %d\n", F->id, F->nome, F->caixaID);
+    printf("[Funcionario] - Funcionario: %d | %s | Caixa: %d\n", F->id, F->nome, F->caixaID);
 }
 
 void DestruirFuncionario(Funcionario *F)
