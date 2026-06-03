@@ -58,6 +58,10 @@ typedef struct
     int totalClientesGerados;
     int maxClientesSimulacao;
     int terminarPrograma;
+    
+    //Campos para trabalhar com produtos oferecidos:
+    int totalProdutosOferecidos;
+    float valorProdutosOferecidos;
 
 } Supermercado;
 

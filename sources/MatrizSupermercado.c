@@ -73,6 +73,7 @@ int InserirClienteCaixa(Caixa *C, Cliente *Cli)
 /* A cada ciclo desconta TICK de tempo ao cliente na frente de cada caixa */
 void ProcessarCaixas(MatrizSupermercado *H)
 {
+    
     if (H == NULL)
         return;
 
@@ -93,7 +94,7 @@ void ProcessarCaixas(MatrizSupermercado *H)
             continue;
 
         /* Atualizar tempo de espera de todos */
-        NoCliente *Aux = C->fila->Inicio;
+        NoCliente *Aux = C->fila->Inicio->Prox;
 
         while (Aux != NULL)
         {
@@ -114,8 +115,44 @@ void ProcessarCaixas(MatrizSupermercado *H)
             /* Estatísticas da caixa */
             C->tempoTotalAtendimento += Cli->tempoInicialCaixa;
 
+          
+                
+            
+            if ((Cli->carrinho != NULL) && (Cli->carrinho->NEL > 0) &&
+            (Cli->tempoEspera > 120))
+            {
+                NoProduto *Aux = Cli->carrinho->Inicio;
+
+                while (Aux != NULL && Aux->Prox != NULL)
+                    Aux = Aux->Prox;
+
+                if (Aux != NULL && Aux->Info != NULL)
+                {
+                    Aux->Info->oferecido = 1;
+
+                    printf("\n[OFERTA] - Cliente: %s\n", Cli->nome);
+
+                    printf("            Produto: %s\n", Aux->Info->nome);
+                }
+            }
+
+
             if (Cli->carrinho != NULL)
-                C->totalProdutosVendidos += Cli->carrinho->NEL;
+            {
+                int vendidos = 0;
+
+                NoProduto *P = Cli->carrinho->Inicio;
+
+                while (P != NULL)
+                {
+                    if (!P->Info->oferecido)
+                        vendidos++;
+
+                    P = P->Prox;
+                }
+
+                C->totalProdutosVendidos += vendidos;
+            }
 
             printf("\nCliente %s terminou atendimento na Caixa %d\n",
                    Cli->nome,

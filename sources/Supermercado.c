@@ -2,7 +2,7 @@
 #include "../includes/Ficheiro.h"
 
 extern int Aleatorio(int min, int max);
-static void OferecerProduto(Cliente *C);
+static void OferecerProduto(Supermercado *S, Cliente *C);
 
 // CRIAR SUPERMERCADO
 Supermercado *CriarSupermercado(char *nome)
@@ -37,6 +37,9 @@ Supermercado *CriarSupermercado(char *nome)
     S->totalClientesGerados = 0;
     S->maxClientesSimulacao = 160;
     S->terminarPrograma = 0;
+
+    S->totalProdutosOferecidos = 0;
+    S->valorProdutosOferecidos = 0;
     return S;
 }
 
@@ -203,8 +206,7 @@ Caixa *EscolherCaixa(Supermercado *S)
 }
 
 // GERAR CARRINHO
-void GerarCarrinhoCliente(Supermercado *S, Cliente *C,
-                          int quantidade)
+void GerarCarrinhoCliente(Supermercado *S, Cliente *C, int quantidade)
 {
     if (S == NULL || C == NULL)
         return;
@@ -315,12 +317,10 @@ void EntradaPessoaSupermercado(Supermercado *S)
         if (Nova != NULL)
             CX = Nova;
     }
-    
+
     InserirClienteCaixa(CX, C);
 
-    printf("\n[ENTRADA] - %-20s -> Caixa %d\n",
-           C->nome,
-           CX->id);
+    printf("\n[ENTRADA] - %-20s -> Caixa %d\n", C->nome, CX->id);
 }
 
 /*Numero de Caixas Abertas */
@@ -577,7 +577,7 @@ int ExecutarSimulacao(Supermercado *S)
     VerificarMudancasFila(S);
 
     EquilibrarFilas(S);
-
+    
     ProcessarCaixas(S->HCaixas);
 
     VerificarFechoCaixas(S);
@@ -586,7 +586,7 @@ int ExecutarSimulacao(Supermercado *S)
 }
 
 // Produtos oferecidos
-static void OferecerProduto(Cliente *C)
+static void OferecerProduto(Supermercado *S, Cliente *C)
 {
     if (C == NULL)
         return;
@@ -607,6 +607,9 @@ static void OferecerProduto(Cliente *C)
     if (Aux->Info != NULL)
     {
         Aux->Info->oferecido = 1;
+        S->totalProdutosOferecidos++;
+        S->valorProdutosOferecidos += Aux->Info->preco;
+
         printf("\n[OFERTA] - Cliente: %s\n", C->nome);
         printf("         Produto: %s\n", Aux->Info->nome);
     }
