@@ -172,27 +172,9 @@ void ObterNumeroProdutosOferecidos(MatrizSupermercado *H, Estatisticas *E)
     if (H == NULL)
         return;
 
-    for (int i = 0; i < H->tamanho; i++)
-    {
-        Caixa *C = &H->Tabela[i];
-
-        if (C->fila == NULL)
-            continue;
-
-        NoCliente *NC = C->fila->Inicio;
-
-        while (NC != NULL)
-        {
-            if (NC->Cli != NULL &&
-                NC->Cli->carrinho != NULL)
-            {
-                E->numeroProdutosOferecidos += NC->Cli->carrinho->NEL;
-            }
-
-            NC = NC->Prox;
-        }
-    }
+    E->numeroProdutosOferecidos = H->totalProdutosOferecidos;
 }
+
 
 void ValorTotalProdutosOferecidos(MatrizSupermercado *H, Estatisticas *E)
 {
@@ -201,33 +183,7 @@ void ValorTotalProdutosOferecidos(MatrizSupermercado *H, Estatisticas *E)
     if (H == NULL)
         return;
 
-    for (int i = 0; i < H->tamanho; i++)
-    {
-        Caixa *C = &H->Tabela[i];
-
-        if (C->fila == NULL)
-            continue;
-
-        NoCliente *NC = C->fila->Inicio;
-
-        while (NC != NULL)
-        {
-            if (NC->Cli != NULL && NC->Cli->carrinho != NULL)
-            {
-                NoProduto *NP = NC->Cli->carrinho->Inicio;
-
-                while (NP != NULL)
-                {
-                    E->custoOferecidos +=
-                        NP->Info->preco;
-
-                    NP = NP->Prox;
-                }
-            }
-
-            NC = NC->Prox;
-        }
-    }
+    E->custoOferecidos = H->valorProdutosOferecidos;
 }
 
 void ObterNumeroProdutosVendidos(MatrizSupermercado *H, Estatisticas *E)

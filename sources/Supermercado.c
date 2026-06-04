@@ -2,7 +2,6 @@
 #include "../includes/Ficheiro.h"
 
 extern int Aleatorio(int min, int max);
-static void OferecerProduto(Supermercado *S, Cliente *C);
 
 // CRIAR SUPERMERCADO
 Supermercado *CriarSupermercado(char *nome)
@@ -117,6 +116,10 @@ int InicializarSupermercado(Supermercado *S, char *config)
     /* MatrizSupermercado */
 
     S->HCaixas = CriarMatrizSupermercado(S->n_caixas);
+    if (S->HCaixas != NULL)
+    {
+        S->HCaixas->max_espera = S->max_espera;
+    }
 
     if (S->HCaixas != NULL)
     {
@@ -599,33 +602,6 @@ int ExecutarSimulacao(Supermercado *S)
     return 1;
 }
 
-// Produtos oferecidos
-static void OferecerProduto(Supermercado *S, Cliente *C)
-{
-    if (C == NULL)
-        return;
-
-    if (C->carrinho == NULL)
-        return;
-
-    if (C->carrinho->NEL <= 0)
-        return;
-
-    NoProduto *Aux = C->carrinho->Inicio;
-
-    while (Aux->Prox != NULL)
-        Aux = Aux->Prox;
-
-    if (Aux->Info != NULL)
-    {
-        Aux->Info->oferecido = 1;
-        S->totalProdutosOferecidos++;
-        S->valorProdutosOferecidos += Aux->Info->preco;
-
-        printf("\n[OFERTA] - Cliente: %s\n", C->nome);
-        printf("         Produto: %s\n", Aux->Info->nome);
-    }
-}
 
 // MEMORIA
 size_t MemoriaUtilizada(Supermercado *S)
@@ -741,7 +717,27 @@ size_t MemoriaUtilizada(Supermercado *S)
     }
 
     /* H*/
+    /* HashTable de Clientes */
+    if (S->HClientes != NULL)
+    {
+        mem += sizeof(HashTable);
 
+        if (S->HClientes->tabela != NULL)
+        {
+            mem += sizeof(HashNode *) * S->HClientes->tamanho;
+
+            for (int i = 0; i < S->HClientes->tamanho; i++)
+            {
+                HashNode *Atual = S->HClientes->tabela[i];
+
+                while (Atual != NULL)
+                {
+                    mem += sizeof(HashNode);
+                    Atual = Atual->prox;
+                }
+            }
+        }
+    }
     return mem;
 }
 
