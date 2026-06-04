@@ -110,7 +110,7 @@ void ProcessarCaixas(MatrizSupermercado *H)
 
         if (Cli == NULL)
             continue;
-
+        
         Cli->tempoTotalCaixa -= TICK;
 
         if (Cli->tempoTotalCaixa <= 0)
@@ -118,7 +118,8 @@ void ProcessarCaixas(MatrizSupermercado *H)
             /* Estatísticas da caixa */
             C->tempoTotalAtendimento += Cli->tempoInicialCaixa;
 
-           if ((Cli->carrinho != NULL) && (Cli->carrinho->NEL > 0) &&
+           if ((Cli->carrinho != NULL) &&
+            (Cli->carrinho->NEL > 0) &&
             (Cli->tempoEspera > H->max_espera))
             {
                 NoProduto *Aux = Cli->carrinho->Inicio;
@@ -126,7 +127,9 @@ void ProcessarCaixas(MatrizSupermercado *H)
                 while (Aux != NULL && Aux->Prox != NULL)
                     Aux = Aux->Prox;
 
-                if (Aux != NULL && Aux->Info != NULL && Aux->Info->oferecido == 0)
+                if (Aux != NULL &&
+                    Aux->Info != NULL &&
+                    Aux->Info->oferecido == 0)
                 {
                     Aux->Info->oferecido = 1;
 
@@ -138,6 +141,7 @@ void ProcessarCaixas(MatrizSupermercado *H)
                 }
             }
 
+            
             if (Cli->carrinho != NULL)
             {
                 int vendidos = 0;
