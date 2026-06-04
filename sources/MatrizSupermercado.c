@@ -50,7 +50,7 @@ float CalcularTempoCaixa(Caixa *C)
     return total;
 }
 
-int FuncaoHash(MatrizSupermercado *H, int idCaixa)
+int FuncaoEspalharCaix(MatrizSupermercado *H, int idCaixa)
 {
     return (idCaixa - 1) % H->tamanho;
 }
@@ -76,7 +76,8 @@ void ProcessarCaixas(MatrizSupermercado *H)
     if (H == NULL)
         return;
 
-    const int TICK = 5;
+    // A diferença entre TICk = 5 e TICK é que o TICK 1 faz com que o cliente demore mais tempoa para sair da fila/caixa:
+    const int TICK = 0;
 
     for (int i = 0; i < H->tamanho; i++)
     {
@@ -153,7 +154,7 @@ int NumeroClientesFila(Caixa *C)
 /*Obter Caixa por ID*/
 Caixa *ObterCaixa(MatrizSupermercado *H, int idCaixa)
 {
-    int indice = FuncaoHash(H, idCaixa);
+    int indice = FuncaoEspalharCaix(H, idCaixa);
     return &H->Tabela[indice];
 }
 
@@ -162,23 +163,25 @@ void MostrarMatrizSupermercado(MatrizSupermercado *H)
     if (H == NULL)
         return;
 
-    printf("\n╔════════════════════════════════════════════════╗\n");
-    printf("║            ESTADO DAS CAIXAS                   ║\n");
-    printf("╚════════════════════════════════════════════════╝\n");
+    printf("\n");
+    printf("╔════════╦═══════════╦══════════╦════════════╦════════════╦══════════╗\n");
+    printf("║ CAIXA  ║ ESTADO    ║ CLIENTES ║ ATENDIDOS  ║ PRODUTOS   ║ MAX FILA ║\n");
+    printf("╠════════╬═══════════╬══════════╬════════════╬════════════╬══════════╣\n");
 
     for (int i = 0; i < H->tamanho; i++)
     {
         Caixa *C = &H->Tabela[i];
 
-        printf("\n[CAIXA %d]\n", C->id);
-        printf("Estado      : %s\n", C->aberta ? "ABERTA" : "FECHADA");
-        printf("Fila        : %d clientes\n", C->fila ? C->fila->NEL : 0);
-        printf("Atendidos   : %d\n", C->totalPessoasAtendidas);
-        printf("Vendidos    : %d produtos\n", C->totalProdutosVendidos);
-        printf("Máx fila    : %d\n", C->maxClientesFila);
+        printf("║ %-6d ║ %-9s ║ %-8d ║ %-10d ║ %-10d ║ %-8d ║\n",
+               C->id,
+               C->aberta ? "ABERTA" : "FECHADA",
+               C->fila ? C->fila->NEL : 0,
+               C->totalPessoasAtendidas,
+               C->totalProdutosVendidos,
+               C->maxClientesFila);
     }
 
-    printf("\n╚════════════════════════════════════════════════╝\n");
+    printf("╚════════╩═══════════╩══════════╩════════════╩════════════╩══════════╝\n");
 }
 
 void DestruirMatrizSupermercado(MatrizSupermercado *H)

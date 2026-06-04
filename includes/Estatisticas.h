@@ -111,8 +111,6 @@ void MenuEstatisticas(MatrizSupermercado *H);
 
 void MenuCaixas(MatrizSupermercado *H);
 
-void MenuClientes(ListaClientes *LC);
-
 void MenuProdutos(ListaProdutos *LP);
 
 void MenuFuncionarios(ListaFuncionarios *LF);

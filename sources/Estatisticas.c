@@ -19,28 +19,28 @@
 // MENU ESTATISTICA
 static void MostrarMenuEstatisticas(void)
 {
-    printf("\n╔════════════════════════════════════╗\n");
-    printf("║     PAINEL DE ESTATISTICAS         ║\n");
-    printf("╚════════════════════════════════════╝\n");
-
-    printf("  1  | Caixa com mais produtos\n");
-    printf("  2  | Caixa com mais clientes\n");
-    printf("  3  | Caixa com menos clientes\n");
-    printf("  4  | Numero de produtos oferecidos\n");
-    printf("  5  | Valor total de produtos oferecidos\n");
-    printf("  6  | Numero de produtos vendidos\n");
-    printf("  7  | Tempo medio de espera\n");
-    printf("  8  | Tempo total de atendimento\n");
-    printf("  9  | Total de clientes atendidos\n");
-    printf(" 10  | Numero de caixas abertas\n");
-    printf(" 11  | Numero de caixas fechadas\n");
-    printf(" 12  | Maior fila registada\n");
-    printf(" 13  | Operador com menos clientes\n");
-    printf(" 14  | Operador com mais produtos\n");
-    printf(" 15  | Resumo global do supermercado\n");
-
-    printf("\n  0  | Voltar\n");
-    printf("╚════════════════════════════════════╝\n");
+    printf("\n");
+    printf("╔══════════════════════════════════════════════════════════════╗\n");
+    printf("║                    PAINEL DE ESTATISTICAS                    ║\n");
+    printf("╠════╦═════════════════════════════════════════════════════════╣\n");
+    printf("║  1 ║ Caixa com mais produtos                                 ║\n");
+    printf("║  2 ║ Caixa com mais clientes                                 ║\n");
+    printf("║  3 ║ Caixa com menos clientes                                ║\n");
+    printf("║  4 ║ Numero de produtos oferecidos                           ║\n");
+    printf("║  5 ║ Valor total de produtos oferecidos                      ║\n");
+    printf("║  6 ║ Numero de produtos vendidos                             ║\n");
+    printf("║  7 ║ Tempo medio de espera                                   ║\n");
+    printf("║  8 ║ Tempo total de atendimento                              ║\n");
+    printf("║  9 ║ Total de clientes atendidos                             ║\n");
+    printf("║ 10 ║ Numero de caixas abertas                                ║\n");
+    printf("║ 11 ║ Numero de caixas fechadas                               ║\n");
+    printf("║ 12 ║ Maior fila registada                                    ║\n");
+    printf("║ 13 ║ Operador com menos clientes                             ║\n");
+    printf("║ 14 ║ Operador com mais produtos                              ║\n");
+    printf("║ 15 ║ Resumo global do supermercado                           ║\n");
+    printf("╠════╩═════════════════════════════════════════════════════════╣\n");
+    printf("║  0 ║ Voltar                                                  ║\n");
+    printf("╚══════════════════════════════════════════════════════════════╝\n");
 }
 
 // MENU PRINCIPAL ESTATISTICAS

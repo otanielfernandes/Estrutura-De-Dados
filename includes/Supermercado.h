@@ -11,6 +11,7 @@
 #include "Relogio.h"
 #include "MatrizSupermercado.h"
 #include "Estatisticas.h"
+#include "Hashing.h"
 
 // doxygen
 // Apagar daqui por enquanto:
@@ -54,7 +55,7 @@ typedef struct
     int duracao_simulacao; /* ciclos atÃ© fechar portas (lido do ficheiro) */
     int ciclo_atual;       /* ciclo em que estamos agora                  */
     int simulacao_ativa;   /* 1 = sem novas entradas, a aguardar filas    */
-
+    HashTable *HClientes;  /*para pesquisa de clientes */
     int totalClientesGerados;
     int maxClientesSimulacao;
     int terminarPrograma;
@@ -73,5 +74,5 @@ int Supermercado_E_Para_Fechar(Supermercado *S);
 void DestruirSupermercado(Supermercado *S);
 void MenuPrincipal(Supermercado *S);
 size_t MemoriaUtilizada(Supermercado *S);
-
+void MenuClientes(Supermercado *S);
 #endif // SUPERMERCADO_H_INCLUDED

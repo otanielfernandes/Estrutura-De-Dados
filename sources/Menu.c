@@ -3,7 +3,6 @@
 #include "../includes/Ficheiro.h"
 #include "../includes/ListaClientes.h"
 #include "../includes/MatrizSupermercado.h"
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -24,7 +23,6 @@ static void LimparTela(void)
 }
 
 /* MENU PRINCIPAL */
-
 void MenuPrincipal(Supermercado *S)
 {
     int op;
@@ -34,18 +32,18 @@ void MenuPrincipal(Supermercado *S)
 
     do
     {
-        // LimparTela();
-
-        printf("\n===================================\n");
-        printf("        MENU PRINCIPAL\n");
-        printf("===================================\n\n");
-
-        printf("1  | Caixas\n");
-        printf("2  | Clientes\n");
-        printf("3  | Estatisticas\n");
-        printf("4  | Ficheiros\n");
-        printf("5  | Produtos\n");
-        printf("0  | Sair\n");
+        LimparTela();
+        printf("\n");
+        printf("╔════════════════════════════════════════════════════╗\n");
+        printf("║              SUPERMERCADO %-24s ║\n", S->NOME);
+        printf("╠════════════════════════════════════════════════════╣\n");
+        printf("║ 1  - Gestao de Caixas                              ║\n");
+        printf("║ 2  - Gestao de Clientes                            ║\n");
+        printf("║ 3  - Estatisticas                                  ║\n");
+        printf("║ 4  - Ficheiros                                     ║\n");
+        printf("║ 5  - Produtos                                      ║\n");
+        printf("║ 0  - Sair                                          ║\n");
+        printf("╚════════════════════════════════════════════════════╝\n");
 
         printf("\nOpcao: ");
 
@@ -55,31 +53,41 @@ void MenuPrincipal(Supermercado *S)
         switch (op)
         {
         case 1:
+            LimparTela();
             MenuCaixas(S->HCaixas);
             break;
 
         case 2:
-            MenuClientes(S->LClientes);
+            LimparTela();
+            MenuClientes(S);
             break;
 
         case 3:
+            LimparTela();
             MenuEstatisticas(S->HCaixas);
             break;
 
         case 4:
-            MenuFicheiros(S->LProdutos, S->LClientes, S->LFuncionarios);
+            LimparTela();
+            MenuFicheiros(
+                S->LProdutos,
+                S->LClientes,
+                S->LFuncionarios);
             break;
 
         case 5:
+            LimparTela();
             MenuProdutos(S->LProdutos);
             break;
 
         case 0:
-            printf("\nAte logo!\n");
+            LimparTela();
+            printf("\nA encerrar programa...\n");
             break;
 
         default:
-            printf("\nOpcao invalida.\n");
+            LimparTela();
+            printf("\n[ERRO] Opcao invalida.\n");
             Pausar();
         }
 
@@ -87,7 +95,6 @@ void MenuPrincipal(Supermercado *S)
 }
 
 /* CAIXAS */
-
 static void ListarCaixas(MatrizSupermercado *H)
 {
     if (H == NULL || H->Tabela == NULL)
@@ -96,19 +103,24 @@ static void ListarCaixas(MatrizSupermercado *H)
         return;
     }
 
-    printf("\n===== LISTA DE CAIXAS =====\n");
+    printf("\n");
+    printf("╔══════╦══════════╦══════╦════════════╦════════════╗\n");
+    printf("║  ID  ║  ESTADO  ║ FILA ║  PESSOAS   ║ PRODUTOS   ║\n");
+    printf("╠══════╬══════════╬══════╬════════════╬════════════╣\n");
 
     for (int i = 0; i < H->tamanho; i++)
     {
         Caixa *C = &H->Tabela[i];
 
-        printf("Caixa %d | %s | Pessoas: %d | Produtos: %d | Fila: %d\n",
+        printf("║ %4d ║ %-8s ║ %4d ║ %10d ║ %10d ║\n",
                C->id,
-               C->aberta ? "Aberta" : "Fechada",
+               C->aberta ? "ABERTA" : "FECHADA",
+               C->fila ? C->fila->NEL : 0,
                C->totalPessoasAtendidas,
-               C->totalProdutosVendidos,
-               (C->fila ? C->fila->NEL : 0));
+               C->totalProdutosVendidos);
     }
+
+    printf("╚══════╩══════════╩══════╩════════════╩════════════╝\n");
 }
 
 static void AbrirCaixa(MatrizSupermercado *H)
@@ -174,40 +186,44 @@ void MenuCaixas(MatrizSupermercado *H)
 
     do
     {
-        // LimparTela();
+        LimparTela();
+        printf("\n");
+        printf("╔══════════════════════════════╗\n");
+        printf("║         MENU CAIXAS          ║\n");
+        printf("╠══════════════════════════════╣\n");
+        printf("║ 1 - Listar Caixas            ║\n");
+        printf("║ 2 - Abrir Caixa              ║\n");
+        printf("║ 3 - Fechar Caixa             ║\n");
+        printf("║ 0 - Voltar                   ║\n");
+        printf("╚══════════════════════════════╝\n");
 
-        printf("\n===== MENU CAIXAS =====\n");
-
-        printf("1 | Listar caixas\n");
-        printf("2 | Abrir caixa\n");
-        printf("3 | Fechar caixa\n");
-        printf("0 | Voltar\n");
-
-        printf("Opcao: ");
+        printf("\nOpcao: ");
 
         scanf("%d", &op);
         getchar();
 
-        LimparTela();
-
         switch (op)
         {
         case 1:
+            LimparTela();
             ListarCaixas(H);
             Pausar();
             break;
 
         case 2:
+            LimparTela();
             AbrirCaixa(H);
             Pausar();
             break;
 
         case 3:
+            LimparTela();
             FecharCaixa(H);
             Pausar();
             break;
 
         case 0:
+            LimparTela();
             break;
 
         default:
@@ -219,7 +235,6 @@ void MenuCaixas(MatrizSupermercado *H)
 }
 
 /* CLIENTES */
-
 static void ListarClientesMenu(ListaClientes *LC)
 {
     if (LC == NULL || LC->Inicio == NULL)
@@ -228,49 +243,179 @@ static void ListarClientesMenu(ListaClientes *LC)
         return;
     }
 
-    printf("\n===== LISTA DE CLIENTES =====\n");
+    printf("\n");
+    printf("═══════════════════════════════════════\n");
+    printf(" ID       NOME\n");
+    printf("═══════════════════════════════════════\n");
 
     NoCliente *aux = LC->Inicio;
 
     while (aux != NULL)
     {
-        printf("Nome: %s\n", aux->Cli->nome);
+        printf(" %-8d %s\n",
+               aux->Cli->id,
+               aux->Cli->nome);
 
         aux = aux->Prox;
     }
+
+    printf("═══════════════════════════════════════\n");
 }
 
-void MenuClientes(ListaClientes *LC)
+void MenuClientes(Supermercado *S)
 {
     int op;
 
-    if (LC == NULL)
+    if (S->LClientes == NULL)
         return;
 
     do
     {
-        // LimparTela();
+        LimparTela();
+        printf("\n");
+        printf("╔══════════════════════════════╗\n");
+        printf("║        MENU CLIENTES         ║\n");
+        printf("╠══════════════════════════════╣\n");
+        printf("║ 1 - Listar Clientes          ║\n");
+        printf("║ 2 - Pesquisar por ID         ║\n");
+        printf("║ 0 - Voltar                   ║\n");
+        printf("╚══════════════════════════════╝\n");
 
-        printf("\n===== MENU CLIENTES =====\n");
-
-        printf("1 | Listar clientes\n");
-        printf("0 | Voltar\n");
-
-        printf("Opcao: ");
+        printf("\nOpcao: ");
 
         scanf("%d", &op);
         getchar();
 
-        LimparTela();
-
         switch (op)
         {
         case 1:
-            ListarClientesMenu(LC);
+            LimparTela();
+            ListarClientesMenu(S->LClientes);
             Pausar();
             break;
 
+        case 2:
+        {
+            int id;
+
+            printf("\nID do cliente: ");
+            scanf("%d", &id);
+            getchar();
+
+            if (id <= 0)
+            {
+                printf("\nID invalido.\n");
+                Pausar();
+                break;
+            }
+
+            HashNode *clienteNode = BuscarHashTable(S->HClientes, id);
+
+            if (clienteNode == NULL)
+            {
+                printf("\nCliente nao encontrado.\n");
+                Pausar();
+                break;
+            }
+
+            LimparTela();
+            Cliente *C = clienteNode->cliente;
+
+            printf("\n");
+            printf("╔══════════════════════════════════════════════╗\n");
+            printf("║           DADOS DO CLIENTE                  ║\n");
+            printf("╚══════════════════════════════════════════════╝\n");
+
+            printf("Nome              : %s\n", C->nome);
+            printf("ID                : %d\n", C->id);
+
+            printf("Tempo Total Caixa : %.2f\n",
+                   C->tempoTotalCaixa);
+
+            printf("Tempo Espera      : %d\n",
+                   C->tempoEspera);
+
+            printf("Mudou Caixa       : %s\n",
+                   C->mudouCaixa ? "SIM" : "NAO");
+
+            printf("Em Atendimento    : %s\n",
+                   C->emAtendimento ? "SIM" : "NAO");
+
+            if (clienteNode->caixa != NULL)
+            {
+                printf("Caixa Atual       : %d\n",
+                       clienteNode->caixa->id);
+            }
+
+            printf("\n");
+            printf("═══════════════════════════════════════════════\n");
+            printf("                 CARRINHO\n");
+            printf("═══════════════════════════════════════════════\n");
+
+            if (C->carrinho == NULL ||
+                C->carrinho->Inicio == NULL)
+            {
+                printf("Carrinho vazio.\n");
+            }
+            else
+            {
+                NoProduto *P = C->carrinho->Inicio;
+
+                float total = 0;
+                int totalProdutos = 0;
+                int produtosOferecidos = 0;
+
+                while (P != NULL)
+                {
+                    Produto *Prod = P->Info;
+
+                    if (Prod != NULL)
+                    {
+                        printf("\nProduto : %s\n",
+                               Prod->nome);
+
+                        printf("Codigo  : %d\n",
+                               Prod->codigo);
+
+                        printf("Preco   : %.2f €\n",
+                               Prod->preco);
+
+                        printf("Tempo Caixa : %.2f s\n",
+                               Prod->tempoCaixa);
+
+                        printf("Oferecido : %s\n",
+                               Prod->oferecido ? "SIM" : "NAO");
+
+                        total += Prod->preco;
+                        totalProdutos++;
+
+                        if (Prod->oferecido)
+                            produtosOferecidos++;
+                    }
+
+                    P = P->Prox;
+                }
+
+                printf("\n");
+                printf("═══════════════════════════════════════════════\n");
+                printf("Total Produtos      : %d\n",
+                       totalProdutos);
+
+                printf("Produtos Oferecidos : %d\n",
+                       produtosOferecidos);
+
+                printf("Valor Total Compra  : %.2f €\n",
+                       total);
+
+                printf("═══════════════════════════════════════════════\n");
+            }
+
+            Pausar();
+            break;
+        }
+
         case 0:
+            LimparTela();
             break;
 
         default:
@@ -280,7 +425,6 @@ void MenuClientes(ListaClientes *LC)
 
     } while (op != 0);
 }
-
 /* FICHEIROS */
 
 void MenuFicheiros(ListaProdutos *LP, ListaClientes *LC, ListaFuncionarios *LF)
@@ -291,21 +435,22 @@ void MenuFicheiros(ListaProdutos *LP, ListaClientes *LC, ListaFuncionarios *LF)
 
     do
     {
-        // LimparTela();
-
-        printf("\n===== MENU FICHEIROS =====\n");
-
-        printf("1 | Carregar produtos\n");
-        printf("2 | Carregar clientes\n");
-        printf("3 | Carregar funcionarios\n");
-        printf("0 | Voltar\n");
-
+        LimparTela();
+        printf("\n");
+        printf("╔══════════════════════════════╗\n");
+        printf("║       MENU FICHEIROS         ║\n");
+        printf("╠══════════════════════════════╣\n");
+        printf("║ 1 - Carregar Produtos        ║\n");
+        printf("║ 2 - Carregar Clientes        ║\n");
+        printf("║ 3 - Carregar Funcionarios    ║\n");
+        printf("║ 0 - Voltar                   ║\n");
+        printf("╚══════════════════════════════╝\n");
         printf("\nOpcao: ");
 
         scanf("%d", &op);
         getchar();
 
-        // LimparTela();
+        LimparTela();
 
         switch (op)
         {
@@ -351,6 +496,7 @@ void MenuFicheiros(ListaProdutos *LP, ListaClientes *LC, ListaFuncionarios *LF)
 
             LerFuncionarios(LF, ficheiro);
 
+            LimparTela();
             printf("\n[FUNCIONARIOS] - Funcionarios carregados com sucesso.\n");
 
             Pausar();
@@ -379,16 +525,20 @@ void MenuProdutos(ListaProdutos *LP)
 
     do
     {
-        // LimparTela();
+        LimparTela();
+        printf("\n");
+        printf("╔══════════════════════════════╗\n");
+        printf("║        MENU PRODUTOS         ║\n");
+        printf("╠══════════════════════════════╣\n");
+        printf("║ 1 - Listar Produtos          ║\n");
+        printf("║ 0 - Voltar                   ║\n");
+        printf("╚══════════════════════════════╝\n");
 
-        printf("\n===== MENU PRODUTOS =====\n");
-        printf("1 | Listar produtos\n");
-        printf("0 | Voltar\n");
-        printf("Opcao: ");
+        printf("\nOpcao: ");
 
         scanf("%d", &op);
         getchar();
-
+        LimparTela();
         switch (op)
         {
         case 1:

@@ -19,6 +19,14 @@ Supermercado *CriarSupermercado(char *nome)
 
     S->Rolex = CriarRelogio(10);
 
+    S->HClientes = CriarHashTable(211);
+
+    if (S->HClientes == NULL)
+    {
+        free(S);
+        return NULL;
+    }
+
     S->max_espera = 0;
     S->n_caixas = 0;
     S->tempo_atendimento_produto = 0;
@@ -79,18 +87,17 @@ int InicializarSupermercado(Supermercado *S, char *config)
     }
 
     fclose(f);
-    printf("\n╔════════════════════════════════════════════════╗\n");
-    printf("║          CONFIGURACAO CARREGADA                ║\n");
-    printf("╚════════════════════════════════════════════════╝\n");
-
-    printf("Maximo de espera          : %d\n", S->max_espera);
-    printf("Numero de caixas          : %d\n", S->n_caixas);
-    printf("Tempo por produto         : %d\n", S->tempo_atendimento_produto);
-    printf("Preco maximo              : %d\n", S->max_preco);
-    printf("Maximo medio de fila      : %d\n", S->max_fila);
-    printf("Minimo medio de fila      : %d\n", S->min_fila);
-
-    printf("╚════════════════════════════════════════════════╝\n");
+    printf("\n");
+    printf("╔═════════════════════════════════════════════════════════════╗\n");
+    printf("║                 PARAMETROS DA SIMULACAO                     ║\n");
+    printf("╠══════════════════════════════╦══════════════════════════════╣\n");
+    printf("║ %-28s ║ %28d ║\n", "MAX_ESPERA", S->max_espera);
+    printf("║ %-28s ║ %28d ║\n", "N_CAIXAS", S->n_caixas);
+    printf("║ %-28s ║ %28d ║\n", "TEMPO_ATENDIMENTO_PRODUTO", S->tempo_atendimento_produto);
+    printf("║ %-28s ║ %28d ║\n", "MAX_PRECO", S->max_preco);
+    printf("║ %-28s ║ %28d ║\n", "MAX_FILA", S->max_fila);
+    printf("║ %-28s ║ %28d ║\n", "MIN_FILA", S->min_fila);
+    printf("╚══════════════════════════════╩══════════════════════════════╝\n");
 
     /* LISTAS */
 
@@ -227,9 +234,33 @@ void GerarCarrinhoCliente(Supermercado *S, Cliente *C,
     }
 }
 
+// Nova função para calcular a media de clientes nas filas:
+static float MediaClientesFila(Supermercado *S)
+{
+    int totalClientes = 0;
+    int caixasAbertas = 0;
+
+    for (int i = 0; i < S->HCaixas->tamanho; i++)
+    {
+        Caixa *C = &S->HCaixas->Tabela[i];
+
+        if (C->aberta)
+        {
+            caixasAbertas++;
+            totalClientes += C->fila->NEL;
+        }
+    }
+
+    if (caixasAbertas == 0)
+        return 0;
+
+    return (float)totalClientes / caixasAbertas;
+}
+
 // ENTRADA CLIENTE
 void EntradaPessoaSupermercado(Supermercado *S)
 {
+
     if (S == NULL)
         return;
 
@@ -282,17 +313,10 @@ void EntradaPessoaSupermercado(Supermercado *S)
         return;
     }
 
-    float tempoCliente = CalcularTempoCliente(C);
+    float media = MediaClientesFila(S);
 
-    float tempoCaixa = CalcularTempoCaixa(CX);
-
-    /* ULTRAPASSOU O MAX_ESPERA */
-    if ((tempoCaixa + tempoCliente) > S->max_espera)
+    if (media >= S->max_fila)
     {
-        /* oferecer produto */
-        OferecerProduto(C);
-
-        /* tentar abrir nova caixa */
         Caixa *Nova = AbrirNovaCaixa(S);
 
         if (Nova != NULL)
@@ -300,6 +324,7 @@ void EntradaPessoaSupermercado(Supermercado *S)
     }
 
     InserirClienteCaixa(CX, C);
+    InserirHashTable(S->HClientes, C->id, C, CX);
 
     printf("\n[ENTRADA] - %-20s -> Caixa %d\n",
            C->nome,
@@ -512,6 +537,12 @@ static void VerificarMudancasFila(Supermercado *S)
         if (C->mudouCaixa)
         {
             InserirCliente(Origem->fila, C);
+            HashNode *N = BuscarHashTable(S->HClientes, C->id);
+
+            if (N != NULL)
+            {
+                N->caixa = Destino;
+            }
             continue;
         }
 
@@ -583,9 +614,7 @@ static void OferecerProduto(Cliente *C)
     NoProduto *Aux = C->carrinho->Inicio;
 
     while (Aux->Prox != NULL)
-    {
         Aux = Aux->Prox;
-    }
 
     if (Aux->Info != NULL)
     {
@@ -743,6 +772,9 @@ void DestruirSupermercado(Supermercado *S)
 
     if (S->HCaixas != NULL)
         DestruirMatrizSupermercado(S->HCaixas);
+
+    if (S->HClientes != NULL)
+        DestruirHashTable(S->HClientes);
 
     free(S);
 }

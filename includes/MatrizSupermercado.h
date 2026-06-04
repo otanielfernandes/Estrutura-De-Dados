@@ -1,5 +1,5 @@
-#ifndef _H
-#define _H
+#ifndef MATRIZSUPERMERCADO_H
+#define MATRIZSUPERMERCADO_H
 
 #include "Cliente.h"
 #include "ListaClientes.h"
