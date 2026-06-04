@@ -9,7 +9,6 @@
 int Menu()
 {
     int op;
-    LimparTela();
     printf("\n╔════════════════════════════════════╗\n");
     printf("║     SUPERMERCADO SIMULADOR         ║\n");
     printf("╠════════════════════════════════════╣\n");
@@ -31,6 +30,7 @@ int Menu()
 
 void ExecutaAccoesMenu(Supermercado *S, int *simulacaoAtiva, int *programaAtivo)
 {
+    limparTela();
     int op = Menu();
 
     limparTela();
