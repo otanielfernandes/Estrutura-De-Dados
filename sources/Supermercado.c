@@ -120,6 +120,10 @@ int InicializarSupermercado(Supermercado *S, char *config)
     {
         S->HCaixas->max_espera = S->max_espera;
     }
+    if (S->HCaixas != NULL)
+    {
+        S->HCaixas->max_espera = S->max_espera;
+    }
 
     if (S->HCaixas != NULL)
     {
@@ -716,6 +720,27 @@ size_t MemoriaUtilizada(Supermercado *S)
     }
 
     /* H*/
+    /* HashTable de Clientes */
+    if (S->HClientes != NULL)
+    {
+        mem += sizeof(HashTable);
+
+        if (S->HClientes->tabela != NULL)
+        {
+            mem += sizeof(HashNode *) * S->HClientes->tamanho;
+
+            for (int i = 0; i < S->HClientes->tamanho; i++)
+            {
+                HashNode *Atual = S->HClientes->tabela[i];
+
+                while (Atual != NULL)
+                {
+                    mem += sizeof(HashNode);
+                    Atual = Atual->prox;
+                }
+            }
+        }
+    }
     /* HashTable de Clientes */
     if (S->HClientes != NULL)
     {

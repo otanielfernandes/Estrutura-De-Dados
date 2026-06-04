@@ -120,23 +120,32 @@ void ProcessarCaixas(MatrizSupermercado *H)
 
             if ((Cli->carrinho != NULL) && (Cli->carrinho->NEL > 0) &&
                 (Cli->tempoEspera > H->max_espera))
-            {
-                NoProduto *Aux = Cli->carrinho->Inicio;
-
-                while (Aux != NULL && Aux->Prox != NULL)
-                    Aux = Aux->Prox;
-
-                if (Aux != NULL && Aux->Info != NULL && Aux->Info->oferecido == 0)
+                if ((Cli->carrinho != NULL) &&
+                    (Cli->carrinho->NEL > 0) &&
+                    (Cli->tempoEspera > H->max_espera))
                 {
-                    Aux->Info->oferecido = 1;
+                    NoProduto *Aux = Cli->carrinho->Inicio;
 
-                    H->totalProdutosOferecidos++;
-                    H->valorProdutosOferecidos += Aux->Info->preco;
+                    while (Aux != NULL && Aux->Prox != NULL)
+                        Aux = Aux->Prox;
 
-                    printf("\n[OFERTA] - Cliente: %s\n", Cli->nome);
-                    printf("            Produto: %s\n", Aux->Info->nome);
+                    if (Aux != NULL && Aux->Info != NULL && Aux->Info->oferecido == 0)
+                        if (Aux != NULL &&
+                            Aux->Info != NULL &&
+                            Aux->Info->oferecido == 0)
+                        {
+                            Aux->Info->oferecido = 1;
+
+                            H->totalProdutosOferecidos++;
+                            H->valorProdutosOferecidos += Aux->Info->preco;
+
+                            H->totalProdutosOferecidos++;
+                            H->valorProdutosOferecidos += Aux->Info->preco;
+
+                            printf("\n[OFERTA] - Cliente: %s\n", Cli->nome);
+                            printf("            Produto: %s\n", Aux->Info->nome);
+                        }
                 }
-            }
 
             if (Cli->carrinho != NULL)
             {
