@@ -33,6 +33,11 @@ typedef struct MatrizSupermercado
     // Será um vector dinâmico para caixas:
     Caixa *Tabela;
     int tamanho;
+
+    // Campos usados para obter o total de produtos oferecidos:
+    int max_espera;
+    int totalProdutosOferecidos;
+    float valorProdutosOferecidos;
 } MatrizSupermercado;
 
 MatrizSupermercado *CriarMatrizSupermercado(int tamanho);

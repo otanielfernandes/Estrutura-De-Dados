@@ -10,6 +10,9 @@ MatrizSupermercado *CriarMatrizSupermercado(int tamanho)
         return NULL;
 
     H->tamanho = tamanho;
+    H->max_espera = 120;
+    H->totalProdutosOferecidos = 0;
+    H->valorProdutosOferecidos = 0;
     H->Tabela = (Caixa *)malloc(sizeof(Caixa) * tamanho);
     if (H->Tabela == NULL)
     {
@@ -116,19 +119,21 @@ void ProcessarCaixas(MatrizSupermercado *H)
             C->tempoTotalAtendimento += Cli->tempoInicialCaixa;
 
             if ((Cli->carrinho != NULL) && (Cli->carrinho->NEL > 0) &&
-                (Cli->tempoEspera > 120))
+                (Cli->tempoEspera > H->max_espera))
             {
                 NoProduto *Aux = Cli->carrinho->Inicio;
 
                 while (Aux != NULL && Aux->Prox != NULL)
                     Aux = Aux->Prox;
 
-                if (Aux != NULL && Aux->Info != NULL)
+                if (Aux != NULL && Aux->Info != NULL && Aux->Info->oferecido == 0)
                 {
                     Aux->Info->oferecido = 1;
 
-                    printf("\n[OFERTA] - Cliente: %s\n", Cli->nome);
+                    H->totalProdutosOferecidos++;
+                    H->valorProdutosOferecidos += Aux->Info->preco;
 
+                    printf("\n[OFERTA] - Cliente: %s\n", Cli->nome);
                     printf("            Produto: %s\n", Aux->Info->nome);
                 }
             }
