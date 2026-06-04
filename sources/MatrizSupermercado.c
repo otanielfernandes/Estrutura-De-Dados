@@ -1,5 +1,6 @@
 #include "../includes/MatrizSupermercado.h"
 #include "../includes/Cliente.h"
+#include "../includes/Ficheiro.h"
 
 extern float CalcularTempoCliente(Cliente *C);
 
@@ -139,11 +140,8 @@ void ProcessarCaixas(MatrizSupermercado *H)
                             H->totalProdutosOferecidos++;
                             H->valorProdutosOferecidos += Aux->Info->preco;
 
-                            H->totalProdutosOferecidos++;
-                            H->valorProdutosOferecidos += Aux->Info->preco;
-
-                            printf("\n[OFERTA] - Cliente: %s\n", Cli->nome);
-                            printf("            Produto: %s\n", Aux->Info->nome);
+                            printf("\n[OFERTA] - [id - %d] %-20s | Produto: %s\n", Cli->id, Cli->nome, Aux->Info->nome);
+                            RegistrarHistoricoCSV("PRODUTO_OFERECIDO", Cli, C->id, C->id, Aux->Info->nome, Aux->Info->preco);
                         }
                 }
 
@@ -164,9 +162,11 @@ void ProcessarCaixas(MatrizSupermercado *H)
                 C->totalProdutosVendidos += vendidos;
             }
 
-            printf("\nCliente %s terminou atendimento na Caixa %d\n",
+            printf("\n[SAIDA] -[id - %d] %-20s | Caixa %d\n",
+                   Cli->id,
                    Cli->nome,
                    C->id);
+            RegistrarHistoricoCSV("SAIDA_CLIENTE", Cli, C->id, 0, NULL, 0);
 
             /* Libertar carrinho utilizado */
             if (Cli->carrinho != NULL)

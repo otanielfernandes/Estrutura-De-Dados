@@ -3,6 +3,7 @@
 #include <time.h>
 
 #include "../includes/Supermercado.h"
+#include "../includes/Ficheiro.h"
 #include "../includes/Uteis.h"
 #include "../includes/UI.h"
 
@@ -10,25 +11,28 @@ int Menu()
 {
     int op;
     limparTela();
-    printf("\n╔════════════════════════════════════╗\n");
-    printf("║     SUPERMERCADO SIMULADOR         ║\n");
-    printf("╠════════════════════════════════════╣\n");
-    printf("║ 1  - Menu Principal                ║\n");
-    printf("║ 2  - Estatísticas                  ║\n");
-    printf("║ 3  - Estado das Caixas             ║\n");
-    printf("║ 4  - Memória Utilizada             ║\n");
-    printf("║ 5  - Parar Simulação               ║\n");
-    printf("║ 6  - Continuar Simulação           ║\n");
-    printf("║ 0  - Sair                          ║\n");
-    printf("╚════════════════════════════════════╝\n");
+    printf("\n");
+    printf("╔════════════════════════════════════════════════════╗\n");
+    printf("║            SUPERMERCADO SIMULADOR                  ║\n");
+    printf("╠════════════════════════════════════════════════════╣\n");
+    printf("║  1 - Menu Principal                                ║\n");
+    printf("║  2 - Estatisticas                                  ║\n");
+    printf("║  3 - Estado das Caixas                             ║\n");
+    printf("║  4 - Memoria Utilizada                             ║\n");
+    printf("╠════════════════════════════════════════════════════╣\n");
+    printf("║  5 - Parar Simulacao                               ║\n");
+    printf("║  6 - Continuar Simulacao                           ║\n");
+    printf("╠════════════════════════════════════════════════════╣\n");
+    printf("║  7 - Gestao de Ficheiros / CSV                     ║\n");
+    printf("║  0 - Sair                                          ║\n");
+    printf("╚════════════════════════════════════════════════════╝\n");
 
-    printf("Opção: ");
+    printf("Opcao: ");
     scanf("%d", &op);
     getchar();
 
     return op;
 }
-
 void ExecutaAccoesMenu(Supermercado *S, int *simulacaoAtiva, int *programaAtivo)
 {
     int op = Menu();
@@ -80,6 +84,9 @@ void ExecutaAccoesMenu(Supermercado *S, int *simulacaoAtiva, int *programaAtivo)
         resetCor();
         break;
 
+    case 7:
+        MenuFicheiros(S->LProdutos, S->LClientes, S->LFuncionarios, S->HCaixas);
+        break;
     case 0:
         *programaAtivo = 0;
         cor(12);
@@ -121,6 +128,8 @@ int main()
            S->LProdutos->NEL,
            S->LClientes->NEL);
 
+    CriarHistoricoCSV("dados/Historico.csv");
+
     int programaAtivo = 1;
     int simulacaoAtiva = 1;
 
@@ -144,6 +153,9 @@ int main()
     resetCor();
 
     MenuEstatisticas(S->HCaixas);
+
+    ExportarCaixasCSV(S->HCaixas, "dados/Caixas.csv");
+    ExportarEstatisticasCSV(S->HCaixas, "dados/Estatisticas.csv");
 
     DestruirSupermercado(S);
     return 0;

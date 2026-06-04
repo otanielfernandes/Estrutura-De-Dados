@@ -182,6 +182,7 @@ Caixa *AbrirNovaCaixa(Supermercado *S)
             C->aberta = 1;
 
             printf("\n[CAIXA] - Caixa %d aberta.\n", C->id);
+            RegistrarHistoricoCSV("ABERTURA_CAIXA", NULL, 0, C->id, NULL, 0);
 
             return C;
         }
@@ -335,7 +336,8 @@ void EntradaPessoaSupermercado(Supermercado *S)
     InserirClienteCaixa(CX, C);
     InserirHashTable(S->HClientes, C->id, C, CX);
 
-    printf("\n[ENTRADA] - %-20s -> Caixa %d\n", C->nome, CX->id);
+    printf("\n[ENTRADA] -[id - %d] %-20s -> Caixa %d\n", C->id, C->nome, CX->id);
+    RegistrarHistoricoCSV("ENTRADA_CLIENTE", C, 0, CX->id, NULL, 0);
 }
 
 /*Numero de Caixas Abertas */
@@ -427,6 +429,7 @@ static void VerificarAberturaCaixas(Supermercado *S)
         if (Nova != NULL)
         {
             printf("\n[CAIXA] - Nova caixa aberta automaticamente.\n");
+            RegistrarHistoricoCSV("ABERTURA_AUTOMATICA_CAIXA", NULL, 0, Nova->id, NULL, 0);
         }
     }
 }
@@ -449,9 +452,12 @@ static void EquilibrarFilas(Supermercado *S)
 
         InserirCliente(Menor->fila, C);
 
-        printf("\n[CLIENTE] - Cliente mudou da Caixa %d para Caixa %d\n",
+        printf("\n[MUDANCA] -[id - %d] %-20s | Caixa %d -> Caixa %d\n",
+               C->id,
+               C->nome,
                Maior->id,
                Menor->id);
+        RegistrarHistoricoCSV("MUDANCA_FILA", C, Maior->id, Menor->id, NULL, 0);
 
         Maior = CaixaMaiorFila(S);
         Menor = CaixaMenorFila(S);
@@ -498,6 +504,7 @@ static void VerificarFechoCaixas(Supermercado *S)
 
         printf("\n[CAIXA] - Caixa %d fechada.\n",
                C->id);
+        RegistrarHistoricoCSV("FECHO_AUTOMATICO_CAIXA", NULL, C->id, 0, NULL, 0);
 
         return;
     }
@@ -573,10 +580,12 @@ static void VerificarMudancasFila(Supermercado *S)
             C->mudouCaixa = 1;
 
             InserirCliente(Destino->fila, C);
-            printf("\n[MUDANCA] - %-20s | Caixa %d -> Caixa %d\n",
+            printf("\n[MUDANCA] -[id - %d] %-20s | Caixa %d -> Caixa %d\n",
+                   C->id,
                    C->nome,
                    Origem->id,
                    Destino->id);
+            RegistrarHistoricoCSV("MUDANCA_FILA", C, Origem->id, Destino->id, NULL, 0);
         }
         else
         {
