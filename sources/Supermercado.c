@@ -630,7 +630,7 @@ static void OferecerProduto(Supermercado *S, Cliente *C)
 // MEMORIA
 size_t MemoriaUtilizada(Supermercado *S)
 {
-    if (S == NULL)
+    if (S == NULL) // testar se a estrutura é nula
         return 0;
 
     size_t mem = 0;
@@ -739,6 +739,8 @@ size_t MemoriaUtilizada(Supermercado *S)
             }
         }
     }
+
+    /* H*/
 
     return mem;
 }

@@ -16,7 +16,7 @@
     getchar();
 }*/
 
-// MENU ESTATISTICA
+// MENU ESTATISTICA sEMPROBLEMAS
 static void MostrarMenuEstatisticas(void)
 {
     printf("\n");
