@@ -212,11 +212,9 @@ void ValorTotalProdutosOferecidos(MatrizSupermercado *H, Estatisticas *E)
 
         while (NC != NULL)
         {
-            if (NC->Cli != NULL &&
-                NC->Cli->carrinho != NULL)
+            if (NC->Cli != NULL && NC->Cli->carrinho != NULL)
             {
-                NoProduto *NP =
-                    NC->Cli->carrinho->Inicio;
+                NoProduto *NP = NC->Cli->carrinho->Inicio;
 
                 while (NP != NULL)
                 {
@@ -231,6 +229,7 @@ void ValorTotalProdutosOferecidos(MatrizSupermercado *H, Estatisticas *E)
         }
     }
 }
+
 void ObterNumeroProdutosVendidos(MatrizSupermercado *H, Estatisticas *E)
 {
     if (H == NULL || E == NULL)

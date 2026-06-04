@@ -323,7 +323,7 @@ void MenuClientes(Supermercado *S)
 
             printf("\n");
             printf("╔══════════════════════════════════════════════╗\n");
-            printf("║           DADOS DO CLIENTE                  ║\n");
+            printf("║           DADOS DO CLIENTE                   ║\n");
             printf("╚══════════════════════════════════════════════╝\n");
 
             printf("Nome              : %s\n", C->nome);

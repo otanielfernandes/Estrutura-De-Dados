@@ -60,6 +60,10 @@ typedef struct
     int maxClientesSimulacao;
     int terminarPrograma;
 
+    // Campos para trabalhar com produtos oferecidos:
+    int totalProdutosOferecidos;
+    float valorProdutosOferecidos;
+
 } Supermercado;
 
 Supermercado *CriarSupermercado(char *nome);
